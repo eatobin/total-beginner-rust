@@ -26,7 +26,6 @@ impl<'a> Borrower<'a> {
     }
 }
 
-#[cfg(test)]
 mod tests {
     use super::*;
 
