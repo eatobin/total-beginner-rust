@@ -26,53 +26,48 @@ impl<'a> Borrower<'a> {
     }
 }
 
-// #[cfg(test)] // maybe later?
-mod tests {
-    use super::*;
+#[test]
+fn test_build_borrower() {
+    let br = Borrower {
+        name: "borrower1",
+        max_books: 1,
+    };
+    assert_eq!(br, build_borrower("borrower1", 1));
+}
 
-    #[test]
-    fn test_build_borrower() {
-        let br = Borrower {
-            name: "borrower1",
-            max_books: 1,
-        };
-        assert_eq!(br, build_borrower("borrower1", 1));
-    }
+#[test]
+fn test_set_name() {
+    let mut br1 = Borrower {
+        name: "borrower1",
+        max_books: 1,
+    };
+    br1.set_name("borrower2");
+    let br2 = Borrower {
+        name: "borrower2",
+        max_books: 1,
+    };
+    assert_eq!(br2, br1);
+}
 
-    #[test]
-    fn test_set_name() {
-        let mut br1 = Borrower {
-            name: "borrower1",
-            max_books: 1,
-        };
-        br1.set_name("borrower2");
-        let br2 = Borrower {
-            name: "borrower2",
-            max_books: 1,
-        };
-        assert_eq!(br2, br1);
-    }
+#[test]
+fn test_set_max_books() {
+    let mut br1 = Borrower {
+        name: "borrower1",
+        max_books: 1,
+    };
+    br1.set_max_books(2);
+    let br2 = Borrower {
+        name: "borrower1",
+        max_books: 2,
+    };
+    assert_eq!(br2, br1);
+}
 
-    #[test]
-    fn test_set_max_books() {
-        let mut br1 = Borrower {
-            name: "borrower1",
-            max_books: 1,
-        };
-        br1.set_max_books(2);
-        let br2 = Borrower {
-            name: "borrower1",
-            max_books: 2,
-        };
-        assert_eq!(br2, br1);
-    }
-
-    #[test]
-    fn test_borrower_to_string() {
-        let br1 = Borrower {
-            name: "borrower1",
-            max_books: 1,
-        };
-        assert_eq!("borrower1 (1 books)", br1.borrower_to_string());
-    }
+#[test]
+fn test_borrower_to_string() {
+    let br1 = Borrower {
+        name: "borrower1",
+        max_books: 1,
+    };
+    assert_eq!("borrower1 (1 books)", br1.borrower_to_string());
 }
