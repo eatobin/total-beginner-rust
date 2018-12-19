@@ -20,7 +20,7 @@ impl<'a> Borrower<'a> {
     pub fn borrower_to_string(&self) -> String {
         let mut bs: String = self.name.to_string() + " (";
         let mb: String = self.max_books.to_string();
-        bs.push_str(&mb);
+        bs += &mb; // an alternate way to concatenate
         bs.push_str(" books)");
         bs
     }
