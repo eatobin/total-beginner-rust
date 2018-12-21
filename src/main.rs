@@ -1,5 +1,5 @@
-#[cfg(test)]
 mod borrower;
+mod book;
 
 fn main() {
     let mut noodles: String = "noodles".to_string();
