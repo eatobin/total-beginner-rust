@@ -65,3 +65,27 @@ fn test_set_author() {
     };
     assert_eq!(bk2, bk1);
 }
+
+#[test]
+fn test_set_borrower() {
+    let mut bk1 = Book {
+        title: "title1".to_string(),
+        author: "author1".to_string(),
+        borrower: None,
+    };
+    bk1.set_borrower(Some(Borrower
+        {
+            name: "borrower1".to_string(),
+            max_books: 1,
+        }));
+    let bk2 = Book {
+        title: "title1".to_string(),
+        author: "author1".to_string(),
+        borrower: Some(Borrower
+            {
+                name: "borrower1".to_string(),
+                max_books: 1,
+            }),
+    };
+    assert_eq!(bk2, bk1);
+}
