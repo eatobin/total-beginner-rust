@@ -8,13 +8,12 @@ pub struct Book {
 }
 
 impl Book {
-    pub fn new(title: &str, author: &str, borrower: Option<Borrower>) -> Book {
-        Book { title: title.to_string(), author: author.to_string(), borrower }
+    pub fn new(title: &str, author: &str) -> Book {
+        Book { title: title.to_string(), author: author.to_string(), borrower: None }
     }
-//    pub fn set_name(&mut self, name: &str) { self.name = name.to_string() }
-//    pub fn set_max_books(&mut self, mb: u8) {
-//        self.max_books = mb;
-//    }
+    pub fn set_title(&mut self, title: &str) { self.title = title.to_string() }
+    pub fn set_author(&mut self, author: &str) { self.author = author.to_string() }
+    pub fn set_borrower(&mut self, borrower: Option<Borrower>) { self.borrower = borrower }
 //
 //    pub fn borrower_to_string(&self) -> String {
 //        let mut bs: String = self.name.to_string() + " (";
@@ -27,21 +26,42 @@ impl Book {
 
 #[test]
 fn test_new() {
-    let bk1 = Book {
-        title: "title1".to_string(),
-        author: "author1".to_string(),
-        borrower: Some(Borrower
-            {
-                name: "borrower1".to_string(),
-                max_books: 1,
-            }),
-    };
-    let bk2 = Book {
+    let bk = Book {
         title: "title1".to_string(),
         author: "author1".to_string(),
         borrower: None,
     };
-    assert_eq!(bk1, Book::new("title1", "author1",
-                              Some(Borrower::new("borrower1", 1))));
-    assert_eq!(bk2, Book::new("title1", "author1", None));
+    assert_eq!(bk, Book::new("title1", "author1"));
+}
+
+#[test]
+fn test_set_title() {
+    let mut bk1 = Book {
+        title: "title1".to_string(),
+        author: "author1".to_string(),
+        borrower: None,
+    };
+    bk1.set_title("title2");
+    let bk2 = Book {
+        title: "title2".to_string(),
+        author: "author1".to_string(),
+        borrower: None,
+    };
+    assert_eq!(bk2, bk1);
+}
+
+#[test]
+fn test_set_author() {
+    let mut bk1 = Book {
+        title: "title1".to_string(),
+        author: "author1".to_string(),
+        borrower: None,
+    };
+    bk1.set_author("author2");
+    let bk2 = Book {
+        title: "title1".to_string(),
+        author: "author2".to_string(),
+        borrower: None,
+    };
+    assert_eq!(bk2, bk1);
 }

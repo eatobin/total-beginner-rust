@@ -10,7 +10,7 @@ impl Borrower {
     }
     pub fn set_name(&mut self, name: &str) { self.name = name.to_string() }
     pub fn set_max_books(&mut self, mb: u8) {
-        self.max_books = mb;
+        self.max_books = mb
     }
 
     pub fn borrower_to_string(&self) -> String {
