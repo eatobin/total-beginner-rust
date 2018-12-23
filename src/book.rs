@@ -14,7 +14,14 @@ impl Book {
     pub fn set_title(&mut self, title: &str) { self.title = title.to_string() }
     pub fn set_author(&mut self, author: &str) { self.author = author.to_string() }
     pub fn set_borrower(&mut self, borrower: Option<Borrower>) { self.borrower = borrower }
-//
+
+    pub fn available_string(&self) -> String {
+        match &self.borrower {
+            Some(br) => format!("{} {}", "Checked out to", &(br.name)),
+            None => "Available".to_string()
+        }
+    }
+
 //    pub fn borrower_to_string(&self) -> String {
 //        let mut bs: String = self.name.to_string() + " (";
 //        let mb: String = self.max_books.to_string();
