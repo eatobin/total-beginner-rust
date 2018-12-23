@@ -96,3 +96,24 @@ fn test_set_borrower() {
     };
     assert_eq!(bk2, bk1);
 }
+
+#[test]
+fn test_book_to_string() {
+    let bk1 = Book {
+        title: "title1".to_string(),
+        author: "author1".to_string(),
+        borrower: None,
+    };
+    assert_eq!(bk1.available_string(), "Available");
+
+    let bk2 = Book {
+        title: "title1".to_string(),
+        author: "author1".to_string(),
+        borrower: Some(Borrower
+            {
+                name: "borrower1".to_string(),
+                max_books: 1,
+            }),
+    };
+    assert_eq!(bk2.available_string(), "Checked out to borrower1");
+}
