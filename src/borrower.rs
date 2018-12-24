@@ -14,11 +14,7 @@ impl Borrower {
     }
 
     pub fn borrower_to_string(&self) -> String {
-        let mut bs: String = self.name.to_owned() + " (";
-        let mb: String = self.max_books.to_string();
-        bs.push_str(&mb);
-        bs += " books)"; // an alternate way to concatenate
-        bs
+        format!("{} {}{} {}", &(self.name), "(", &(self.max_books), "books)")
     }
 }
 
