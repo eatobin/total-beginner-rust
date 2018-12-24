@@ -21,16 +21,16 @@ impl Borrower {
 #[test]
 fn test_new() {
     let br = Borrower {
-        name: "borrower1".to_owned(),
+        name: "Borrower1".to_owned(),
         max_books: 1,
     };
-    assert_eq!(br, Borrower::new("borrower1", 1));
+    assert_eq!(br, Borrower::new("Borrower1", 1));
 }
 
 #[test]
 fn test_set_name() {
     let mut br1 = Borrower {
-        name: "borrower1".to_owned(),
+        name: "Borrower1".to_owned(),
         max_books: 1,
     };
     br1.set_name("borrower2");
@@ -44,12 +44,12 @@ fn test_set_name() {
 #[test]
 fn test_set_max_books() {
     let mut br1 = Borrower {
-        name: "borrower1".to_owned(),
+        name: "Borrower1".to_owned(),
         max_books: 1,
     };
     br1.set_max_books(2);
     let br2 = Borrower {
-        name: "borrower1".to_owned(),
+        name: "Borrower1".to_owned(),
         max_books: 2,
     };
     assert_eq!(br2, br1);
@@ -58,8 +58,8 @@ fn test_set_max_books() {
 #[test]
 fn test_borrower_to_string() {
     let br1 = Borrower {
-        name: "borrower1".to_owned(),
+        name: "Borrower1".to_owned(),
         max_books: 1,
     };
-    assert_eq!("borrower1 (1 books)", br1.borrower_to_string());
+    assert_eq!("Borrower1 (1 books)", br1.borrower_to_string());
 }
