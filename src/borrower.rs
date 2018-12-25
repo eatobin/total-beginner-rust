@@ -28,7 +28,7 @@ impl Borrower {
 #[test]
 fn test_new_borrower() {
     let br = Borrower {
-        name: "Borrower1".to_owned(),
+        name: String::from("Borrower1"),
         max_books: 1,
     };
     assert_eq!(br, Borrower::new("Borrower1", 1));
