@@ -19,7 +19,7 @@ impl Borrower {
 }
 
 #[test]
-fn test_new() {
+fn test_new_borrower() {
     let br = Borrower {
         name: "Borrower1".to_owned(),
         max_books: 1,

@@ -28,7 +28,7 @@ impl Book {
 }
 
 #[test]
-fn test_new() {
+fn test_new_book() {
     let bk = Book {
         title: "Title1".to_owned(),
         author: "Author1".to_owned(),
