@@ -15,12 +15,15 @@ impl Book {
             borrower: None,
         }
     }
+
     pub fn set_title(&mut self, title: &str) {
         self.title = title.to_owned()
     }
+
     pub fn set_author(&mut self, author: &str) {
         self.author = author.to_owned()
     }
+
     pub fn set_borrower(&mut self, borrower: Option<Borrower>) {
         self.borrower = borrower
     }

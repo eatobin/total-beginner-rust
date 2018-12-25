@@ -1,5 +1,5 @@
-mod borrower;
 mod book;
+mod borrower;
 
 fn main() {
     let mut noodles: String = "noodles".to_string();

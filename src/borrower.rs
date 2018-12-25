@@ -11,9 +11,11 @@ impl Borrower {
             max_books,
         }
     }
+
     pub fn set_name(&mut self, name: &str) {
         self.name = name.to_owned()
     }
+
     pub fn set_max_books(&mut self, mb: u8) {
         self.max_books = mb
     }
