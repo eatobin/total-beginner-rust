@@ -1,12 +1,20 @@
 pub use crate::book::Book;
 pub use crate::borrower::Borrower;
 
-pub fn add_item<T: PartialEq>(x: T, xs: &mut Vec<T>) {
-    if !xs.contains(&x) {
-        xs.push(x);
-    }
+//pub fn add_item<T: PartialEq>(x: T, xs: &mut Vec<T>) {
+//    if !xs.contains(&x) {
+//        xs.push(x);
+//    }
+//}
+pub fn add_borrower<'a>(br: &'a Borrower, brs: &'a mut Vec<&'a Borrower>) -> &'a mut Vec<&'a Borrower> {
+    brs.push(br);
+    brs
 }
-
+//pub fn add_borrower('a)(br: &'a Borrower, mut brs: Vec<&Borrower>) -> Vec<&Borrower> {
+//brs.push(br);
+//    brs
+//
+//}
 
 
 // #![allow(unused)]
