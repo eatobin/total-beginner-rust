@@ -7,8 +7,12 @@ pub use crate::borrower::Borrower;
 //    }
 //}
 pub fn add_borrower<'a>(br: &'a Borrower, brs: &'a mut Vec<&'a Borrower>) -> &'a mut Vec<&'a Borrower> {
-    brs.push(br);
-    brs
+    if !brs.contains(&&br) {
+        brs.push(br);
+        brs
+    } else {
+        brs
+    }
 }
 //pub fn add_borrower('a)(br: &'a Borrower, mut brs: Vec<&Borrower>) -> Vec<&Borrower> {
 //brs.push(br);
