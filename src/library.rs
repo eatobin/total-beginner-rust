@@ -2,12 +2,17 @@ use crate::book::Book;
 use crate::borrower::Borrower;
 
 pub fn add_item<T: PartialEq>(x: T, mut xs: Vec<T>) -> Vec<T> {
-    if !xs.contains(&x) {
-        xs.push(x);
+    if xs.contains(&x) {
         xs
     } else {
+        xs.push(x);
         xs
     }
+}
+
+pub fn remove_book(bk: Book, mut bks: Vec<Book>) -> Vec<Book> {
+    bks.retain(|i| i != &bk);
+    bks
 }
 
 #[test]
@@ -62,4 +67,34 @@ fn test_add_item() {
         }, ],
         bks
     );
+}
+
+#[test]
+fn test_remove_book() {
+    let mut bks1 = vec![
+        Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        },
+        Book {
+            title: "Title2".to_owned(),
+            author: "Author2".to_owned(),
+            borrower: None,
+        },
+    ];
+    bks1 = remove_book(
+        Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        },
+        bks1,
+    );
+    let bks2 = vec![Book {
+        title: "Title2".to_owned(),
+        author: "Author2".to_owned(),
+        borrower: None,
+    }];
+    assert_eq!(bks1, bks2);
 }
