@@ -1,43 +1,65 @@
-pub use crate::book::Book;
-pub use crate::borrower::Borrower;
+use crate::book::Book;
+use crate::borrower::Borrower;
 
-//pub fn add_item<T: PartialEq>(x: T, xs: &mut Vec<T>) {
-//    if !xs.contains(&x) {
-//        xs.push(x);
-//    }
-//}
-pub fn add_borrower<'a>(br: &'a Borrower, brs: &'a mut Vec<&'a Borrower>) -> &'a mut Vec<&'a Borrower> {
-    if !brs.contains(&&br) {
-        brs.push(br);
-        brs
+pub fn add_item<T: PartialEq>(x: T, mut xs: Vec<T>) -> Vec<T> {
+    if !xs.contains(&x) {
+        xs.push(x);
+        xs
     } else {
-        brs
+        xs
     }
 }
-//pub fn add_borrower('a)(br: &'a Borrower, mut brs: Vec<&Borrower>) -> Vec<&Borrower> {
-//brs.push(br);
-//    brs
-//
-//}
 
+#[test]
+fn test_add_item() {
+    let br1 = Borrower {
+        name: String::from("Borrower1"),
+        max_books: 1,
+    };
+    let mut brs: Vec<Borrower> = Vec::new();
 
-// #![allow(unused)]
-// fn main() {
-//     // let mut char_list = vec!['y', 'm', 'a', 'q'];
-//     let mut word_list = vec![&"cat", &"dog"];
-//     assert!(word_list.contains(&&"cat"));
+    brs = add_item(br1, brs);
+    assert_eq!(
+        vec![Borrower {
+            name: String::from("Borrower1"),
+            max_books: 1,
+        }, ],
+        brs
+    );
 
-//     // println!("{:?}", char_list);
-//     // add_item('e', &mut char_list);
-//     // println!("{:?}", char_list);
-//     // add_item('y', &mut char_list);
-//     // println!("{:?}", char_list);
-//     add_item(&"bird", &mut word_list);
-//     println!("{:?}", &word_list);
-// }
+    brs = add_item(Borrower::new("Borrower1", 1), brs);
+    assert_eq!(
+        vec![Borrower {
+            name: String::from("Borrower1"),
+            max_books: 1,
+        }, ],
+        brs
+    );
 
-// pub fn add_item<'a, T: PartialEq>(x: &'a T, xs: &'a mut Vec<&'a T>) {
-//     if !xs.contains(&x) {
-//         xs.push(x);
-//     }
-// }
+    let bk1 = Book {
+        title: "Title1".to_owned(),
+        author: String::from("Author1"),
+        borrower: None,
+    };
+    let mut bks: Vec<Book> = Vec::new();
+
+    bks = add_item(bk1, bks);
+    assert_eq!(
+        vec![Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        }, ],
+        bks
+    );
+
+    bks = add_item(Book::new("Title1", "Author1"), bks);
+    assert_eq!(
+        vec![Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        }, ],
+        bks
+    );
+}
