@@ -97,4 +97,14 @@ fn test_remove_book() {
         borrower: None,
     }];
     assert_eq!(bks1, bks2);
+
+    bks1 = remove_book(
+        Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        },
+        bks1,
+    );
+    assert_eq!(bks1, bks2);
 }
