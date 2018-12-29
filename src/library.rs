@@ -10,11 +10,6 @@ pub fn add_item<T: PartialEq>(x: T, mut xs: Vec<T>) -> Vec<T> {
     }
 }
 
-pub fn remove_book(bk: Book, mut bks: Vec<Book>) -> Vec<Book> {
-    bks.retain(|i| i != &bk);
-    bks
-}
-
 #[test]
 fn test_add_item() {
     let br1 = Borrower {
@@ -67,6 +62,11 @@ fn test_add_item() {
         }, ],
         bks
     );
+}
+
+pub fn remove_book(bk: Book, mut bks: Vec<Book>) -> Vec<Book> {
+    bks.retain(|i| i != &bk);
+    bks
 }
 
 #[test]
