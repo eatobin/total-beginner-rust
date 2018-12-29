@@ -3,6 +3,8 @@
 mod book;
 mod borrower;
 mod library;
+use crate::book::Book;
+use crate::book::Borrower;
 
 fn main() {
     // let mut noodles: String = "noodles".to_string();
@@ -23,29 +25,29 @@ fn main() {
     // word_list = library::add_item("bird".to_owned(), word_list);
     // println!("{:?}", word_list);
 
-    let br1 = borrower::Borrower {
+    let br1 = Borrower {
         name: String::from("Borrower1"),
         max_books: 1,
     };
-    let br2 = borrower::Borrower {
+    let br2 = Borrower {
         name: String::from("Borrower2"),
         max_books: 2,
     };
-    let br3 = borrower::Borrower {
+    let br3 = Borrower {
         name: String::from("Borrower3"),
         max_books: 3,
     };
 
-    let mut bl: Vec<borrower::Borrower> = Vec::new();
+    let mut bl: Vec<Borrower> = Vec::new();
     bl.push(br2);
     bl.push(br3);
     // println!("{:?}", bl);
     // bl = library::add_item(br3, bl);
     // println!("{:?}", bl);
-    // bl = library::add_item(borrower::Borrower::new("Borrower3", 3), bl);
+    // bl = library::add_item(Borrower::new("Borrower3", 3), bl);
     // println!("{:?}", bl);
 
-    //    br1 = borrower::Borrower {
+    //    br1 = Borrower {
     //        name: String::from("Borrower11"),
     //        max_books: 11,
     //    };
@@ -56,15 +58,31 @@ fn main() {
     //    s = "you".to_string();
     //    println!("{}", t);
     //    println!("{}", s);
-    fun_test(5, &times2);
-    println!(
-        "{}",
-        is_br(&br1, &borrower::Borrower::get_name, "Borrower1")
-    );
+    // fun_test(5, &times2);
+    // println!("{}", is_br(&br1, &Borrower::get_name, "Borrower1"));
     println!(
         "{:?}",
-        find_borrower("Borrower2", &mut bl, &borrower::Borrower::get_name)
+        find_borrower("Borrower22", &mut bl, &Borrower::get_name)
     );
+    println!("{:?}", find_item("Borrower2", &mut bl, &Borrower::get_name));
+
+    let bk1 = Book {
+        title: "Title1".to_owned(),
+        author: "Author1".to_owned(),
+        borrower: None,
+    };
+
+    let bk2 = Book {
+        title: "title2".to_owned(),
+        author: "Author1".to_owned(),
+        borrower: None,
+    };
+
+    let mut bkl: Vec<Book> = Vec::new();
+    bkl.push(bk1);
+    bkl.push(bk2);
+
+    println!("{:?}", find_item("Title11", &mut bkl, &Book::get_title));
 }
 
 fn fun_test(value: i32, f: &Fn(i32) -> i32) -> i32 {
@@ -76,15 +94,24 @@ fn times2(value: i32) -> i32 {
     2 * value
 }
 
-fn is_br(br: &borrower::Borrower, f: &Fn(&borrower::Borrower) -> &str, target: &str) -> bool {
+fn is_br(br: &Borrower, f: &Fn(&Borrower) -> &str, target: &str) -> bool {
     f(br) == target
 }
 
 fn find_borrower<'a>(
     tgt: &str,
-    coll: &'a mut Vec<borrower::Borrower>,
-    f: &Fn(&borrower::Borrower) -> &str,
-) -> Option<&'a borrower::Borrower> {
+    coll: &'a mut Vec<Borrower>,
+    f: &Fn(&Borrower) -> &str,
+) -> Option<&'a Borrower> {
+    coll.retain(|i| f(i) == tgt);
+    if coll.is_empty() {
+        None
+    } else {
+        Some(&coll[0])
+    }
+}
+
+fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
     coll.retain(|i| f(i) == tgt);
     if coll.is_empty() {
         None
