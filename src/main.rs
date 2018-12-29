@@ -62,7 +62,7 @@ fn main() {
         is_br(&br1, &borrower::Borrower::get_name, "Borrower1")
     );
     println!(
-        "{}",
+        "{:?}",
         find_borrower("Borrower2", &mut bl, &borrower::Borrower::get_name)
     );
 }
@@ -84,11 +84,11 @@ fn find_borrower<'a>(
     tgt: &str,
     coll: &'a mut Vec<borrower::Borrower>,
     f: &Fn(&borrower::Borrower) -> &str,
-) -> bool {
+) -> Option<&'a borrower::Borrower> {
     coll.retain(|i| f(i) == tgt);
     if coll.is_empty() {
-        false
+        None
     } else {
-        true
+        Some(&coll[0])
     }
 }
