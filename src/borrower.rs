@@ -12,6 +12,10 @@ impl Borrower {
         }
     }
 
+    pub fn get_name(br: &Borrower) -> &str {
+        &(br.name)
+    }
+
     pub fn set_name(&mut self, name: &str) {
         self.name = name.to_owned()
     }
@@ -32,6 +36,15 @@ fn test_new_borrower() {
         max_books: 1,
     };
     assert_eq!(br, Borrower::new("Borrower1", 1));
+}
+
+#[test]
+fn test_get_name() {
+    let br = Borrower {
+        name: "Borrower1".to_owned(),
+        max_books: 1,
+    };
+    assert_eq!(Borrower::get_name(&br), "Borrower1");
 }
 
 #[test]

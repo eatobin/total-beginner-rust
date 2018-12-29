@@ -23,7 +23,7 @@ fn test_add_item() {
         vec![Borrower {
             name: String::from("Borrower1"),
             max_books: 1,
-        }, ],
+        },],
         brs
     );
 
@@ -32,7 +32,7 @@ fn test_add_item() {
         vec![Borrower {
             name: String::from("Borrower1"),
             max_books: 1,
-        }, ],
+        },],
         brs
     );
 
@@ -49,7 +49,7 @@ fn test_add_item() {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
             borrower: None,
-        }, ],
+        },],
         bks
     );
 
@@ -59,7 +59,7 @@ fn test_add_item() {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
             borrower: None,
-        }, ],
+        },],
         bks
     );
 }
