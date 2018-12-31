@@ -171,5 +171,9 @@ mod tests {
                 }),
             })
         );
+
+        assert_eq!(find_item("Borrower11", &mut brl, &Borrower::get_name), None);
+
+        assert_eq!(find_item("Title22", &mut bkl, &Book::get_title), None);
     }
 }
