@@ -153,6 +153,14 @@ mod tests {
         bkl.push(bk2);
 
         assert_eq!(
+            find_item("Borrower1", &mut brl, &Borrower::get_name),
+            Some(&Borrower {
+                name: String::from("Borrower1"),
+                max_books: 1,
+            })
+        );
+
+        assert_eq!(
             find_item("Title2", &mut bkl, &Book::get_title),
             Some(&Book {
                 title: "Title2".to_owned(),
