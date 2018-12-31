@@ -68,25 +68,27 @@ fn main() {
         "{:?}",
         find_borrower("Borrower22", &mut bl, &Borrower::get_name)
     );
-    // println!("{:?}", find_item("Borrower2", &mut bl, &Borrower::get_name));
+    println!("{:?}", find_item("Borrower2", &mut bl, &Borrower::get_name));
 
-    // let bk1 = Book {
-    //     title: "Title1".to_owned(),
-    //     author: "Author1".to_owned(),
-    //     borrower: None,
-    // };
+    let bk1 = Book {
+        title: "Title1".to_owned(),
+        author: "Author1".to_owned(),
+        borrower: None,
+    };
 
-    // let bk2 = Book {
-    //     title: "title2".to_owned(),
-    //     author: "Author1".to_owned(),
-    //     borrower: None,
-    // };
+    let bk2 = Book {
+        title: "Title2".to_owned(),
+        author: "Author2".to_owned(),
+        borrower: None,
+    };
 
-    // let mut bkl: Vec<Book> = Vec::new();
-    // bkl.push(bk1);
-    // bkl.push(bk2);
+    let mut bkl: Vec<Book> = Vec::new();
+    bkl.push(bk1);
+    bkl.push(bk2);
 
-    // println!("{:?}", find_item("Title11", &mut bkl, &Book::get_title));
+    println!("{:?}", find_item("Title1", &mut bkl, &Book::get_title));
+    println!("{:?}", find_item("Title2", &mut bkl, &Book::get_title));
+    println!("{:?}", find_item("Title11", &mut bkl, &Book::get_title));
 
     // let vec2 = vec![4, 5, 6];
     // let mut into_iter = vec2.into_iter();
@@ -127,11 +129,8 @@ fn find_borrower<'a>(
     r
 }
 
-fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
-    coll.retain(|i| f(i) == tgt);
-    if coll.is_empty() {
-        None
-    } else {
-        Some(&coll[0])
-    }
+fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a mut T> {
+    let mut coll_i = coll.into_iter();
+    let r = coll_i.find(|i| f(i) == tgt);
+    r
 }
