@@ -82,7 +82,18 @@ fn main() {
     bkl.push(bk1);
     bkl.push(bk2);
 
-    println!("{:?}", find_item("Title11", &mut bkl, &Book::get_title));
+    // println!("{:?}", find_item("Title11", &mut bkl, &Book::get_title));
+
+    let vec2 = vec![4, 5, 6];
+    let mut into_iter = vec2.into_iter();
+    println!("Find 2 in vec2: {:?}", into_iter.find(|&x| x == 5));
+    // let mut bkl_i = bkl.iter();
+    let mut bkl_i = bkl.into_iter();
+    println!("Find 2 in bkl_i: {:?}", bkl_i.find(|x| x == &Book {
+        title: "Title11".to_owned(),
+        author: "Author1".to_owned(),
+        borrower: None,
+    }));
 }
 
 fn fun_test(value: i32, f: &Fn(i32) -> i32) -> i32 {
