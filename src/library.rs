@@ -15,10 +15,8 @@ pub fn remove_book(bk: Book, mut bks: Vec<Book>) -> Vec<Book> {
     bks
 }
 
-pub fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a mut T> {
-    let mut coll_i = coll.into_iter();
-    let r = coll_i.find(|i| f(i) == tgt);
-    r
+fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
+    coll.iter().find(|&i| f(i) == tgt)
 }
 
 #[cfg(test)]
@@ -120,46 +118,50 @@ mod tests {
         assert_eq!(bks1, bks2);
     }
 
-    //    #[test]
-    //    fn test_find_item() {
-    //        let br1 = Borrower {
-    //            name: String::from("Borrower1"),
-    //            max_books: 1,
-    //        };
-    //        let br2 = Borrower {
-    //            name: String::from("Borrower2"),
-    //            max_books: 2,
-    //        };
-    //
-    //        let mut brl: Vec<Borrower> = Vec::new();
-    //        brl.push(br1);
-    //        brl.push(br2);
-    //
-    //        let bk1 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: None,
-    //        };
-    //
-    //        let bk2 = Book {
-    //            title: "Title2".to_owned(),
-    //            author: "Author2".to_owned(),
-    //            borrower: Some(Borrower {
-    //                name: String::from("Borrower2"),
-    //                max_books: 2,
-    //            }),
-    //        };
-    //
-    //        let mut bkl: Vec<Book> = Vec::new();
-    //        bkl.push(bk1);
-    //        bkl.push(bk2);
-    //
-    //        let exp_br_item_1 = &mut Borrower {
-    //            name: String::from("Borrower1"),
-    //            max_books: 1,
-    //        };
-    //        let br_item_1 = find_item("Borrower1", &mut brl, &Borrower::get_name).unwrap();
-    //
-    //        assert_eq!(exp_br_item_1, br_item_1)
-    //    }
+    #[test]
+    fn test_find_item() {
+        let br1 = Borrower {
+            name: String::from("Borrower1"),
+            max_books: 1,
+        };
+        let br2 = Borrower {
+            name: String::from("Borrower2"),
+            max_books: 2,
+        };
+
+        let mut brl: Vec<Borrower> = Vec::new();
+        brl.push(br1);
+        brl.push(br2);
+
+        let bk1 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
+
+        let bk2 = Book {
+            title: "Title2".to_owned(),
+            author: "Author2".to_owned(),
+            borrower: Some(Borrower {
+                name: String::from("Borrower2"),
+                max_books: 2,
+            }),
+        };
+
+        let mut bkl: Vec<Book> = Vec::new();
+        bkl.push(bk1);
+        bkl.push(bk2);
+
+        assert_eq!(
+            find_item("Title2", &mut bkl, &Book::get_title),
+            Some(&Book {
+                title: "Title2".to_owned(),
+                author: "Author2".to_owned(),
+                borrower: Some(Borrower {
+                    name: String::from("Borrower2"),
+                    max_books: 2,
+                }),
+            })
+        );
+    }
 }

@@ -90,7 +90,14 @@ fn main() {
     println!("{:?}", find_item("Title1", &mut bkl, &Book::get_title));
     println!("{:?}", find_item("Title2", &mut bkl, &Book::get_title));
     println!("{:?}", find_item("Title11", &mut bkl, &Book::get_title));
-    assert_eq!(find_item("Title2", &mut bkl, &Book::get_title), Some(&Book { title: "Title2".to_owned(), author: "Author2".to_owned(), borrower: None }));
+    assert_eq!(
+        find_item("Title2", &mut bkl, &Book::get_title),
+        Some(&Book {
+            title: "Title2".to_owned(),
+            author: "Author2".to_owned(),
+            borrower: None,
+        })
+    );
     // let vec2 = vec![4, 5, 6];
     // let mut into_iter = vec2.into_iter();
     // println!("Find 2 in vec2: {:?}", into_iter.find(|&x| x == 5));
@@ -106,26 +113,26 @@ fn main() {
     //         })
     // );
 
-    let a = ["lol", "NaN", "n", "t"];
-
-    let mut first_number: Option<u16> = a.iter().find_map(|s| s.parse().ok());
-    assert_eq!(first_number, None);
-
-    let mut first_book: Option<&Book> = bkl.iter().find(|&i| {
-        i == &Book {
-            title: "Title2".to_owned(),
-            author: "Author2".to_owned(),
-            borrower: None,
-        }
-    });
-    assert_eq!(
-        first_book,
-        Some(&Book {
-            title: "Title2".to_owned(),
-            author: "Author2".to_owned(),
-            borrower: None,
-        })
-    )
+    //    let a = ["lol", "NaN", "n", "t"];
+    //
+    //    let mut first_number: Option<u16> = a.iter().find_map(|s| s.parse().ok());
+    //    assert_eq!(first_number, None);
+    //
+    //    let mut first_book: Option<&Book> = bkl.iter().find(|&i| {
+    //        i == &Book {
+    //            title: "Title2".to_owned(),
+    //            author: "Author2".to_owned(),
+    //            borrower: None,
+    //        }
+    //    });
+    //    assert_eq!(
+    //        first_book,
+    //        Some(&Book {
+    //            title: "Title2".to_owned(),
+    //            author: "Author2".to_owned(),
+    //            borrower: None,
+    //        })
+    //    )
 }
 
 fn fun_test(value: i32, f: &Fn(i32) -> i32) -> i32 {
