@@ -4,7 +4,7 @@ mod book;
 mod borrower;
 mod library;
 use crate::book::Book;
-use crate::book::Borrower;
+use crate::borrower::Borrower;
 
 fn main() {
     // let mut noodles: String = "noodles".to_string();

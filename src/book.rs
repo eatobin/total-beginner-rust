@@ -1,4 +1,4 @@
-pub use crate::borrower::Borrower;
+use crate::borrower::Borrower;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Book {
