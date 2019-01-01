@@ -1,6 +1,6 @@
 use crate::borrower::Borrower;
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq)]
 pub struct Book {
     pub title: String,
     pub author: String,
@@ -8,16 +8,16 @@ pub struct Book {
 }
 
 impl Book {
-    pub fn new(title: &str, author: &str) -> Book {
+    pub fn new(title: &str, author: &str, borrower: Option<Borrower>) -> Book {
         Book {
             title: title.to_owned(),
             author: author.to_owned(),
-            borrower: None,
+            borrower: borrower,
         }
     }
 
-    pub fn get_title(bk: &Book) -> &str {
-        &(bk.title)
+    pub fn get_title(&self) -> &str {
+        &(self.title)
     }
 
     pub fn set_title(&mut self, title: &str) {
@@ -63,7 +63,7 @@ mod tests {
             author: "Author1".to_owned(),
             borrower: None,
         };
-        assert_eq!(bk, Book::new("Title1", "Author1"));
+        assert_eq!(bk, Book::new("Title1", "Author1", None));
     }
 
     #[test]

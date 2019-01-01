@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq)]
 pub struct Borrower {
     pub name: String,
     pub max_books: u8,
@@ -12,8 +12,12 @@ impl Borrower {
         }
     }
 
-    pub fn get_name(br: &Borrower) -> &str {
-        &(br.name)
+    //pub fn get_name(br: &Borrower) -> &str {
+    //    &(br.name)
+    //}
+    
+    pub fn get_name(&self) -> &str {
+        &(self.name)
     }
 
     pub fn set_name(&mut self, name: &str) {
