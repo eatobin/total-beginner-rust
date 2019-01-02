@@ -15,7 +15,7 @@ impl Borrower {
     //pub fn get_name(br: &Borrower) -> &str {
     //    &(br.name)
     //}
-    
+
     pub fn get_name(&self) -> &str {
         &(self.name)
     }

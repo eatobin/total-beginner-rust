@@ -134,11 +134,10 @@ fn main() {
     //        })
     //    )
 
-    let v = &vec![1,2,3,4,5,6];
-    let jj = v.into_iter().filter(|&i|i % 2 == 0).collect::<Vec<_>>();
+    let v = &vec![1, 2, 3, 4, 5, 6];
+    let jj = v.into_iter().filter(|&i| i % 2 == 0).collect::<Vec<_>>();
     println!("{:?}", jj);
     println!("{:?}", v);
-
 }
 
 fn fun_test(value: i32, f: &Fn(i32) -> i32) -> i32 {

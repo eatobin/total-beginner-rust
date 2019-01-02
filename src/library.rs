@@ -15,9 +15,9 @@ pub fn remove_book<'a>(bk: &Book, mut bks: Vec<&'a Book>) -> Vec<&'a Book> {
     bks
 }
 
-pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&'a T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
-    coll.iter().find(|&i| f(i) == tgt)
-}
+//pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&'a T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
+//    coll.iter().find(|&i| f(i) == tgt)
+//}
 
 //fn shoes_in_my_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
 //    shoes.into_iter()
@@ -101,15 +101,15 @@ mod tests {
     #[test]
     fn test_remove_book() {
         let bk1 = Book {
-                title: "Title1".to_owned(),
-                author: "Author1".to_owned(),
-                borrower: None,
-            };
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
         let bk2 = Book {
-                title: "Title2".to_owned(),
-                author: "Author2".to_owned(),
-                borrower: None,
-            };
+            title: "Title2".to_owned(),
+            author: "Author2".to_owned(),
+            borrower: None,
+        };
         let mut bks1: Vec<&Book> = vec![&bk1, &bk2];
         bks1 = remove_book(
             &Book {
@@ -125,7 +125,7 @@ mod tests {
             borrower: None,
         };
         let bks2 = vec![&bk3];
-        assert_eq!(bks1, bks2);
+        //        assert_eq!(bks1, bks2);
 
         // bks1 = remove_book(
         //     Book {
