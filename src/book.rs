@@ -20,18 +20,18 @@ impl Book {
         &(self.title)
     }
 
-    //    pub fn set_title(&mut self, title: &str) {
-    //        self.title = title.to_owned()
-    //    }
-    //
-    //    pub fn set_author(&mut self, author: &str) {
-    //        self.author = author.to_owned()
-    //    }
-    //
-    //    pub fn set_borrower(&mut self, borrower: Option<Borrower>) {
-    //        self.borrower = borrower
-    //    }
-    //
+    pub fn set_title(&mut self, title: &str) {
+        self.title = title.to_owned()
+    }
+
+    pub fn set_author(&mut self, author: &str) {
+        self.author = author.to_owned()
+    }
+
+    pub fn set_borrower(&mut self, borrower: Option<Borrower>) {
+        self.borrower = borrower
+    }
+
     //    pub fn available_string(&self) -> String {
     //        match &self.borrower {
     //            Some(br) => format!("{} {}", "Checked out to", br.get_name()),
@@ -76,60 +76,62 @@ mod tests {
         assert_eq!(bk.get_title(), "Title1");
     }
 
-    //    #[test]
-    //    fn test_set_title() {
-    //        let mut bk1 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: None,
-    //        };
-    //        bk1.set_title("title2");
-    //        let bk2 = Book {
-    //            title: "title2".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: None,
-    //        };
-    //        assert_eq!(bk2, bk1);
-    //    }
-    //
-    //    #[test]
-    //    fn test_set_author() {
-    //        let mut bk1 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: None,
-    //        };
-    //        bk1.set_author("author2");
-    //        let bk2 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "author2".to_owned(),
-    //            borrower: None,
-    //        };
-    //        assert_eq!(bk2, bk1);
-    //    }
-    //
-    //    #[test]
-    //    fn test_set_borrower() {
-    //        let mut bk1 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: None,
-    //        };
-    //        bk1.set_borrower(Some(Borrower {
-    //            name: "Borrower1".to_owned(),
-    //            max_books: 1,
-    //        }));
-    //        let bk2 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: Some(Borrower {
-    //                name: "Borrower1".to_owned(),
-    //                max_books: 1,
-    //            }),
-    //        };
-    //        assert_eq!(bk2, bk1);
-    //    }
-    //
+    #[test]
+    fn test_set_title() {
+        let mut bk1 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
+        bk1.set_title("Title2");
+        let bk2 = Book {
+            title: "Title2".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
+        assert_eq!(bk2, bk1);
+    }
+
+    #[test]
+    fn test_set_author() {
+        let mut bk1 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
+        bk1.set_author("Author2");
+        let bk2 = Book {
+            title: "Title1".to_owned(),
+            author: "Author2".to_owned(),
+            borrower: None,
+        };
+        assert_eq!(bk2, bk1);
+    }
+
+    #[test]
+    fn test_set_borrower() {
+        let mut bk1 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
+        bk1.set_borrower(Some(Borrower::new("Borrower1", 11)));
+        let bk2 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: Some(Borrower::new("Borrower1", 11)),
+        };
+        assert_eq!(bk2, bk1);
+
+        bk1.set_borrower(None);
+        let bk2 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
+        assert_eq!(bk2, bk1);
+    }
+
     //    #[test]
     //    fn test_book_to_string() {
     //        let bk1 = Book {
