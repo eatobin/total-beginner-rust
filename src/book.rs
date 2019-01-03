@@ -32,23 +32,23 @@ impl Book {
         self.borrower = borrower
     }
 
-    //    pub fn available_string(&self) -> String {
-    //        match &self.borrower {
-    //            Some(br) => format!("{} {}", "Checked out to", br.get_name()),
-    //            None => "Available".to_owned(),
-    //        }
-    //    }
-    //
-    //    pub fn book_to_string(&self) -> String {
-    //        format!(
-    //            "{} {} {}{} {}",
-    //            &(self.title),
-    //            "by",
-    //            &(self.author),
-    //            ";",
-    //            &(self.available_string())
-    //        )
-    //    }
+    pub fn available_string(&self) -> String {
+        match &self.borrower {
+            Some(br) => format!("{} {}", "Checked out to", br.get_name()),
+            None => "Available".to_owned(),
+        }
+    }
+
+    pub fn book_to_string(&self) -> String {
+        format!(
+            "{} {} {}{} {}",
+            &(self.title),
+            "by",
+            &(self.author),
+            ";",
+            &(self.available_string())
+        )
+    }
 }
 
 #[cfg(test)]
@@ -115,11 +115,11 @@ mod tests {
             author: "Author1".to_owned(),
             borrower: None,
         };
-        bk1.set_borrower(Some(Borrower::new("Borrower1", 11)));
+        bk1.set_borrower(Some(Borrower::new("Borrower1", 1)));
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: Some(Borrower::new("Borrower1", 11)),
+            borrower: Some(Borrower::new("Borrower1", 1)),
         };
         assert_eq!(bk2, bk1);
 
@@ -132,29 +132,26 @@ mod tests {
         assert_eq!(bk2, bk1);
     }
 
-    //    #[test]
-    //    fn test_book_to_string() {
-    //        let bk1 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: None,
-    //        };
-    //        assert_eq!(bk1.available_string(), "Available");
-    //
-    //        let bk2 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: Some(Borrower {
-    //                name: "Borrower1".to_owned(),
-    //                max_books: 1,
-    //            }),
-    //        };
-    //        assert_eq!(bk2.available_string(), "Checked out to Borrower1");
-    //
-    //        assert_eq!(bk1.book_to_string(), "Title1 by Author1; Available");
-    //        assert_eq!(
-    //            bk2.book_to_string(),
-    //            "Title1 by Author1; Checked out to Borrower1"
-    //        );
-    //    }
+    #[test]
+    fn test_book_to_string() {
+        let bk1 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
+        assert_eq!(bk1.available_string(), "Available");
+
+        let bk2 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: Some(Borrower::new("Borrower1", 1)),
+        };
+        assert_eq!(bk2.available_string(), "Checked out to Borrower1");
+
+        assert_eq!(bk1.book_to_string(), "Title1 by Author1; Available");
+        assert_eq!(
+            bk2.book_to_string(),
+            "Title1 by Author1; Checked out to Borrower1"
+        );
+    }
 }
