@@ -15,9 +15,9 @@ pub fn remove_book<'a>(bk: &Book, mut bks: Vec<&'a Book>) -> Vec<&'a Book> {
     bks
 }
 
-pub fn find_item<'a, T>(tgt: &str, coll: Vec<&'a T>, f: &Fn(&'a T) -> &'a str) -> Option<&'a T> {
-    coll.into_iter().find(|&i| f(i) == tgt)
-}
+//pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&'a T>, f: &Fn(&'a T) -> &'a str) -> Option<&'a T> {
+//    coll.iter().find(|&&i| f(i) == tgt)
+//}
 
 ////fn shoes_in_my_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
 ////    shoes.into_iter()
@@ -88,6 +88,9 @@ mod tests {
 
         let fnd_br: Option<&Borrower> = find_item("Borrower1", brs, &Borrower::get_name);
         assert_eq!(fnd_br, Some(&br1));
+
+//        let fnd_br: Option<&Borrower> = find_item("Borrower1", brs, &Borrower::get_name);
+//        assert_eq!(fnd_br, Some(&br1));
 
         //
         //    //     let bk1 = Book {

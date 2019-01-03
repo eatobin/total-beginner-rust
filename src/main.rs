@@ -6,6 +6,7 @@ mod library;
 
 //use crate::book::Book;
 use crate::borrower::Borrower;
+use std::str;
 
 fn main() {
     // let mut noodles: String = "noodles".to_string();
@@ -138,6 +139,9 @@ fn main() {
     let jj = v.into_iter().filter(|&i| i % 2 == 0).collect::<Vec<_>>();
     println!("{:?}", jj);
     println!("{:?}", v);
+
+    let w = vec!["do", "the", "best"];
+    println!("{:?}", find_string(4, &w, &str::len));
 }
 
 fn fun_test(value: i32, f: &Fn(i32) -> i32) -> i32 {
@@ -153,22 +157,22 @@ fn is_br(br: &Borrower, f: &Fn(&Borrower) -> &str, target: &str) -> bool {
     f(br) == target
 }
 
-fn find_borrower<'a>(
-    tgt: &str,
-    coll: &'a mut Vec<Borrower>,
-    f: &Fn(&Borrower) -> &str,
-) -> Option<&'a mut Borrower> {
-    let mut coll_i = coll.into_iter();
-    let r = coll_i.find(|i| f(i) == tgt);
-    r
-}
-
-//fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a mut T> {
-//    let mut coll_i = coll.into_iter();
-//    let r = coll_i.find(|i| f(i) == tgt);
-//    r
+//fn find_borrower<'a>(
+//    tgt: &str,
+//    coll: &'a Vec<&'a Borrower>,
+//    f: &Fn(&'a Borrower) -> &'a str,
+//) -> Option<&'a Borrower> {
+//    let t: () = (coll.iter().find(|&&i| f(i) == tgt)).deref();
 //}
 
-fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
-    coll.iter().find(|&i| f(i) == tgt)
+fn find_string<'a>(tgt: usize, coll: &'a [&'a str], f: &Fn(&str) -> usize) -> Option<&'a&'a str> {
+    coll.iter().find(|&&i| f(i) == tgt)
 }
+
+//pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&'a T>, f: &Fn(&'a T) -> &'a str) -> Option<&'a T> {
+//    coll.iter().find(|&&i| f(i) == tgt)
+//}
+
+//fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
+//    coll.iter().find(|&i| f(i) == tgt)
+//}
