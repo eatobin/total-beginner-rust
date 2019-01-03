@@ -15,11 +15,7 @@ pub fn remove_book<'a>(bk: &Book, mut bks: Vec<&'a Book>) -> Vec<&'a Book> {
     bks
 }
 
-pub fn find_item<'a, T>(
-    tgt: &'a str,
-    coll: Vec<&'a T>,
-    f: &'a Fn(&'a T) -> &'a str,
-) -> Option<&'a T> {
+pub fn find_item<'a, T>(tgt: &str, coll: Vec<&'a T>, f: &Fn(&'a T) -> &'a str) -> Option<&'a T> {
     coll.into_iter().find(|&i| f(i) == tgt)
 }
 
