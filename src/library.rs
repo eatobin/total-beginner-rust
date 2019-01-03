@@ -10,11 +10,11 @@ pub fn add_item<'a, T: PartialEq>(x: &'a T, mut xs: Vec<&'a T>) -> Vec<&'a T> {
     }
 }
 
-//pub fn remove_book<'a>(bk: &Book, mut bks: Vec<&'a Book>) -> Vec<&'a Book> {
-//    bks.retain(|i| i != &bk);
-//    bks
-//}
-//
+pub fn remove_book<'a>(bk: &Book, mut bks: Vec<&'a Book>) -> Vec<&'a Book> {
+    bks.retain(|i| i != &bk);
+    bks
+}
+
 ////pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&'a T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
 ////    coll.iter().find(|&i| f(i) == tgt)
 ////}
@@ -41,7 +41,7 @@ mod tests {
         let mut brs: Vec<&Borrower> = Vec::new();
 
         brs = add_item(&br, brs);
-        assert_eq!(vec![&Borrower::new("Borrower1", 1), ], brs);
+        assert_eq!(vec![&Borrower::new("Borrower1", 1),], brs);
         assert_eq!(vec![&br], brs);
 
         let br_dup = Borrower::new("Borrower1", 1);
@@ -59,47 +59,23 @@ mod tests {
         bks = add_item(&bk_dup, bks);
         assert_eq!(vec![&bk], bks);
     }
-    //
-    //    #[test]
-    //    fn test_remove_book() {
-    //        let bk1 = Book {
-    //            title: "Title1".to_owned(),
-    //            author: "Author1".to_owned(),
-    //            borrower: None,
-    //        };
-    //        let bk2 = Book {
-    //            title: "Title2".to_owned(),
-    //            author: "Author2".to_owned(),
-    //            borrower: None,
-    //        };
-    //        let mut bks1: Vec<&Book> = vec![&bk1, &bk2];
-    //        bks1 = remove_book(
-    //            &Book {
-    //                title: "Title1".to_owned(),
-    //                author: "Author11".to_owned(),
-    //                borrower: None,
-    //            },
-    //            bks1,
-    //        );
-    //        let bk3 = &Book {
-    //            title: "Title2".to_owned(),
-    //            author: "Author2".to_owned(),
-    //            borrower: None,
-    //        };
-    //        let bks2 = vec![&bk3];
-    //        //        assert_eq!(bks1, bks2);
-    //
-    //        // bks1 = remove_book(
-    //        //     Book {
-    //        //         title: "Title1".to_owned(),
-    //        //         author: "Author1".to_owned(),
-    //        //         borrower: None,
-    //        //     },
-    //        //     bks1,
-    //        // );
-    //        // assert_eq!(bks1, bks2);
-    //    }
-    //
+
+    #[test]
+    fn test_remove_book() {
+        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let bk2 = Book::new("Title2", "Author2", None);
+        let mut bks1: Vec<&Book> = vec![&bk1, &bk2];
+        let bks2: Vec<&Book> = vec![&bk1, &bk2];
+
+        bks1 = remove_book(&Book::new("Title22", "Author2", None), bks1);
+        assert_eq!(bks1, bks2);
+
+        let bks2: Vec<&Book> = vec![&bk1];
+
+        bks1 = remove_book(&Book::new("Title2", "Author2", None), bks1);
+        assert_eq!(bks1, bks2);
+    }
+
     //    // #[test]
     //    // fn test_find_item() {
     //    //     let br1 = Borrower {
