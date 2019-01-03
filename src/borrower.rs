@@ -1,7 +1,7 @@
 #[derive(Debug, PartialEq)]
 pub struct Borrower {
-    pub name: String,
-    pub max_books: u8,
+    name: String,
+    max_books: u8,
 }
 
 impl Borrower {
@@ -12,12 +12,12 @@ impl Borrower {
         }
     }
 
-    //pub fn get_name(br: &Borrower) -> &str {
-    //    &(br.name)
-    //}
-
     pub fn get_name(&self) -> &str {
         &(self.name)
+    }
+
+    pub fn get_max_books(&self) -> u8 {
+        self.max_books
     }
 
     pub fn set_name(&mut self, name: &str) {
@@ -54,6 +54,15 @@ mod tests {
             max_books: 1,
         };
         assert_eq!(Borrower::get_name(&br), "Borrower1");
+    }
+
+    #[test]
+    fn test_get_max_books() {
+        let br = Borrower {
+            name: "Borrower1".to_owned(),
+            max_books: 1,
+        };
+        assert_eq!(Borrower::get_max_books(&br), 1);
     }
 
     #[test]

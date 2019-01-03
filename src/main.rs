@@ -1,11 +1,11 @@
 #![allow(unused)]
 
-use crate::book::Book;
-use crate::borrower::Borrower;
-
 mod book;
 mod borrower;
 mod library;
+
+//use crate::book::Book;
+use crate::borrower::Borrower;
 
 fn main() {
     // let mut noodles: String = "noodles".to_string();
@@ -24,25 +24,25 @@ fn main() {
     // word_list = library::add_item("bird".to_owned(), word_list);
     // println!("{:?}", word_list);
     // word_list = library::add_item("bird".to_owned(), word_list);
-    // println!("{:?}", word_list);
-
-    let br1 = Borrower {
-        name: String::from("Borrower1"),
-        max_books: 1,
-    };
-    let br2 = Borrower {
-        name: String::from("Borrower2"),
-        max_books: 2,
-    };
-    let br3 = Borrower {
-        name: String::from("Borrower3"),
-        max_books: 3,
-    };
-
-    let mut bl: Vec<Borrower> = Vec::new();
-    bl.push(br2);
-    bl.push(br3);
-    // println!("{:?}", bl);
+    //    // println!("{:?}", word_list);
+    //
+    //    let br1 = Borrower {
+    //        name: String::from("Borrower1"),
+    //        max_books: 1,
+    //    };
+    //    let br2 = Borrower {
+    //        name: String::from("Borrower2"),
+    //        max_books: 2,
+    //    };
+    //    let br3 = Borrower {
+    //        name: String::from("Borrower3"),
+    //        max_books: 3,
+    //    };
+    //
+    //    let mut bl: Vec<Borrower> = Vec::new();
+    //    bl.push(br2);
+    //    bl.push(br3);
+    //    // println!("{:?}", bl);
     // bl = library::add_item(br3, bl);
     // println!("{:?}", bl);
     // bl = library::add_item(Borrower::new("Borrower3", 3), bl);
@@ -70,34 +70,34 @@ fn main() {
     //        find_borrower("Borrower22", &mut bl, &Borrower::get_name)
     //    );
     //    println!("{:?}", find_item("Borrower2", &mut bl, &Borrower::get_name));
-
-    let bk1 = Book {
-        title: "Title1".to_owned(),
-        author: "Author1".to_owned(),
-        borrower: None,
-    };
-
-    let bk2 = Book {
-        title: "Title2".to_owned(),
-        author: "Author2".to_owned(),
-        borrower: None,
-    };
-
-    let mut bkl: Vec<Book> = Vec::new();
-    bkl.push(bk1);
-    bkl.push(bk2);
-
-    println!("{:?}", find_item("Title1", &mut bkl, &Book::get_title));
-    println!("{:?}", find_item("Title2", &mut bkl, &Book::get_title));
-    println!("{:?}", find_item("Title11", &mut bkl, &Book::get_title));
-    assert_eq!(
-        find_item("Title2", &mut bkl, &Book::get_title),
-        Some(&Book {
-            title: "Title2".to_owned(),
-            author: "Author2".to_owned(),
-            borrower: None,
-        })
-    );
+    //
+    //    let bk1 = Book {
+    //        title: "Title1".to_owned(),
+    //        author: "Author1".to_owned(),
+    //        borrower: None,
+    //    };
+    //
+    //    let bk2 = Book {
+    //        title: "Title2".to_owned(),
+    //        author: "Author2".to_owned(),
+    //        borrower: None,
+    //    };
+    //
+    //    let mut bkl: Vec<Book> = Vec::new();
+    //    bkl.push(bk1);
+    //    bkl.push(bk2);
+    //
+    //    println!("{:?}", find_item("Title1", &mut bkl, &Book::get_title));
+    //    println!("{:?}", find_item("Title2", &mut bkl, &Book::get_title));
+    //    println!("{:?}", find_item("Title11", &mut bkl, &Book::get_title));
+    //    assert_eq!(
+    //        find_item("Title2", &mut bkl, &Book::get_title),
+    //        Some(&Book {
+    //            title: "Title2".to_owned(),
+    //            author: "Author2".to_owned(),
+    //            borrower: None,
+    //        })
+    //    );
     // let vec2 = vec![4, 5, 6];
     // let mut into_iter = vec2.into_iter();
     // println!("Find 2 in vec2: {:?}", into_iter.find(|&x| x == 5));
