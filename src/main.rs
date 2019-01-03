@@ -188,11 +188,7 @@ fn find_string<'a>(tgt: usize, coll: &'a [&'a str], f: &Fn(&str) -> usize) -> Op
     coll.iter().find(|&&i| f(i) == tgt)
 }
 
-pub fn find_item<'a, T>(
-    tgt: &str,
-    coll: &'a Vec<&'a T>,
-    f: &Fn(&'a T) -> &'a str,
-) -> Option<&'a &'a T> {
+pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&T>, f: &Fn(&'a T) -> &str) -> Option<&'a &'a T> {
     coll.iter().find(|&&i| f(i) == tgt)
 }
 
