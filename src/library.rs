@@ -15,9 +15,9 @@ pub fn remove_book<'a>(bk: &Book, mut bks: Vec<&'a Book>) -> Vec<&'a Book> {
     bks
 }
 
-//pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&'a T>, f: &Fn(&'a T) -> &'a str) -> Option<&'a T> {
-//    coll.iter().find(|&&i| f(i) == tgt)
-//}
+pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&T>, f: &Fn(&'a T) -> &str) -> Option<&'a &'a T> {
+    coll.iter().find(|&&i| f(i) == tgt)
+}
 
 ////fn shoes_in_my_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
 ////    shoes.into_iter()
@@ -41,7 +41,7 @@ mod tests {
         let mut brs: Vec<&Borrower> = Vec::new();
 
         brs = add_item(&br, brs);
-        assert_eq!(vec![&Borrower::new("Borrower1", 1),], brs);
+        assert_eq!(vec![&Borrower::new("Borrower1", 1), ], brs);
         assert_eq!(vec![&br], brs);
 
         let br_dup = Borrower::new("Borrower1", 1);
@@ -86,8 +86,8 @@ mod tests {
         brs.push(&br2);
         assert_eq!(brs, vec![&br1, &br2]);
 
-        //        let fnd_br: Option<&Borrower> = find_item("Borrower1", brs, &Borrower::get_name);
-        //        assert_eq!(fnd_br, Some(&br1));
+        let fnd_br = find_item("Borrower1", &brs, &Borrower::get_name);
+        assert_eq!(fnd_br, Some(&&br1));
 
         //        let fnd_br: Option<&Borrower> = find_item("Borrower1", brs, &Borrower::get_name);
         //        assert_eq!(fnd_br, Some(&br1));
