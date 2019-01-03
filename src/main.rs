@@ -4,7 +4,7 @@ mod book;
 mod borrower;
 mod library;
 
-//use crate::book::Book;
+use crate::book::Book;
 use crate::borrower::Borrower;
 use std::str;
 
@@ -142,6 +142,23 @@ fn main() {
 
     let w = vec!["do", "the", "best"];
     println!("{:?}", find_string(4, &w, &str::len));
+
+    let br1 = Borrower::new("Borrower1", 1);
+    let br2 = Borrower::new("Borrower2", 2);
+    let mut brs: Vec<&Borrower> = Vec::new();
+    brs.push(&br1);
+    brs.push(&br2);
+    assert_eq!(brs, vec![&br1, &br2]);
+
+    println!("{:?}", find_item("Borrower2", &brs, &Borrower::get_name));
+
+    let bk1 = Book::new("Title1", "Author1", None);
+    let bk2 = Book::new("Title2", "Author2", None);
+    let mut bks: Vec<&Book> = Vec::new();
+    bks.push(&bk1);
+    bks.push(&bk2);
+
+    println!("{:?}", find_item("Title1", &bks, &Book::get_title));
 }
 
 fn fun_test(value: i32, f: &Fn(i32) -> i32) -> i32 {
@@ -165,13 +182,17 @@ fn is_br(br: &Borrower, f: &Fn(&Borrower) -> &str, target: &str) -> bool {
 //    let t: () = (coll.iter().find(|&&i| f(i) == tgt)).deref();
 //}
 
-fn find_string<'a>(tgt: usize, coll: &'a [&'a str], f: &Fn(&str) -> usize) -> Option<&'a&'a str> {
+fn find_string<'a>(tgt: usize, coll: &'a [&'a str], f: &Fn(&str) -> usize) -> Option<&'a &'a str> {
     coll.iter().find(|&&i| f(i) == tgt)
 }
 
-//pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&'a T>, f: &Fn(&'a T) -> &'a str) -> Option<&'a T> {
-//    coll.iter().find(|&&i| f(i) == tgt)
-//}
+pub fn find_item<'a, T>(
+    tgt: &str,
+    coll: &'a Vec<&'a T>,
+    f: &Fn(&'a T) -> &'a str,
+) -> Option<&'a &'a T> {
+    coll.iter().find(|&&i| f(i) == tgt)
+}
 
 //fn find_item<'a, T>(tgt: &str, coll: &'a mut Vec<T>, f: &Fn(&T) -> &str) -> Option<&'a T> {
 //    coll.iter().find(|&i| f(i) == tgt)

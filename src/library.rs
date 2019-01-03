@@ -86,11 +86,11 @@ mod tests {
         brs.push(&br2);
         assert_eq!(brs, vec![&br1, &br2]);
 
-        let fnd_br: Option<&Borrower> = find_item("Borrower1", brs, &Borrower::get_name);
-        assert_eq!(fnd_br, Some(&br1));
+        //        let fnd_br: Option<&Borrower> = find_item("Borrower1", brs, &Borrower::get_name);
+        //        assert_eq!(fnd_br, Some(&br1));
 
-//        let fnd_br: Option<&Borrower> = find_item("Borrower1", brs, &Borrower::get_name);
-//        assert_eq!(fnd_br, Some(&br1));
+        //        let fnd_br: Option<&Borrower> = find_item("Borrower1", brs, &Borrower::get_name);
+        //        assert_eq!(fnd_br, Some(&br1));
 
         //
         //    //     let bk1 = Book {
