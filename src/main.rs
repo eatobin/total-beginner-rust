@@ -151,6 +151,7 @@ fn main() {
     assert_eq!(brs, vec![&br1, &br2]);
 
     println!("{:?}", find_item("Borrower2", &brs, &Borrower::get_name));
+    println!("{:?}", find_item("Borrower22", &brs, &Borrower::get_name));
 
     let bk1 = Book::new("Title1", "Author1", None);
     let bk2 = Book::new("Title2", "Author2", None);
@@ -159,6 +160,7 @@ fn main() {
     bks.push(&bk2);
 
     println!("{:?}", find_item("Title1", &bks, &Book::get_title));
+    println!("{:?}", find_item("Title11", &bks, &Book::get_title));
 }
 
 fn fun_test(value: i32, f: &Fn(i32) -> i32) -> i32 {
