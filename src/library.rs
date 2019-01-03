@@ -19,17 +19,6 @@ pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&T>, f: &Fn(&'a T) -> &str) -> 
     coll.iter().find(|&&i| f(i) == tgt)
 }
 
-////fn shoes_in_my_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
-////    shoes.into_iter()
-////        .filter(|s| s.size == shoe_size)
-////        .collect()
-////}
-////
-//// pub fn get_books_for_borrower(br: Borrower, bks: Vec<&Book>) -> Vec<&Book> {
-////     bks.into_iter()
-////         .filter(|&i| i.borrower == Some(br))
-//// }
-
 #[cfg(test)]
 mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
