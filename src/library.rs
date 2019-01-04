@@ -1,15 +1,6 @@
 use crate::book::Book;
 use crate::borrower::Borrower;
 
-//pub fn add_item<'a, T: PartialEq>(x: &'a T, mut xs: Vec<&'a T>) -> Vec<&'a T> {
-//    if xs.contains(&x) {
-//        xs
-//    } else {
-//        xs.push(x);
-//        xs
-//    }
-//}
-
 pub fn add_item<T: PartialEq>(x: T, mut xs: Vec<T>) -> Vec<T> {
     if xs.contains(&x) {
         xs
@@ -19,7 +10,7 @@ pub fn add_item<T: PartialEq>(x: T, mut xs: Vec<T>) -> Vec<T> {
     }
 }
 
-pub fn remove_book<'a>(bk: &Book, mut bks: Vec<&'a Book>) -> Vec<&'a Book> {
+pub fn remove_book(bk: Book, mut bks: Vec<Book>) -> Vec<Book> {
     bks.retain(|i| i != &bk);
     bks
 }
@@ -60,15 +51,18 @@ mod tests {
     fn test_remove_book() {
         let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
         let bk2 = Book::new("Title2", "Author2", None);
-        let mut bks1: Vec<&Book> = vec![&bk1, &bk2];
-        let bks2: Vec<&Book> = vec![&bk1, &bk2];
+        let bk3 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let bk4 = Book::new("Title2", "Author2", None);
+        let bk5 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let mut bks1: Vec<Book> = vec![bk1, bk2];
+        let bks2: Vec<Book> = vec![bk3, bk4];
 
-        bks1 = remove_book(&Book::new("Title22", "Author2", None), bks1);
+        bks1 = remove_book(Book::new("Title22", "Author2", None), bks1);
         assert_eq!(bks1, bks2);
 
-        let bks2: Vec<&Book> = vec![&bk1];
+        let bks2: Vec<Book> = vec![bk5];
 
-        bks1 = remove_book(&Book::new("Title2", "Author2", None), bks1);
+        bks1 = remove_book(Book::new("Title2", "Author2", None), bks1);
         assert_eq!(bks1, bks2);
     }
 
