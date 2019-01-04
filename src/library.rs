@@ -1,7 +1,16 @@
 use crate::book::Book;
 use crate::borrower::Borrower;
 
-pub fn add_item<'a, T: PartialEq>(x: &'a T, mut xs: Vec<&'a T>) -> Vec<&'a T> {
+//pub fn add_item<'a, T: PartialEq>(x: &'a T, mut xs: Vec<&'a T>) -> Vec<&'a T> {
+//    if xs.contains(&x) {
+//        xs
+//    } else {
+//        xs.push(x);
+//        xs
+//    }
+//}
+
+pub fn add_item<T: PartialEq>(x: T, mut xs: Vec<T>) -> Vec<T> {
     if xs.contains(&x) {
         xs
     } else {
@@ -27,26 +36,24 @@ mod tests {
     #[test]
     fn test_add_item() {
         let br = Borrower::new("Borrower1", 1);
-        let mut brs: Vec<&Borrower> = Vec::new();
+        let mut brs: Vec<Borrower> = Vec::new();
 
-        brs = add_item(&br, brs);
-        assert_eq!(vec![&Borrower::new("Borrower1", 1),], brs);
-        assert_eq!(vec![&br], brs);
+        brs = add_item(br, brs);
+        assert_eq!(vec![Borrower::new("Borrower1", 1),], brs);
 
         let br_dup = Borrower::new("Borrower1", 1);
-        brs = add_item(&br_dup, brs);
-        assert_eq!(vec![&br], brs);
+        brs = add_item(br_dup, brs);
+        assert_eq!(vec![Borrower::new("Borrower1", 1),], brs);
 
         let bk = Book::new("Title1", "Author1", None);
-        let mut bks: Vec<&Book> = Vec::new();
+        let mut bks: Vec<Book> = Vec::new();
 
-        bks = add_item(&bk, bks);
-        assert_eq!(vec![&Book::new("Title1", "Author1", None)], bks);
-        assert_eq!(vec![&bk], bks);
+        bks = add_item(bk, bks);
+        assert_eq!(vec![Book::new("Title1", "Author1", None)], bks);
 
         let bk_dup = Book::new("Title1", "Author1", None);
-        bks = add_item(&bk_dup, bks);
-        assert_eq!(vec![&bk], bks);
+        bks = add_item(bk_dup, bks);
+        assert_eq!(vec![Book::new("Title1", "Author1", None)], bks);
     }
 
     #[test]
