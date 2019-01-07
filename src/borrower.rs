@@ -1,4 +1,6 @@
-#[derive(Debug, PartialEq)]
+use std::collections::HashSet;
+
+#[derive(Hash, Eq, PartialEq, Debug)]
 pub struct Borrower {
     name: String,
     max_books: u8,

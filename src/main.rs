@@ -6,7 +6,14 @@ mod library;
 
 use crate::book::Book;
 use crate::borrower::Borrower;
+use std::collections::HashSet;
 use std::str;
+
+#[derive(Hash, Eq, PartialEq, Debug)]
+struct Viking {
+    name: String,
+    power: usize,
+}
 
 fn main() {
     // let mut noodles: String = "noodles".to_string();
@@ -161,6 +168,50 @@ fn main() {
 
     println!("{:?}", find_item("Title1", &bks, &Book::get_title));
     println!("{:?}", find_item("Title11", &bks, &Book::get_title));
+
+    let mut vikings = HashSet::new();
+
+    vikings.insert(Viking {
+        name: "Einar".to_string(),
+        power: 9,
+    });
+    vikings.insert(Viking {
+        name: "Einar".to_string(),
+        power: 9,
+    });
+    vikings.insert(Viking {
+        name: "Olaf".to_string(),
+        power: 4,
+    });
+    vikings.insert(Viking {
+        name: "Harald".to_string(),
+        power: 8,
+    });
+
+    // Use derived implementation to print the vikings.
+    for x in &vikings {
+        println!("{:?}", x);
+    }
+
+    println!("{:?}", adder2(Viking {
+        name: "HaraldXX".to_string(),
+        power: 8,
+    }, vikings))
+}
+
+fn adder(x: Viking) -> HashSet<Viking> {
+    let mut vikings: HashSet<Viking> = HashSet::new();
+    vikings.insert(Viking {
+        name: "Eric".to_string(),
+        power: 9,
+    });
+    vikings.insert(x);
+    vikings
+}
+
+fn adder2(x: Viking, mut xs: HashSet<Viking>) -> HashSet<Viking> {
+    xs.insert(x);
+    xs
 }
 
 fn fun_test(value: i32, f: &Fn(i32) -> i32) -> i32 {
