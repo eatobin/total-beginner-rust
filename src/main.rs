@@ -152,22 +152,25 @@ fn main() {
 
     let br1 = Borrower::new("Borrower1", 1);
     let br2 = Borrower::new("Borrower2", 2);
-    let mut brs: Vec<&Borrower> = Vec::new();
-    brs.push(&br1);
-    brs.push(&br2);
-    assert_eq!(brs, vec![&br1, &br2]);
+    let mut brs: HashSet<Borrower> = HashSet::new();
+    brs.insert(br1);
+    brs.insert(br2);
 
-    println!("{:?}", find_item("Borrower2", &brs, &Borrower::get_name));
-    println!("{:?}", find_item("Borrower22", &brs, &Borrower::get_name));
+    println!("{:?}", find_borrower("Borrower1", &brs, &Borrower::get_name));
 
-    let bk1 = Book::new("Title1", "Author1", None);
-    let bk2 = Book::new("Title2", "Author2", None);
-    let mut bks: Vec<&Book> = Vec::new();
-    bks.push(&bk1);
-    bks.push(&bk2);
+//    assert_eq!(brs, vec![&br1, &br2]);
 
-    println!("{:?}", find_item("Title1", &bks, &Book::get_title));
-    println!("{:?}", find_item("Title11", &bks, &Book::get_title));
+//    println!("{:?}", find_item("Borrower2", &brs, &Borrower::get_name));
+//    println!("{:?}", find_item("Borrower22", &brs, &Borrower::get_name));
+//
+//    let bk1 = Book::new("Title1", "Author1", None);
+//    let bk2 = Book::new("Title2", "Author2", None);
+//    let mut bks: Vec<&Book> = Vec::new();
+//    bks.push(&bk1);
+//    bks.push(&bk2);
+//
+//    println!("{:?}", find_item("Title1", &bks, &Book::get_title));
+//    println!("{:?}", find_item("Title11", &bks, &Book::get_title));
 
     let mut vikings = HashSet::new();
 
@@ -227,13 +230,9 @@ fn is_br(br: &Borrower, f: &Fn(&Borrower) -> &str, target: &str) -> bool {
     f(br) == target
 }
 
-//fn find_borrower<'a>(
-//    tgt: &str,
-//    coll: &'a Vec<&'a Borrower>,
-//    f: &Fn(&'a Borrower) -> &'a str,
-//) -> Option<&'a Borrower> {
-//    let t: () = (coll.iter().find(|&&i| f(i) == tgt)).deref();
-//}
+pub fn find_borrower<'a>(name: &str, brs: &'a HashSet<Borrower>, f: &Fn(&'a Borrower) -> &str) -> Option<&'a Borrower> {
+    brs.iter().find(|&i| f(i) == name)
+}
 
 fn find_string<'a>(tgt: usize, coll: &'a [&'a str], f: &Fn(&str) -> usize) -> Option<&'a &'a str> {
     coll.iter().find(|&&i| f(i) == tgt)
