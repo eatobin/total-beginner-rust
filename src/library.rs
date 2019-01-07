@@ -2,30 +2,6 @@ use crate::book::Book;
 use crate::borrower::Borrower;
 use std::collections::HashSet;
 
-pub fn add_book(bk: Book, mut bks: HashSet<Book>) -> HashSet<Book> {
-    bks.insert(bk);
-    bks
-}
-
-pub fn add_item2<T>(x: T, mut xs: HashSet<T>) -> HashSet<T> where T: Eq, T: PartialEq {
-    xs.insert(x);
-    xs
-}
-
-//pub fn add_item<'a, T: PartialEq>(x: &'a T, mut xs: Vec<&'a T>) -> Vec<&'a T> {
-//    if xs.contains(&x) {
-//        xs
-//    } else {
-//        xs.push(x);
-//        xs
-//    }
-//}
-//
-//pub fn remove_book<'a>(bk: &Book, mut bks: Vec<&'a Book>) -> Vec<&'a Book> {
-//    bks.retain(|i| i != &bk);
-//    bks
-//}
-//
 //pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&T>, f: &Fn(&'a T) -> &str) -> Option<&'a &'a T> {
 //    coll.iter().find(|&&i| f(i) == tgt)
 //}
@@ -36,28 +12,18 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_add_item() {
-        let br = Borrower::new("Borrower1", 1);
+    fn test_insert_and_remove() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower1", 1);
+        let br3 = Borrower::new("Borrower1", 1);
+        let br4 = Borrower::new("Borrower1", 1);
         let mut brs: HashSet<Borrower> = HashSet::new();
 
-        //        brs = add_item(&br, brs);
-        //        assert_eq!(vec![&Borrower::new("Borrower1", 1),], brs);
-        //        assert_eq!(vec![&br], brs);
-        //
-        //        let br_dup = Borrower::new("Borrower1", 1);
-        //        brs = add_item(&br_dup, brs);
-        //        assert_eq!(vec![&br], brs);
-        //
-        //        let bk = Book::new("Title1", "Author1", None);
-        //        let mut bks: Vec<&Book> = Vec::new();
-        //
-        //        bks = add_item(&bk, bks);
-        //        assert_eq!(vec![&Book::new("Title1", "Author1", None)], bks);
-        //        assert_eq!(vec![&bk], bks);
-        //
-        //        let bk_dup = Book::new("Title1", "Author1", None);
-        //        bks = add_item(&bk_dup, bks);
-        //        assert_eq!(vec![&bk], bks);
+        assert_eq!(brs.insert(br1), true);
+        assert_eq!(brs.insert(br2), false);
+
+        assert_eq!(brs.remove(&br3), true);
+        assert_eq!(brs.remove(&br3), false);
     }
 
     //    #[test]
