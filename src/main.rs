@@ -158,6 +158,8 @@ fn main() {
 
     println!("{:?}", find_borrower("Borrower1", &brs, &Borrower::get_name));
 
+    println!("{:?}", brs.iter().find(|&br| br.get_name() == "Borrower1"));
+
 //    assert_eq!(brs, vec![&br1, &br2]);
 
 //    println!("{:?}", find_item("Borrower2", &brs, &Borrower::get_name));
@@ -230,7 +232,7 @@ fn is_br(br: &Borrower, f: &Fn(&Borrower) -> &str, target: &str) -> bool {
     f(br) == target
 }
 
-pub fn find_borrower<'a>(name: &str, brs: &'a HashSet<Borrower>, f: &Fn(&'a Borrower) -> &str) -> Option<&'a Borrower> {
+pub fn find_borrower<'a>(name: &str, mut brs: &'a HashSet<Borrower>, f: &Fn(&'a Borrower) -> &str) -> Option<&'a Borrower> {
     brs.iter().find(|&i| f(i) == name)
 }
 
