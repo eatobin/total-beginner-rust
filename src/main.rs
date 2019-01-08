@@ -156,23 +156,26 @@ fn main() {
     brs.insert(br1);
     brs.insert(br2);
 
-    println!("{:?}", find_borrower("Borrower1", &brs, &Borrower::get_name));
+    println!(
+        "{:?}",
+        find_borrower("Borrower1", &brs, &Borrower::get_name)
+    );
 
     println!("{:?}", brs.iter().find(|&br| br.get_name() == "Borrower1"));
 
-//    assert_eq!(brs, vec![&br1, &br2]);
+    //    assert_eq!(brs, vec![&br1, &br2]);
 
-//    println!("{:?}", find_item("Borrower2", &brs, &Borrower::get_name));
-//    println!("{:?}", find_item("Borrower22", &brs, &Borrower::get_name));
-//
-//    let bk1 = Book::new("Title1", "Author1", None);
-//    let bk2 = Book::new("Title2", "Author2", None);
-//    let mut bks: Vec<&Book> = Vec::new();
-//    bks.push(&bk1);
-//    bks.push(&bk2);
-//
-//    println!("{:?}", find_item("Title1", &bks, &Book::get_title));
-//    println!("{:?}", find_item("Title11", &bks, &Book::get_title));
+    //    println!("{:?}", find_item("Borrower2", &brs, &Borrower::get_name));
+    //    println!("{:?}", find_item("Borrower22", &brs, &Borrower::get_name));
+    //
+    //    let bk1 = Book::new("Title1", "Author1", None);
+    //    let bk2 = Book::new("Title2", "Author2", None);
+    //    let mut bks: Vec<&Book> = Vec::new();
+    //    bks.push(&bk1);
+    //    bks.push(&bk2);
+    //
+    //    println!("{:?}", find_item("Title1", &bks, &Book::get_title));
+    //    println!("{:?}", find_item("Title11", &bks, &Book::get_title));
 
     let mut vikings = HashSet::new();
 
@@ -198,10 +201,16 @@ fn main() {
         println!("{:?}", x);
     }
 
-    println!("{:?}", adder2(Viking {
-        name: "HaraldXX".to_string(),
-        power: 8,
-    }, vikings))
+    println!(
+        "{:?}",
+        adder2(
+            Viking {
+                name: "HaraldXX".to_string(),
+                power: 8,
+            },
+            vikings
+        )
+    )
 }
 
 fn adder(x: Viking) -> HashSet<Viking> {
@@ -232,7 +241,11 @@ fn is_br(br: &Borrower, f: &Fn(&Borrower) -> &str, target: &str) -> bool {
     f(br) == target
 }
 
-pub fn find_borrower<'a>(name: &str, mut brs: &'a HashSet<Borrower>, f: &Fn(&'a Borrower) -> &str) -> Option<&'a Borrower> {
+pub fn find_borrower<'a>(
+    name: &str,
+    mut brs: &'a HashSet<Borrower>,
+    f: &Fn(&'a Borrower) -> &str,
+) -> Option<&'a Borrower> {
     brs.iter().find(|&i| f(i) == name)
 }
 

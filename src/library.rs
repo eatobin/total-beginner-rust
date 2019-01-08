@@ -6,7 +6,11 @@ use std::collections::HashSet;
 //    coll.iter().find(|&&i| f(i) == tgt)
 //}
 
-pub fn find_borrower<'a>(name: &str, brs: &'a HashSet<Borrower>, f: &Fn(&'a Borrower) -> &str) -> Option<&'a Borrower> {
+pub fn find_borrower<'a>(
+    name: &str,
+    brs: &'a HashSet<Borrower>,
+    f: &Fn(&'a Borrower) -> &str,
+) -> Option<&'a Borrower> {
     brs.iter().find(|&i| f(i) == name)
 }
 
