@@ -1,6 +1,4 @@
-use std::collections::HashSet;
-
-#[derive(Hash, Eq, PartialEq, Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Borrower {
     name: String,
     max_books: u8,
@@ -44,7 +42,7 @@ mod tests {
     fn test_new_borrower() {
         let br = Borrower::new("Borrower1", 1);
         assert_eq!(Borrower::get_name(&br), "Borrower1");
-        assert_eq!(Borrower::get_max_books(&br), 1);
+        assert_eq!(Borrower::get_max_books(&br), 11);
     }
 
     #[test]
