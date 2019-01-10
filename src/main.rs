@@ -1,8 +1,8 @@
-//#![allow(unused)]
+#![allow(unused)]
 //
-//mod book;
-//mod borrower;
-//mod library;
+mod book;
+mod borrower;
+mod library;
 //
 //use crate::book::Book;
 //use crate::borrower::Borrower;
