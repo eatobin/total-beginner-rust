@@ -24,6 +24,10 @@ impl Book {
         self.title = title.to_owned()
     }
 
+    pub fn get_author(&self) -> &str {
+        &(self.author)
+    }
+
     pub fn set_author(&mut self, author: &str) {
         self.author = author.to_owned()
     }

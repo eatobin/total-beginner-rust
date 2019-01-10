@@ -2,17 +2,35 @@ use crate::book::Book;
 use crate::borrower::Borrower;
 use std::collections::HashSet;
 
-//pub fn find_item<'a, T>(tgt: &str, coll: &'a Vec<&T>, f: &Fn(&'a T) -> &str) -> Option<&'a &'a T> {
-//    coll.iter().find(|&&i| f(i) == tgt)
-//}
-
-pub fn find_borrower<'a>(
-    name: &str,
-    brs: &'a HashSet<Borrower>,
-    f: &Fn(&'a Borrower) -> &str,
-) -> Option<&'a Borrower> {
-    brs.iter().find(|&i| f(i) == name)
+pub struct Library {
+    borrowers: HashSet<Borrower>,
+    books: HashSet<Book>,
 }
+
+impl Library {
+    pub fn new() -> Self {
+        Library {
+            borrowers: HashSet::new(),
+            books: HashSet::new(),
+        }
+    }
+
+    pub fn add_borrower(&mut self, borrower: Borrower) -> bool {
+        self.borrowers.insert(borrower)
+    }
+
+    pub fn add_book(&mut self, book: Book) -> bool {
+        self.books.insert(book)
+    }
+}
+
+//pub fn find_borrower<'a>(
+//    name: &str,
+//    brs: &'a HashSet<Borrower>,
+//    f: &Fn(&'a Borrower) -> &str,
+//) -> Option<&'a Borrower> {
+//    brs.iter().find(|&i| f(i) == name)
+//}
 
 #[cfg(test)]
 mod tests {
@@ -20,18 +38,22 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_insert_and_remove() {
+    fn test_add_borrower_and_book() {
+        let mut lib = Library::new();
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower1", 1);
-        let br3 = Borrower::new("Borrower1", 1);
-        let br4 = Borrower::new("Borrower1", 1);
-        let mut brs: HashSet<Borrower> = HashSet::new();
+        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let bk2 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        //        let br2 = Borrower::new("Borrower1", 1);
+        //        let br3 = Borrower::new("Borrower1", 1);
+        //        let br4 = Borrower::new("Borrower1", 1);
+        //        let mut brs: HashSet<Borrower> = HashSet::new();
 
-        assert_eq!(brs.insert(br1), true);
-        assert_eq!(brs.insert(br2), false);
+        assert_eq!(lib.add_borrower(br1), true);
+        assert_eq!(lib.add_borrower(br2), false);
 
-        assert_eq!(brs.remove(&br3), true);
-        assert_eq!(brs.remove(&br3), false);
+        assert_eq!(lib.add_book(bk1), true);
+        assert_eq!(lib.add_book(bk2), false);
     }
 
     //    #[test]
