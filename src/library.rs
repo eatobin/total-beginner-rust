@@ -22,6 +22,14 @@ impl Library {
     pub fn add_book(&mut self, book: Book) -> bool {
         self.books.insert(book)
     }
+
+    // TODO add_item?
+
+    pub fn find_borrower(&self, name: &str) -> Option<&mut Borrower> {
+        self.borrowers
+            .iter_mut()
+            .find(|&br| Borrower::get_name(br) == name)
+    }
 }
 
 //pub fn find_borrower<'a>(
