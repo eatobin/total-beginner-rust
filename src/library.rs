@@ -58,7 +58,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_add_borrower_and_book() {
+    fn test_add_borrower_or_book() {
         let mut lib = Library::new();
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower1", 1);
