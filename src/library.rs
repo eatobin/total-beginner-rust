@@ -14,13 +14,13 @@ impl Library {
             books: Vec::new(),
         }
     }
-    // try this:
+
     pub fn get_borrowers(&self) -> &Vec<Borrower> {
         &(self.borrowers)
     }
 
-    pub fn get_books(&mut self) -> &mut Vec<Book> {
-        &mut (self.books)
+    pub fn get_books(&self) -> &Vec<Book> {
+        &(self.books)
     }
 
     pub fn add_borrower(&mut self, br: Borrower) {
