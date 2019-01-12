@@ -50,6 +50,8 @@ impl Library {
     }
 
     // TODO find_item?
+
+    pub fn get_books_for_borrower(&self, br: &Borrower)
 }
 
 #[cfg(test)]
