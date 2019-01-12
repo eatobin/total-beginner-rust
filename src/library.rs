@@ -51,9 +51,9 @@ impl Library {
 
     // TODO find_item?
 
-    pub fn get_books_for_borrower(&self, br: &Borrower) -> Vec<Book> {
+    pub fn get_books_for_borrower(&self, br: &Option<Borrower>) -> Vec<Book> {
         let mut bks_clone = self.books.clone();
-        bks_clone.retain(|bk| bk.get_borrower() == Some(br));
+        bks_clone.retain(|bk| bk.get_borrower() == br);
         bks_clone
     }
 }
@@ -117,5 +117,31 @@ mod tests {
 
         let fnd_bk = lib.find_book("Title11");
         assert_eq!(fnd_bk, None);
+    }
+
+    #[test]
+    fn test_find_books_for_borrower() {
+        let mut lib = Library::new();
+        let mut br1 = Borrower::new("Borrower1", 1);
+        let mut br2 = Borrower::new("Borrower2", 2);
+        let mut bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let mut bk2 = Book::new("Title2", "Author2", Some(Borrower::new("Borrower2", 2)));
+        let mut bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower2", 2)));
+        lib.add_borrower(br1);
+        lib.add_borrower(br2);
+        lib.add_book(bk1);
+        lib.add_book(bk2);
+        lib.add_book(bk3);
+
+        let br2_bks = vec![
+            Book::new("Title2", "Author2", Some(Borrower::new("Borrower2", 2))),
+            Book::new("Title3", "Author3", Some(Borrower::new("Borrower2", 2))),
+        ];
+        let some_fnd_bks = lib.get_books_for_borrower(&(Some(Borrower::new("Borrower2", 2))));
+        assert_eq!(br2_bks, some_fnd_bks);
+
+        let none_fnd_bks = lib.get_books_for_borrower(&(Some(Borrower::new("Borrower22", 2))));
+        let no_bks: Vec<Book> = vec![];
+        assert_eq!(no_bks, none_fnd_bks);
     }
 }
