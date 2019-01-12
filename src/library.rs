@@ -120,7 +120,7 @@ mod tests {
     }
 
     #[test]
-    fn test_find_books_for_borrower() {
+    fn test_get_books_for_borrower() {
         let mut lib = Library::new();
         let mut br1 = Borrower::new("Borrower1", 1);
         let mut br2 = Borrower::new("Borrower2", 2);
