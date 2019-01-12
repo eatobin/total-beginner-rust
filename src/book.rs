@@ -1,6 +1,6 @@
 use crate::borrower::Borrower;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Book {
     title: String,
     author: String,
@@ -26,6 +26,10 @@ impl Book {
 
     pub fn get_author(&self) -> &str {
         &(self.author)
+    }
+
+    pub fn get_borrower(&self) -> Option<&Borrower> {
+        self.borrower.as_ref()
     }
 
     pub fn set_author(&mut self, author: &str) {

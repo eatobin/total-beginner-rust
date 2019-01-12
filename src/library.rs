@@ -51,7 +51,11 @@ impl Library {
 
     // TODO find_item?
 
-    pub fn get_books_for_borrower(&self, br: &Borrower)
+    pub fn get_books_for_borrower(&self, br: &Borrower) -> Vec<Book> {
+        let mut bks_clone = self.books.clone();
+        bks_clone.retain(|bk| bk.get_borrower() == Some(br));
+        bks_clone
+    }
 }
 
 #[cfg(test)]
