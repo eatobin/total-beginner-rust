@@ -122,11 +122,11 @@ mod tests {
     #[test]
     fn test_get_books_for_borrower() {
         let mut lib = Library::new();
-        let mut br1 = Borrower::new("Borrower1", 1);
-        let mut br2 = Borrower::new("Borrower2", 2);
-        let mut bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
-        let mut bk2 = Book::new("Title2", "Author2", Some(Borrower::new("Borrower2", 2)));
-        let mut bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower2", 2)));
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let bk2 = Book::new("Title2", "Author2", Some(Borrower::new("Borrower2", 2)));
+        let bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower2", 2)));
         lib.add_borrower(br1);
         lib.add_borrower(br2);
         lib.add_book(bk1);
