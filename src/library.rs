@@ -148,4 +148,24 @@ mod tests {
         let none_fnd_bks = lib.num_books_out(&(Some(Borrower::new("Borrower22", 2))));
         assert_eq!(0, none_fnd_bks);
     }
+
+    #[test]
+    fn test_not_maxed_out() {
+        let mut lib = Library::new();
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        //        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower2", 2)));
+        let bk2 = Book::new("Title2", "Author2", Some(Borrower::new("Borrower2", 2)));
+        lib.add_borrower(br1);
+        lib.add_borrower(br2);
+        lib.add_book(bk1);
+        lib.add_book(bk2);
+
+        let not_maxed_br1 = lib.not_maxed_out(&(Some(Borrower::new("Borrower1", 1))));
+        assert_eq!(true, not_maxed_br1);
+
+        let not_maxed_br2 = lib.not_maxed_out(&(Some(Borrower::new("Borrower2", 2))));
+        assert_eq!(false, not_maxed_br2);
+    }
 }
