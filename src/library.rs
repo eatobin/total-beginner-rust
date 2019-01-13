@@ -35,8 +35,6 @@ impl Library {
         }
     }
 
-    // TODO add_item?
-
     pub fn find_borrower(&mut self, name: &str) -> Option<&mut Borrower> {
         self.borrowers
             .iter_mut()
@@ -48,8 +46,6 @@ impl Library {
             .iter_mut()
             .find(|bk| Book::get_title(bk) == title)
     }
-
-    // TODO find_item?
 
     fn num_books_out(&self, br: &Option<Borrower>) -> u8 {
         let mut count: u8 = 0;
