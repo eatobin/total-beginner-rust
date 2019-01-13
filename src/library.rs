@@ -56,6 +56,12 @@ impl Library {
         }
         count
     }
+
+    fn not_maxed_out(&self, br: &Option<Borrower>) -> bool {
+        let out = Library::num_books_out(&self, br);
+        let max = br.as_ref().unwrap().get_max_books();
+        out < max
+    }
 }
 
 #[cfg(test)]
