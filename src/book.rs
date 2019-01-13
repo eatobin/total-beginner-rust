@@ -1,6 +1,6 @@
 use crate::borrower::Borrower;
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq)]
 pub struct Book {
     title: String,
     author: String,
