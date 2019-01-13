@@ -35,9 +35,9 @@ impl Library {
         }
     }
 
-    pub fn find_borrower(&mut self, name: &str) -> Option<&mut Borrower> {
+    pub fn find_borrower(&self, name: &str) -> Option<&Borrower> {
         self.borrowers
-            .iter_mut()
+            .iter()
             .find(|br| Borrower::get_name(br) == name)
     }
 
@@ -47,21 +47,41 @@ impl Library {
             .find(|bk| Book::get_title(bk) == title)
     }
 
-    fn num_books_out(&self, br: &Option<Borrower>) -> u8 {
+    fn num_books_out(&self, br: &Borrower) -> u8 {
         let mut count: u8 = 0;
-        for nxt_br in &(self.books) {
-            if nxt_br.get_borrower() == br {
+        for nxt_bk in &(self.books) {
+            if nxt_bk.get_borrower().as_ref() == Some(br) {
                 count += 1;
             }
         }
         count
     }
 
-    fn not_maxed_out(&self, br: &Option<Borrower>) -> bool {
+    fn not_maxed_out(&self, br: &Borrower) -> bool {
         let out = Library::num_books_out(&self, br);
-        let max = br.as_ref().unwrap().get_max_books();
+        let max = br.get_max_books();
         out < max
     }
+
+    //fn not_maxed_out(&self, br: &Option<Borrower>) -> bool {
+    //    let out = Library::num_books_out(&self, br);
+    //    let max = br.as_ref().unwrap().get_max_books();
+    //    out < max
+    //}
+
+    fn book_not_out(bk: &Book) -> bool {
+        bk.get_borrower().is_none()
+    }
+
+    fn book_out(bk: &Book) -> bool {
+        bk.get_borrower().is_some()
+    }
+
+    //    pub fn check_in(&mut self, name: &str, title: &str) {
+    //        let mbk = Library::find_book(self, title);
+    //        let mbr = Library::find_borrower(self, name);
+    //        if mbk.is_some() && mbr.is_some() && Library::not_maxed_out(self, mbr) { }
+    //    }
 }
 
 #[cfg(test)]
@@ -106,7 +126,7 @@ mod tests {
 
         let fnd_br = lib.find_borrower("Borrower1");
 
-        assert_eq!(fnd_br, Some(&mut Borrower::new("Borrower1", 1)));
+        assert_eq!(fnd_br, Some(&Borrower::new("Borrower1", 1)));
 
         let fnd_br = lib.find_borrower("Borrower11");
         assert_eq!(fnd_br, None);
@@ -139,13 +159,13 @@ mod tests {
         lib.add_book(bk2);
         lib.add_book(bk3);
 
-        let fnd_num_bks_2 = lib.num_books_out(&(Some(Borrower::new("Borrower2", 2))));
+        let fnd_num_bks_2 = lib.num_books_out(&Borrower::new("Borrower2", 2));
         assert_eq!(2, fnd_num_bks_2);
 
-        let fnd_num_bks_1 = lib.num_books_out(&(Some(Borrower::new("Borrower1", 1))));
+        let fnd_num_bks_1 = lib.num_books_out(&Borrower::new("Borrower1", 1));
         assert_eq!(1, fnd_num_bks_1);
 
-        let none_fnd_bks = lib.num_books_out(&(Some(Borrower::new("Borrower22", 2))));
+        let none_fnd_bks = lib.num_books_out(&Borrower::new("Borrower22", 2));
         assert_eq!(0, none_fnd_bks);
     }
 
@@ -162,10 +182,10 @@ mod tests {
         lib.add_book(bk1);
         lib.add_book(bk2);
 
-        let not_maxed_br1 = lib.not_maxed_out(&(Some(Borrower::new("Borrower1", 1))));
+        let not_maxed_br1 = lib.not_maxed_out(&Borrower::new("Borrower1", 1));
         assert_eq!(true, not_maxed_br1);
 
-        let not_maxed_br2 = lib.not_maxed_out(&(Some(Borrower::new("Borrower2", 2))));
+        let not_maxed_br2 = lib.not_maxed_out(&Borrower::new("Borrower2", 2));
         assert_eq!(false, not_maxed_br2);
     }
 }
