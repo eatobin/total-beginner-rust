@@ -51,10 +51,14 @@ impl Library {
 
     // TODO find_item?
 
-    pub fn get_books_for_borrower(&self, br: &Option<Borrower>) -> Vec<Book> {
-        let mut bks_clone = self.books.clone();
-        bks_clone.retain(|bk| bk.get_borrower() == br);
-        bks_clone
+    fn num_books_out(&self, br: &Option<Borrower>) -> u8 {
+        let mut count: u8 = 0;
+        for nxt_br in &(self.books) {
+            if nxt_br.get_borrower() == br {
+                count += 1;
+            }
+        }
+        count
     }
 }
 
@@ -120,7 +124,7 @@ mod tests {
     }
 
     #[test]
-    fn test_get_books_for_borrower() {
+    fn test_num_books_out() {
         let mut lib = Library::new();
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
@@ -133,15 +137,13 @@ mod tests {
         lib.add_book(bk2);
         lib.add_book(bk3);
 
-        let br2_bks = vec![
-            Book::new("Title2", "Author2", Some(Borrower::new("Borrower2", 2))),
-            Book::new("Title3", "Author3", Some(Borrower::new("Borrower2", 2))),
-        ];
-        let some_fnd_bks = lib.get_books_for_borrower(&(Some(Borrower::new("Borrower2", 2))));
-        assert_eq!(br2_bks, some_fnd_bks);
+        let fnd_num_bks_2 = lib.num_books_out(&(Some(Borrower::new("Borrower2", 2))));
+        assert_eq!(2, fnd_num_bks_2);
 
-        let none_fnd_bks = lib.get_books_for_borrower(&(Some(Borrower::new("Borrower22", 2))));
-        let no_bks: Vec<Book> = vec![];
-        assert_eq!(no_bks, none_fnd_bks);
+        let fnd_num_bks_1 = lib.num_books_out(&(Some(Borrower::new("Borrower1", 1))));
+        assert_eq!(1, fnd_num_bks_1);
+
+        let none_fnd_bks = lib.num_books_out(&(Some(Borrower::new("Borrower22", 2))));
+        assert_eq!(0, none_fnd_bks);
     }
 }
