@@ -41,9 +41,9 @@ impl Library {
             .find(|br| Borrower::get_name(br) == name)
     }
 
-    pub fn find_book(&mut self, title: &str) -> Option<&mut Book> {
+    pub fn find_book(&self, title: &str) -> Option<&Book> {
         self.books
-            .iter_mut()
+            .iter()
             .find(|bk| Book::get_title(bk) == title)
     }
 
@@ -63,12 +63,6 @@ impl Library {
         out < max
     }
 
-    //fn not_maxed_out(&self, br: &Option<Borrower>) -> bool {
-    //    let out = Library::num_books_out(&self, br);
-    //    let max = br.as_ref().unwrap().get_max_books();
-    //    out < max
-    //}
-
     fn book_not_out(bk: &Book) -> bool {
         bk.get_borrower().is_none()
     }
@@ -77,11 +71,18 @@ impl Library {
         bk.get_borrower().is_some()
     }
 
-    //    pub fn check_in(&mut self, name: &str, title: &str) {
-    //        let mbk = Library::find_book(self, title);
-    //        let mbr = Library::find_borrower(self, name);
-    //        if mbk.is_some() && mbr.is_some() && Library::not_maxed_out(self, mbr) { }
-    //    }
+        pub fn check_in(self, name: &str, title: &str) -> Library {
+            let lib = self;
+            let mbr = lib.find_borrower(name);
+            let mbk = lib.find_book(title);
+//            let mbr = Library::find_borrower(&self, name);
+//            let mbk = Library::find_book(&self, title);
+//            if mbk.is_some() && mbr.is_some() && Library::not_maxed_out(self, mbr.unwrap()) && Library::book_not_out(mbk.unwrap()) { }
+            if mbr.is_some() && mbk.is_some() && lib.not_maxed_out(mbr.unwrap()) && Library::book_not_out(mbk.unwrap()) {
+                let new_book = Book{borrower: mbr, ..*mbk});
+                lib
+            }else { lib }
+        }
 }
 
 #[cfg(test)]
