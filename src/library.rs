@@ -117,9 +117,13 @@ mod tests {
         assert_eq!(brs.len(), 0);
         let brs = add_item(brs, br1);
         assert_eq!(brs.len(), 1);
+        let brs = add_item(brs, br2);
+        assert_eq!(brs.len(), 1);
 
         assert_eq!(bks.len(), 0);
         let bks = add_item(bks, bk1);
+        assert_eq!(bks.len(), 1);
+        let bks = add_item(bks, bk2);
         assert_eq!(bks.len(), 1);
     }
     //
