@@ -12,7 +12,7 @@ impl Book {
         Book {
             title: title.to_owned(),
             author: author.to_owned(),
-            borrower: borrower,
+            borrower,
         }
     }
 
