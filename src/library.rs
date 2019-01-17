@@ -16,8 +16,8 @@ pub fn remove_book(mut bks: Vec<Book>, bk: Book) -> Vec<Book> {
     bks
 }
 
-pub fn find_borrower(brs: Vec<Borrower>, name: &str) -> Option<Borrower> {
-    brs.into_iter().find(|br| Borrower::get_name(br) == name)
+pub fn find_borrower<'a>(brs: &'a Vec<Borrower>, name: &str) -> Option<&'a Borrower> {
+    brs.iter().find(|&br| Borrower::get_name(br) == name)
 }
 
 pub fn find_book(bks: Vec<Book>, title: &str) -> Option<Book> {
