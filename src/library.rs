@@ -20,8 +20,8 @@ pub fn find_borrower<'a>(brs: &'a Vec<Borrower>, name: &str) -> Option<&'a Borro
     brs.iter().find(|&br| Borrower::get_name(br) == name)
 }
 
-pub fn find_book<'a>(bks: &'a Vec<Book>, title: &str) -> Option<&'a Book> {
-    bks.iter().find(|bk| Book::get_title(bk) == title)
+pub fn find_book<'a>(bks: &'a mut Vec<Book>, title: &str) -> Option<&'a mut Book> {
+    bks.iter_mut().find(|bk| Book::get_title(bk) == title)
 }
 
 //#[derive(Debug)]
@@ -161,9 +161,9 @@ mod tests {
         let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
         let bk2 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
         let brs1: Vec<Borrower> = Vec::new();
-        let bks1: Vec<Book> = Vec::new();
+        let mut bks1: Vec<Book> = Vec::new();
         let brs2: Vec<Borrower> = Vec::new();
-        let bks2: Vec<Book> = Vec::new();
+        let mut bks2: Vec<Book> = Vec::new();
 
         assert_eq!(brs1.len(), 0);
         let brs1 = add_item(brs1, br1);
@@ -179,13 +179,13 @@ mod tests {
         assert_eq!(fnd_br, None);
 
         assert_eq!(bks1.len(), 0);
-        let bks1 = add_item(bks1, bk1);
+        let mut bks1 = add_item(bks1, bk1);
         assert_eq!(bks1.len(), 1);
 
-        let fnd_bk = find_book(&bks1, "Title1");
+        let fnd_bk = find_book(&mut bks1, "Title1");
         assert_eq!(
             fnd_bk,
-            Some(&Book::new(
+            Some(&mut Book::new(
                 "Title1",
                 "Author1",
                 Some(Borrower::new("Borrower1", 1))
@@ -193,10 +193,10 @@ mod tests {
         );
 
         assert_eq!(bks2.len(), 0);
-        let bks2 = add_item(bks2, bk2);
+        let mut bks2 = add_item(bks2, bk2);
         assert_eq!(bks2.len(), 1);
 
-        let fnd_bk = find_book(&bks2, "Title11");
+        let fnd_bk = find_book(&mut bks2, "Title11");
         assert_eq!(fnd_bk, None);
     }
     //
