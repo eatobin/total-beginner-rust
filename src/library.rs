@@ -24,6 +24,16 @@ pub fn find_book<'a>(bks: &'a mut Vec<Book>, title: &str) -> Option<&'a mut Book
     bks.iter_mut().find(|bk| Book::get_title(bk) == title)
 }
 
+fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> u8 {
+    let mut count: u8 = 0;
+    for nxt_bk in bks {
+        if nxt_bk.get_borrower().as_ref() == Some(br) {
+            count += 1;
+        }
+    }
+    count
+}
+
 //#[derive(Debug)]
 //pub struct Library {
 //    borrowers: Vec<Borrower>,
@@ -199,31 +209,33 @@ mod tests {
         let fnd_bk = find_book(&mut bks2, "Title11");
         assert_eq!(fnd_bk, None);
     }
-    //
-    //    #[test]
-    //    fn test_num_books_out() {
-    //        let mut lib = Library::new();
-    //        let br1 = Borrower::new("Borrower1", 1);
-    //        let br2 = Borrower::new("Borrower2", 2);
-    //        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
-    //        let bk2 = Book::new("Title2", "Author2", Some(Borrower::new("Borrower2", 2)));
-    //        let bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower2", 2)));
-    //        lib.add_borrower(br1);
-    //        lib.add_borrower(br2);
-    //        lib.add_book(bk1);
-    //        lib.add_book(bk2);
-    //        lib.add_book(bk3);
-    //
-    //        let fnd_num_bks_2 = lib.num_books_out(&Borrower::new("Borrower2", 2));
-    //        assert_eq!(2, fnd_num_bks_2);
-    //
-    //        let fnd_num_bks_1 = lib.num_books_out(&Borrower::new("Borrower1", 1));
-    //        assert_eq!(1, fnd_num_bks_1);
-    //
-    //        let none_fnd_bks = lib.num_books_out(&Borrower::new("Borrower22", 2));
-    //        assert_eq!(0, none_fnd_bks);
-    //    }
-    //
+
+    #[test]
+    fn test_num_books_out() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let bk2 = Book::new("Title2", "Author2", Some(Borrower::new("Borrower2", 2)));
+        let bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower2", 2)));
+        //            let brs1: Vec<Borrower> = Vec::new();
+        let bks1: Vec<Book> = Vec::new();
+        let bks1 = add_item(bks1, bk1);
+        let bks1 = add_item(bks1, bk2);
+        let bks1 = add_item(bks1, bk3);
+        assert_eq!(bks1.len(), 3);
+        //            let brs2: Vec<Borrower> = Vec::new();
+        //            let mut bks2: Vec<Book> = Vec::new();
+
+        let fnd_num_bks_2 = num_books_out(&bks1, &Borrower::new("Borrower2", 2));
+        assert_eq!(2, fnd_num_bks_2);
+
+        let fnd_num_bks_1 = num_books_out(&bks1, &Borrower::new("Borrower1", 1));
+        assert_eq!(1, fnd_num_bks_1);
+
+        let none_fnd_bks = num_books_out(&bks1, &Borrower::new("Borrower22", 2));
+        assert_eq!(0, none_fnd_bks);
+    }
+
     //    #[test]
     //    fn test_not_maxed_out() {
     //        let mut lib = Library::new();
