@@ -260,9 +260,12 @@ mod tests {
     #[test]
     fn test_not_maxed_out() {
         let sbr1 = Some(Borrower::new("Borrower1", 1));
+        let sbr2 = Some(Borrower::new("Borrower2", 2));
         let bk1 = Book::new("Title1", "Author1", &sbr1);
+        let bk2 = Book::new("Title1", "Author1", &sbr2);
         let bks1: Vec<Book> = Vec::new();
         let bks1 = add_item(bks1, bk1);
+        let bks1 = add_item(bks1, bk2);
 
         let not_maxed_br1 = not_maxed_out(&bks1, &Borrower::new("Borrower1", 1));
         assert_eq!(false, not_maxed_br1);
