@@ -20,12 +20,15 @@ impl Borrower {
         self.max_books
     }
 
-    pub fn set_name(&mut self, name: &str) {
-        self.name = name.to_owned()
+    pub fn set_name(self, name: &str) -> Self {
+        Self {
+            name: name.to_owned(),
+            ..self
+        }
     }
 
-    pub fn set_max_books(&mut self, mb: u8) {
-        self.max_books = mb
+    pub fn set_max_books(self, max_books: u8) -> Self {
+        Self { max_books, ..self }
     }
 
     pub fn borrower_to_string(&self) -> String {
@@ -47,23 +50,25 @@ mod tests {
 
     #[test]
     fn test_set_values() {
-        let mut br1 = Borrower {
+        let br1 = Borrower {
             name: "Borrower1".to_owned(),
             max_books: 1,
         };
-        br1.set_name("Borrower2");
         let br2 = Borrower {
             name: "Borrower2".to_owned(),
             max_books: 1,
         };
-        assert_eq!(br2, br1);
+        assert_eq!(br1.set_name("Borrower2"), br2);
 
-        br1.set_max_books(2);
+        let br1 = Borrower {
+            name: "Borrower1".to_owned(),
+            max_books: 1,
+        };
         let br2 = Borrower {
-            name: "Borrower2".to_owned(),
+            name: "Borrower1".to_owned(),
             max_books: 2,
         };
-        assert_eq!(br2, br1);
+        assert_eq!(br1.set_max_books(2), br2);
     }
 
     #[test]
