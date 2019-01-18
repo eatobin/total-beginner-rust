@@ -4,11 +4,11 @@ use crate::borrower::Borrower;
 pub struct Book<'a> {
     title: String,
     author: String,
-    borrower: &'a Option<Borrower>,
+    borrower: Option<&'a Borrower>,
 }
 
 impl<'a> Book<'a> {
-    pub fn new(title: &str, author: &str, borrower: &'a Option<Borrower>) -> Book<'a> {
+    pub fn new(title: &str, author: &str, borrower: Option<&'a Borrower>) -> Book<'a> {
         Book {
             title: title.to_owned(),
             author: author.to_owned(),
@@ -38,11 +38,11 @@ impl<'a> Book<'a> {
         }
     }
 
-    pub fn get_borrower(&self) -> &Option<Borrower> {
-        &(self.borrower)
+    pub fn get_borrower(&self) -> Option<&'a Borrower> {
+        (self.borrower)
     }
 
-    pub fn set_borrower(self, borrower: &'a Option<Borrower>) -> Self {
+    pub fn set_borrower(self, borrower: Option<&'a Borrower>) -> Self {
         Self { borrower, ..self }
     }
 
@@ -75,9 +75,9 @@ mod tests {
         let bk = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
-        assert_eq!(bk, Book::new("Title1", "Author1", &None));
+        assert_eq!(bk, Book::new("Title1", "Author1", None));
     }
 
     #[test]
@@ -85,7 +85,7 @@ mod tests {
         let bk = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
         assert_eq!(bk.get_title(), "Title1");
     }
@@ -95,67 +95,71 @@ mod tests {
         let bk1 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
         let bk2 = Book {
             title: "Title2".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
         assert_eq!(bk1.set_title("Title2"), bk2);
 
         let bk1 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author2".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
         assert_eq!(bk1.set_author("Author2"), bk2);
     }
 
     #[test]
     fn test_get_borrower() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(&br1);
         let bk1 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &Some(Borrower::new("Borrower1", 1)),
+            borrower: sbr1,
         };
-        assert_eq!(&(Some(Borrower::new("Borrower1", 1))), bk1.get_borrower());
+        assert_eq!((Some(&Borrower::new("Borrower1", 1))), bk1.get_borrower());
 
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
-        assert_eq!(&None, bk2.get_borrower());
+        assert_eq!(None, bk2.get_borrower());
 
         let bk1 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
+        let br1 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(&br1);
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &Some(Borrower::new("Borrower1", 1)),
+            borrower: sbr1,
         };
-        assert_eq!(bk1.set_borrower(&Some(Borrower::new("Borrower1", 1))), bk2);
+        assert_eq!(bk1.set_borrower(Some(&Borrower::new("Borrower1", 1))), bk2);
 
         let bk1 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
-        assert_eq!(bk1.set_borrower(&None), bk2);
+        assert_eq!(bk1.set_borrower(None), bk2);
     }
 
     #[test]
@@ -163,14 +167,16 @@ mod tests {
         let bk1 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &None,
+            borrower: None,
         };
         assert_eq!(bk1.available_string(), "Available");
 
+        let br1 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(&br1);
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
-            borrower: &Some(Borrower::new("Borrower1", 1)),
+            borrower: sbr1,
         };
         assert_eq!(bk2.available_string(), "Checked out to Borrower1");
 
