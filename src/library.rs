@@ -20,13 +20,13 @@ pub fn find_borrower<'a>(brs: &'a Vec<Borrower>, name: &str) -> Option<&'a Borro
     brs.iter().find(|&br| Borrower::get_name(br) == name)
 }
 
-//pub fn find_book<'a>(bks: &'a mut Vec<Book>, title: &str) -> Option<&'a mut Book> {
-//    bks.iter_mut().find(|bk| Book::get_title(bk) == title)
-//}
-
-pub fn find_book<'a>(bks: &'a Vec<Book>, title: &str) -> Option<&'a Book<'a>> {
-    bks.iter().find(|bk| Book::get_title(bk) == title)
+pub fn find_book<'a>(bks: &'a mut Vec<Book<'a>>, title: &str) -> Option<&'a mut Book<'a>> {
+    bks.iter_mut().find(|bk| Book::get_title(bk) == title)
 }
+
+//pub fn find_book<'a>(bks: &'a Vec<Book>, title: &str) -> Option<&'a Book<'a>> {
+//    bks.iter().find(|bk| Book::get_title(bk) == title)
+//}
 
 fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> u8 {
     let mut count: u8 = 0;
@@ -52,23 +52,23 @@ fn book_out(bk: &Book) -> bool {
     bk.get_borrower().is_some()
 }
 
-pub fn check_out<'a>(
-    bks: Vec<Book<'a>>,
-    brs: &Vec<Borrower>,
-    name: &str,
-    title: &str,
-) -> Vec<Book<'a>> {
-    let mbr = find_borrower(brs, name);
-    let mbk = find_book(&bks, title);
-    if (&mbr).is_some()
-        && (&mbk).is_some()
-        && not_maxed_out(&bks, (&mbr).unwrap())
-        && book_not_out((&mbk).unwrap())
-    {
-        //        let new_book = mbk.unwrap().set_borrower()
-    }
-    bks
-}
+//pub fn check_out<'a>(
+//    mut bks: Vec<Book<'a>>,
+//    brs: &Vec<Borrower>,
+//    name: &str,
+//    title: &str,
+//) -> Vec<Book<'a>> {
+//    let mbr = find_borrower(brs, name);
+//    let mbk = find_book(&mut bks, title);
+//    if (&mbr).is_some()
+//        && (&mbk).is_some()
+//        && not_maxed_out(&bks, (&mbr).unwrap())
+//        && book_not_out((&mbk).unwrap())
+//    {
+//        let new_book = mbk.unwrap().to_owned().set_borrower(mbr);
+//    }
+//    bks
+//}
 
 #[cfg(test)]
 mod tests {
