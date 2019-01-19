@@ -72,22 +72,25 @@ mod tests {
 
     #[test]
     fn test_new_book() {
-        let bk = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        assert_eq!(bk, Book::new("Title1", "Author1", None));
-    }
-
-    #[test]
-    fn test_get_title() {
-        let bk = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
+        let bk = Book::new("Title1", "Author1", None);
         assert_eq!(bk.get_title(), "Title1");
+        assert_eq!(bk.get_author(), "Author1");
+
+        let br1 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(&br1);
+        let bk1 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: sbr1,
+        };
+        assert_eq!((Some(&Borrower::new("Borrower1", 1))), bk1.get_borrower());
+
+        let bk2 = Book {
+            title: "Title1".to_owned(),
+            author: "Author1".to_owned(),
+            borrower: None,
+        };
+        assert_eq!(None, bk2.get_borrower());
     }
 
     #[test]
@@ -115,25 +118,6 @@ mod tests {
             borrower: None,
         };
         assert_eq!(bk1.set_author("Author2"), bk2);
-    }
-
-    #[test]
-    fn test_get_borrower() {
-        let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(&br1);
-        let bk1 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: sbr1,
-        };
-        assert_eq!((Some(&Borrower::new("Borrower1", 1))), bk1.get_borrower());
-
-        let bk2 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        assert_eq!(None, bk2.get_borrower());
 
         let bk1 = Book {
             title: "Title1".to_owned(),
