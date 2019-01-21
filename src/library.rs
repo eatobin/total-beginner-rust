@@ -159,33 +159,33 @@ mod tests {
         let sbr1 = Some(&br1);
         let sbr2 = Some(&br2);
         let mut bk1 = Book::new("Title1", "Author1", sbr1);
-        //        let bk2 = Book::new("Title1", "Author1", sbr2);
+        let mut bk2 = Book::new("Title1", "Author1", sbr2);
 
-        let bks1: Vec<&mut Book> = Vec::new();
-        //        let mut bks2: Vec<&mut Book> = Vec::new();
+        let mut bks1: Vec<&mut Book> = Vec::new();
+        let mut bks2: Vec<&mut Book> = Vec::new();
 
         assert_eq!(bks1.len(), 0);
-        //        let bks1 = add_item(bks1, &mut bk1);
-        //        assert_eq!(bks1.len(), 1);
+        let bks1 = add_book(bks1, &mut bk1);
+        assert_eq!(bks1.len(), 1);
 
-        //                    let fnd_bk = find_book(bks1, "Title1");
-        //    //        assert_eq!(
-        //    //            fnd_bk,
-        //    //            Some(&Book::new(
-        //    //                "Title1",
-        //    //                "Author1",
-        //    //                Some(&Borrower::new("Borrower1", 1))
-        //    //            ))
-        //    //        );
-        //    //
-        //    //        assert_eq!(bks2.len(), 0);
-        //    //        let mut bks2 = add_item(bks2, bk2);
-        //    //        assert_eq!(bks2.len(), 1);
-        //    //
-        //    //        let fnd_bk = find_book(&mut bks2, "Title11");
-        //    //        assert_eq!(fnd_bk, None);
+        let fnd_bk = find_book(bks1, "Title1");
+        assert_eq!(
+            fnd_bk,
+            Some(&mut Book::new(
+                "Title1",
+                "Author1",
+                Some(&Borrower::new("Borrower1", 1)),
+            ))
+        );
+
+        assert_eq!(bks2.len(), 0);
+        let mut bks2 = add_book(bks2, &mut bk2);
+        assert_eq!(bks2.len(), 1);
+
+        let fnd_bk = find_book(bks2, "Title11");
+        assert_eq!(fnd_bk, None);
     }
-    //
+
     //    //    #[test]
     //    //    fn test_num_books_out() {
     //    //        let sbr1 = Some(&Borrower::new("Borrower1", 1));
