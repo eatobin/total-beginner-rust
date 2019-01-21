@@ -20,13 +20,17 @@ pub fn find_borrower<'a>(brs: &'a Vec<Borrower>, name: &str) -> Option<&'a Borro
     brs.iter().find(|&br| Borrower::get_name(br) == name)
 }
 
-pub fn find_book<'a>(bks: &'a mut Vec<Book<'a>>, title: &str) -> Option<&'a mut Book<'a>> {
-    bks.iter_mut().find(|bk| Book::get_title(bk) == title)
-}
+//pub fn find_book<'a>(bks: &'a mut Vec<Book<'a>>, title: &str) -> Option<&'a mut Book<'a>> {
+//    bks.iter_mut().find(|bk| Book::get_title(bk) == title)
+//}
 
 //pub fn find_book<'a>(bks: &'a Vec<Book>, title: &str) -> Option<&'a Book<'a>> {
 //    bks.iter().find(|bk| Book::get_title(bk) == title)
 //}
+
+pub fn find_book<'a>(bks: Vec<Book<'a>>, title: &str) -> Option<Book<'a>> {
+    bks.into_iter().find(|&bk| Book::get_title(&bk) == title)
+}
 
 fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> u8 {
     let mut count: u8 = 0;
