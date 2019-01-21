@@ -17,7 +17,8 @@ where
 //}
 //
 pub fn find_borrower<'a>(brs: &'a Vec<Borrower>, name: &str) -> Option<&'a Borrower> {
-    brs.iter().find(|&br| Borrower::get_name(br) == name)
+	let mut iter = brs.iter();
+    iter().find(|&br| Borrower::get_name(br) == name)
 }
 
 //pub fn find_book<'a>(bks: &'a mut Vec<Book<'a>>, title: &str) -> Option<&'a mut Book<'a>> {
@@ -29,7 +30,8 @@ pub fn find_borrower<'a>(brs: &'a Vec<Borrower>, name: &str) -> Option<&'a Borro
 //}
 
 pub fn find_book<'a>(bks: Vec<Book<'a>>, title: &str) -> Option<Book<'a>> {
-    bks.into_iter().find(|&bk| Book::get_title(&bk) == title)
+	let mut into_iter = bks.into_iter();
+    into_iter().find(|&bk| Book::get_title(&bk) == title)
 }
 
 fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> u8 {
