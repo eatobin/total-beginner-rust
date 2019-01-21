@@ -1,11 +1,11 @@
 use crate::book::Book;
 use crate::borrower::Borrower;
 
-pub fn add_item<'a, T: PartialEq>(mut xs: Vec<&'a T>, x: &'a T) -> Vec<&'a T> {
-    if !xs.contains(&&x) {
-        xs.push(&x);
+pub fn add_borrower<'a>(mut brs: Vec<&'a Borrower>, br: &'a Borrower) -> Vec<&'a Borrower> {
+    if !brs.contains(&&br) {
+        brs.push(br);
     }
-    xs
+    brs
 }
 
 pub fn add_book<'a>(mut bks: Vec<&'a mut Book<'a>>, bk: &'a mut Book<'a>) -> Vec<&'a mut Book<'a>> {
@@ -93,9 +93,9 @@ mod tests {
         let mut brs: Vec<&Borrower> = Vec::new();
 
         assert_eq!(brs.len(), 0);
-        let brs = add_item(brs, &br1);
+        let brs = add_borrower(brs, &br1);
         assert_eq!(brs.len(), 1);
-        let brs = add_item(brs, &br2);
+        let brs = add_borrower(brs, &br2);
         assert_eq!(brs.len(), 1);
 
         let br1 = Borrower::new("Borrower1", 1);
@@ -143,14 +143,14 @@ mod tests {
         let brs2: Vec<&Borrower> = Vec::new();
 
         assert_eq!(brs1.len(), 0);
-        let brs1 = add_item(brs1, &br1);
+        let brs1 = add_borrower(brs1, &br1);
         assert_eq!(brs1.len(), 1);
 
         let fnd_br = find_borrower(brs1, "Borrower1");
         assert_eq!(fnd_br, Some(&Borrower::new("Borrower1", 1)));
 
         assert_eq!(brs2.len(), 0);
-        let brs2 = add_item(brs2, &br2);
+        let brs2 = add_borrower(brs2, &br2);
         assert_eq!(brs2.len(), 1);
         let fnd_br = find_borrower(brs2, "Borrower11");
         assert_eq!(fnd_br, None);
