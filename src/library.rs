@@ -16,13 +16,13 @@ pub fn add_book<'a>(mut bks: Vec<&'a mut Book<'a>>, bk: &'a mut Book<'a>) -> Vec
 }
 
 pub fn find_borrower<'a>(brs: Vec<&'a Borrower>, name: &str) -> Option<&'a Borrower> {
-    let mut brs_iter = brs.into_iter();
-    brs_iter.find(|br| Borrower::get_name(&br) == name)
+    let mut brs_into_iter = brs.into_iter();
+    brs_into_iter.find(|br| Borrower::get_name(&br) == name)
 }
 
 pub fn find_book<'a>(bks: Vec<&'a mut Book<'a>>, title: &str) -> Option<&'a mut Book<'a>> {
-    let mut bks_iter = bks.into_iter();
-    bks_iter.find(|bk| Book::get_title(bk) == title)
+    let mut bks_into_iter = bks.into_iter();
+    bks_into_iter.find(|bk| Book::get_title(bk) == title)
 }
 
 fn num_books_out<'a>(bks: Vec<&'a mut Book<'a>>, br: &'a Borrower) -> u8 {
