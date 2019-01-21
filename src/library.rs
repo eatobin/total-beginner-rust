@@ -15,11 +15,6 @@ pub fn add_book<'a>(mut bks: Vec<&'a mut Book<'a>>, bk: &'a mut Book<'a>) -> Vec
     bks
 }
 
-////pub fn remove_book(mut bks: Vec<Book>, bk: Book) -> Vec<Book> {
-////    bks.retain(|this| this != &bk);
-////    bks
-////}
-////
 pub fn find_borrower<'a>(brs: Vec<&'a Borrower>, name: &str) -> Option<&'a Borrower> {
     let mut brs_iter = brs.into_iter();
     brs_iter.find(|br| Borrower::get_name(&br) == name)
@@ -30,15 +25,6 @@ pub fn find_book<'a>(bks: Vec<&'a mut Book<'a>>, title: &str) -> Option<&'a mut 
     bks_iter.find(|bk| Book::get_title(bk) == title)
 }
 
-////pub fn find_book<'a>(bks: &'a Vec<Book>, title: &str) -> Option<&'a Book<'a>> {
-////    bks.iter().find(|bk| Book::get_title(bk) == title)
-////}
-//
-//pub fn find_book<'a>(bks: Vec<Book<'a>>, title: &str) -> Option<Book<'a>> {
-//	let mut into_iter = bks.into_iter();
-//    into_iter().find(|&bk| Book::get_title(&bk) == title)
-//}
-
 fn num_books_out<'a>(bks: Vec<&'a mut Book<'a>>, br: &'a Borrower) -> u8 {
     let mut count: u8 = 0;
     for nxt_bk in bks {
@@ -48,7 +34,7 @@ fn num_books_out<'a>(bks: Vec<&'a mut Book<'a>>, br: &'a Borrower) -> u8 {
     }
     count
 }
-//
+
 //fn not_maxed_out(bks: &Vec<Book>, br: &Borrower) -> bool {
 //    let out = num_books_out(bks, br);
 //    let max = br.get_max_books();
@@ -62,25 +48,25 @@ fn num_books_out<'a>(bks: Vec<&'a mut Book<'a>>, br: &'a Borrower) -> u8 {
 //fn book_out(bk: &Book) -> bool {
 //    bk.get_borrower().is_some()
 //}
-//
-////pub fn check_out<'a>(
-////    mut bks: Vec<Book<'a>>,
-////    brs: &Vec<Borrower>,
-////    name: &str,
-////    title: &str,
-////) -> Vec<Book<'a>> {
-////    let mbr = find_borrower(brs, name);
-////    let mbk = find_book(&mut bks, title);
-////    if (&mbr).is_some()
-////        && (&mbk).is_some()
-////        && not_maxed_out(&bks, (&mbr).unwrap())
-////        && book_not_out((&mbk).unwrap())
-////    {
-////        let new_book = mbk.unwrap().to_owned().set_borrower(mbr);
-////    }
-////    bks
-////}
-//
+
+//pub fn check_out<'a>(
+//    mut bks: Vec<Book<'a>>,
+//    brs: &Vec<Borrower>,
+//    name: &str,
+//    title: &str,
+//) -> Vec<Book<'a>> {
+//    let mbr = find_borrower(brs, name);
+//    let mbk = find_book(&mut bks, title);
+//    if (&mbr).is_some()
+//        && (&mbk).is_some()
+//        && not_maxed_out(&bks, (&mbr).unwrap())
+//        && book_not_out((&mbk).unwrap())
+//    {
+//        let new_book = mbk.unwrap().to_owned().set_borrower(mbr);
+//    }
+//    bks
+//}
+
 #[cfg(test)]
 mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
