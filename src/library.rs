@@ -41,13 +41,13 @@ fn not_maxed_out<'a>(bks: Vec<&'a mut Book<'a>>, br: &'a Borrower) -> bool {
     out < max
 }
 
-//fn book_not_out(bk: &Book) -> bool {
-//    bk.get_borrower().is_none()
-//}
-//
-//fn book_out(bk: &Book) -> bool {
-//    bk.get_borrower().is_some()
-//}
+fn book_not_out<'a>(bk: &'a Book) -> bool {
+    bk.get_borrower().is_none()
+}
+
+fn book_out<'a>(bk: &'a Book) -> bool {
+    bk.get_borrower().is_some()
+}
 
 //pub fn check_out<'a>(
 //    mut bks: Vec<Book<'a>>,
