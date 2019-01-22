@@ -77,6 +77,6 @@ mod tests {
             name: "Borrower1".to_owned(),
             max_books: 1,
         };
-        assert_eq!("Borrower1 (1 books)", br1.borrower_to_string());
+        assert_eq!(br1.borrower_to_string(), "Borrower1 (1 books)");
     }
 }

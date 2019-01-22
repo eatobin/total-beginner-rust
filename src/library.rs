@@ -189,7 +189,7 @@ mod tests {
         assert_eq!(bks1.len(), 3);
 
         let fnd_num_bks_2 = num_books_out(bks1, &Borrower::new("Borrower2", 2));
-        assert_eq!(2, fnd_num_bks_2);
+        assert_eq!(fnd_num_bks_2, 2);
 
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
@@ -206,7 +206,7 @@ mod tests {
         let bks1 = add_book(bks1, &mut bk3);
 
         let fnd_num_bks_1 = num_books_out(bks1, &Borrower::new("Borrower1", 1));
-        assert_eq!(1, fnd_num_bks_1);
+        assert_eq!(fnd_num_bks_1, 1);
 
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
@@ -223,7 +223,7 @@ mod tests {
         let bks1 = add_book(bks1, &mut bk3);
 
         let none_fnd_bks = num_books_out(bks1, &Borrower::new("Borrower22", 2));
-        assert_eq!(0, none_fnd_bks);
+        assert_eq!(none_fnd_bks, 0);
     }
 
     //    //    #[test]

@@ -83,14 +83,14 @@ mod tests {
             author: "Author1".to_owned(),
             borrower: sbr1,
         };
-        assert_eq!((Some(&Borrower::new("Borrower1", 1))), bk1.get_borrower());
+        assert_eq!(bk1.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
 
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
             borrower: None,
         };
-        assert_eq!(None, bk2.get_borrower());
+        assert_eq!(bk2.get_borrower(), None);
     }
 
     #[test]
