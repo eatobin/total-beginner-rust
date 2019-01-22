@@ -49,22 +49,18 @@ fn book_out<'a>(bk: &'a Book) -> bool {
     bk.get_borrower().is_some()
 }
 
-//pub fn check_out<'a>(
-//    mut bks: Vec<Book<'a>>,
-//    brs: &Vec<Borrower>,
-//    name: &str,
-//    title: &str,
-//) -> Vec<Book<'a>> {
+//pub fn check_out<'a>(brs: Vec<&'a Borrower>, bks: Vec<&'a mut Book<'a>>, name: &str, title: &str) {
 //    let mbr = find_borrower(brs, name);
-//    let mbk = find_book(&mut bks, title);
+//    let mbk = find_book(bks, title);
 //    if (&mbr).is_some()
 //        && (&mbk).is_some()
-//        && not_maxed_out(&bks, (&mbr).unwrap())
+//        && not_maxed_out(bks, (&mbr).unwrap())
 //        && book_not_out((&mbk).unwrap())
 //    {
-//        let new_book = mbk.unwrap().to_owned().set_borrower(mbr);
+//        //        let new_book = mbk.unwrap().to_owned().set_borrower(mbr);
+//        unimplemented!()
 //    }
-//    bks
+//    unimplemented!()
 //}
 
 #[cfg(test)]
