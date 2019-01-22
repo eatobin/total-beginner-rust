@@ -182,7 +182,7 @@ mod tests {
         let mut bk1 = Book::new("Title1", "Author1", sbr1);
         let mut bk2 = Book::new("Title2", "Author2", sbr2);
         let mut bk3 = Book::new("Title3", "Author3", sbr3);
-        let mut bks1: Vec<&mut Book> = Vec::new();
+        let bks1: Vec<&mut Book> = Vec::new();
         let bks1 = add_book(bks1, &mut bk1);
         let bks1 = add_book(bks1, &mut bk2);
         let bks1 = add_book(bks1, &mut bk3);
@@ -200,7 +200,7 @@ mod tests {
         let mut bk1 = Book::new("Title1", "Author1", sbr1);
         let mut bk2 = Book::new("Title2", "Author2", sbr2);
         let mut bk3 = Book::new("Title3", "Author3", sbr3);
-        let mut bks1: Vec<&mut Book> = Vec::new();
+        let bks1: Vec<&mut Book> = Vec::new();
         let bks1 = add_book(bks1, &mut bk1);
         let bks1 = add_book(bks1, &mut bk2);
         let bks1 = add_book(bks1, &mut bk3);
@@ -217,7 +217,7 @@ mod tests {
         let mut bk1 = Book::new("Title1", "Author1", sbr1);
         let mut bk2 = Book::new("Title2", "Author2", sbr2);
         let mut bk3 = Book::new("Title3", "Author3", sbr3);
-        let mut bks1: Vec<&mut Book> = Vec::new();
+        let bks1: Vec<&mut Book> = Vec::new();
         let bks1 = add_book(bks1, &mut bk1);
         let bks1 = add_book(bks1, &mut bk2);
         let bks1 = add_book(bks1, &mut bk3);
