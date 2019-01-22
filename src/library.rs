@@ -35,12 +35,12 @@ fn num_books_out<'a>(bks: Vec<&'a mut Book<'a>>, br: &'a Borrower) -> u8 {
     count
 }
 
-//fn not_maxed_out(bks: &Vec<Book>, br: &Borrower) -> bool {
-//    let out = num_books_out(bks, br);
-//    let max = br.get_max_books();
-//    out < max
-//}
-//
+fn not_maxed_out<'a>(bks: Vec<&'a mut Book<'a>>, br: &'a Borrower) -> bool {
+    let out = num_books_out(bks, br);
+    let max = br.get_max_books();
+    out < max
+}
+
 //fn book_not_out(bk: &Book) -> bool {
 //    bk.get_borrower().is_none()
 //}
@@ -226,20 +226,32 @@ mod tests {
         assert_eq!(none_fnd_bks, 0);
     }
 
-    //    //    #[test]
-    //    //    fn test_not_maxed_out() {
-    //    //        let sbr1 = Some(&Borrower::new("Borrower1", 1));
-    //    //        let sbr2 = Some(&Borrower::new("Borrower2", 2));
-    //    //        let bk1 = Book::new("Title1", "Author1", sbr1);
-    //    //        let bk2 = Book::new("Title1", "Author1", sbr2);
-    //    //        let bks1: Vec<Book> = Vec::new();
-    //    //        let bks1 = add_item(bks1, bk1);
-    //    //        let bks1 = add_item(bks1, bk2);
-    //    //
-    //    //        let not_maxed_br1 = not_maxed_out(&bks1, &Borrower::new("Borrower1", 1));
-    //    //        assert_eq!(false, not_maxed_br1);
-    //    //
-    //    //        let not_maxed_br2 = not_maxed_out(&bks1, &Borrower::new("Borrower2", 2));
-    //    //        assert_eq!(true, not_maxed_br2);
-    //    //    }
+    #[test]
+    fn test_not_maxed_out() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        let sbr1 = Some(&br1);
+        let sbr2 = Some(&br2);
+        let mut bk1 = Book::new("Title1", "Author1", sbr1);
+        let mut bk2 = Book::new("Title1", "Author1", sbr2);
+        let bks1: Vec<&mut Book> = Vec::new();
+        let bks1 = add_book(bks1, &mut bk1);
+        let bks1 = add_book(bks1, &mut bk2);
+
+        let not_maxed_br1 = not_maxed_out(bks1, &Borrower::new("Borrower1", 1));
+        assert_eq!(false, not_maxed_br1);
+
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        let sbr1 = Some(&br1);
+        let sbr2 = Some(&br2);
+        let mut bk1 = Book::new("Title1", "Author1", sbr1);
+        let mut bk2 = Book::new("Title1", "Author1", sbr2);
+        let bks1: Vec<&mut Book> = Vec::new();
+        let bks1 = add_book(bks1, &mut bk1);
+        let bks1 = add_book(bks1, &mut bk2);
+
+        let not_maxed_br2 = not_maxed_out(bks1, &Borrower::new("Borrower2", 2));
+        assert_eq!(true, not_maxed_br2);
+    }
 }
