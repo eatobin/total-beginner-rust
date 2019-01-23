@@ -1,14 +1,14 @@
 use crate::borrower::Borrower;
 
 #[derive(Debug, PartialEq)]
-pub struct Book<'a> {
+pub struct Book {
     title: String,
     author: String,
-    borrower: Option<&'a Borrower>,
+    borrower: Option<Borrower>,
 }
 
-impl<'a> Book<'a> {
-    pub fn new(title: &str, author: &str, borrower: Option<&'a Borrower>) -> Book<'a> {
+impl Book {
+    pub fn new(title: &str, author: &str, borrower: Option<Borrower>) -> Book {
         Book {
             title: title.to_owned(),
             author: author.to_owned(),
@@ -38,11 +38,11 @@ impl<'a> Book<'a> {
         }
     }
 
-    pub fn get_borrower(&self) -> Option<&'a Borrower> {
+    pub fn get_borrower(self) -> Option<Borrower> {
         (self.borrower)
     }
 
-    pub fn set_borrower(self, borrower: Option<&'a Borrower>) -> Self {
+    pub fn set_borrower(self, borrower: Option<Borrower>) -> Self {
         Self { borrower, ..self }
     }
 
@@ -77,13 +77,13 @@ mod tests {
         assert_eq!(bk.get_author(), "Author1");
 
         let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(&br1);
+        let sbr1 = Some(br1);
         let bk1 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
             borrower: sbr1,
         };
-        assert_eq!(bk1.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
+        assert_eq!(bk1.get_borrower(), (Some(Borrower::new("Borrower1", 1))));
 
         let bk2 = Book {
             title: "Title1".to_owned(),
@@ -125,13 +125,13 @@ mod tests {
             borrower: None,
         };
         let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(&br1);
+        let sbr1 = Some(br1);
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
             borrower: sbr1,
         };
-        assert_eq!(bk1.set_borrower(Some(&Borrower::new("Borrower1", 1))), bk2);
+        assert_eq!(bk1.set_borrower(Some(Borrower::new("Borrower1", 1))), bk2);
 
         let bk1 = Book {
             title: "Title1".to_owned(),
@@ -156,7 +156,7 @@ mod tests {
         assert_eq!(bk1.available_string(), "Available");
 
         let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(&br1);
+        let sbr1 = Some(br1);
         let bk2 = Book {
             title: "Title1".to_owned(),
             author: "Author1".to_owned(),
