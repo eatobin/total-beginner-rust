@@ -20,6 +20,11 @@ fn main() {
     // let oodles: &mut str = &mut noodles[1..];
     // oodles.make_ascii_uppercase();
     // println!("{}", oodles);
+    let myvec: Vec<String> = vec![String::from("hello"), String::from("world")];
+    let mut othervec: Vec<String> = Vec::new();
+
+    othervec.push(myvec.get(1).unwrap().to_string());
+    println!("{:?}", othervec);
 }
 //
 //    // let mut char_list = vec!['y', 'm', 'a', 'q'];
