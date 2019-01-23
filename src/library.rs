@@ -1,35 +1,35 @@
 use crate::book::Book;
 use crate::borrower::Borrower;
 
-pub fn add_borrower<'a>(mut brs: Vec<&'a Borrower>, br: &'a Borrower) -> Vec<&'a Borrower> {
-    if !brs.contains(&&br) {
+pub fn add_borrower(mut brs: Vec<Borrower>, br: Borrower) -> Vec<Borrower> {
+    if !brs.contains(&br) {
         brs.push(br);
     }
     brs
 }
 
-pub fn add_book<'a>(mut bks: Vec<&'a Book>, bk: &'a Book) -> Vec<&'a Book> {
-    if !bks.contains(&&bk) {
+pub fn add_book(mut bks: Vec<Book>, bk: Book) -> Vec<Book> {
+    if !bks.contains(&bk) {
         bks.push(bk);
     }
     bks
 }
 
-////pub fn find_borrower<'a>(brs: Vec<&'a Borrower>, name: &str) -> Option<&'a Borrower> {
-////    let mut brs_into_iter = brs.into_iter();
-////    brs_into_iter.find(|br| Borrower::get_name(br) == name)
-////}
-//
+pub fn find_borrower(brs: Vec<Borrower>, name: &str) -> Option<Borrower> {
+    let mut brs_into_iter = brs.into_iter();
+    brs_into_iter.find(|br| br.get_name() == name)
+}
+
 //pub fn find_borrower<'a>(brs: &'a Vec<&'a Borrower>, name: &str) -> Option<&'a &'a Borrower> {
 //    let mut brs_into_iter = brs.into_iter();
 //    brs_into_iter.find(|br| Borrower::get_name(br) == name)
 //}
-//
-////pub fn find_book<'a>(bks: Vec<&'a mut Book<'a>>, title: &str) -> Option<&'a mut Book<'a>> {
-////    let mut bks_into_iter = bks.into_iter();
-////    bks_into_iter.find(|bk| Book::get_title(bk) == title)
-////}
-//
+
+pub fn find_book(bks: Vec<Book>, title: &str) -> Option<Book> {
+    let mut bks_into_iter = bks.into_iter();
+    bks_into_iter.find(|bk| bk.get_title() == title)
+}
+
 //pub fn find_book<'a>(bks: &'a Vec<&'a mut Book<'a>>, title: &str) -> Option<&'a &'a mut Book<'a>> {
 //    let mut bks_into_iter = bks.into_iter();
 //    bks_into_iter.find(|bk| Book::get_title(bk) == title)
@@ -88,23 +88,23 @@ mod tests {
     fn test_add_borrower_or_book() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower1", 1);
-        let mut brs: Vec<&Borrower> = Vec::new();
+        let mut brs: Vec<Borrower> = Vec::new();
 
         assert_eq!(brs.len(), 0);
-        let brs = add_borrower(brs, &br1);
+        let brs = add_borrower(brs, br1);
         assert_eq!(brs.len(), 1);
-        let brs = add_borrower(brs, &br2);
+        let brs = add_borrower(brs, br2);
         assert_eq!(brs.len(), 1);
 
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower1", 1);
         let mut bk1 = Book::new("Title1", "Author1", Some(br1));
         let mut bk2 = Book::new("Title1", "Author1", Some(br2));
-        let mut bks: Vec<&Book> = Vec::new();
+        let mut bks: Vec<Book> = Vec::new();
         assert_eq!(bks.len(), 0);
-        let bks = add_book(bks, &bk1);
+        let bks = add_book(bks, bk1);
         assert_eq!(bks.len(), 1);
-        let bks = add_book(bks, &bk2);
+        let bks = add_book(bks, bk2);
         assert_eq!(bks.len(), 1);
     }
 
@@ -130,59 +130,61 @@ mod tests {
     //    //        let bks = remove_book(bks, bk4);
     //    //        assert_eq!(bks.len(), 1);
     //    //    }
-    //
-    //    #[test]
-    //    fn test_find_borrower_or_book() {
-    //        let br1 = Borrower::new("Borrower1", 1);
-    //        let br2 = Borrower::new("Borrower1", 1);
-    //
-    //        let brs1: Vec<&Borrower> = Vec::new();
-    //
-    //        let brs2: Vec<&Borrower> = Vec::new();
-    //
-    //        assert_eq!(brs1.len(), 0);
-    //        let brs1 = add_borrower(brs1, &br1);
-    //        assert_eq!(brs1.len(), 1);
-    //
-    //        let fnd_br = find_borrower(&brs1, "Borrower1");
-    //        assert_eq!(fnd_br, Some(&&Borrower::new("Borrower1", 1)));
-    //
-    //        assert_eq!(brs2.len(), 0);
-    //        let brs2 = add_borrower(brs2, &br2);
-    //        assert_eq!(brs2.len(), 1);
-    //        let fnd_br = find_borrower(&brs2, "Borrower11");
-    //        assert_eq!(fnd_br, None);
-    //
-    //        let sbr1 = Some(&br1);
-    //        let sbr2 = Some(&br2);
-    //        let mut bk1 = Book::new("Title1", "Author1", sbr1);
-    //        let mut bk2 = Book::new("Title1", "Author1", sbr2);
-    //
-    //        let mut bks1: Vec<&mut Book> = Vec::new();
-    //        let mut bks2: Vec<&mut Book> = Vec::new();
-    //
-    //        assert_eq!(bks1.len(), 0);
-    //        let bks1 = add_book(bks1, &mut bk1);
-    //        assert_eq!(bks1.len(), 1);
-    //
-    //        let fnd_bk = find_book(&bks1, "Title1");
-    //        assert_eq!(
-    //            fnd_bk,
-    //            Some(&&mut Book::new(
-    //                "Title1",
-    //                "Author1",
-    //                Some(&&Borrower::new("Borrower1", 1)),
-    //            ))
-    //        );
-    //
-    //        assert_eq!(bks2.len(), 0);
-    //        let mut bks2 = add_book(bks2, &mut bk2);
-    //        assert_eq!(bks2.len(), 1);
-    //
-    //        let fnd_bk = find_book(&bks2, "Title11");
-    //        assert_eq!(fnd_bk, None);
-    //    }
-    //
+
+    #[test]
+    fn test_find_borrower_or_book() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower1", 1);
+
+        let brs1: Vec<Borrower> = Vec::new();
+
+        let brs2: Vec<Borrower> = Vec::new();
+
+        assert_eq!(brs1.len(), 0);
+        let brs1 = add_borrower(brs1, br1);
+        assert_eq!(brs1.len(), 1);
+
+        let fnd_br = find_borrower(brs1, "Borrower1");
+        assert_eq!(fnd_br, Some(Borrower::new("Borrower1", 1)));
+
+        assert_eq!(brs2.len(), 0);
+        let brs2 = add_borrower(brs2, br2);
+        assert_eq!(brs2.len(), 1);
+        let fnd_br = find_borrower(brs2, "Borrower11");
+        assert_eq!(fnd_br, None);
+
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(br1);
+        let sbr2 = Some(br2);
+        let mut bk1 = Book::new("Title1", "Author1", sbr1);
+        let mut bk2 = Book::new("Title1", "Author1", sbr2);
+
+        let mut bks1: Vec<Book> = Vec::new();
+        let mut bks2: Vec<Book> = Vec::new();
+
+        assert_eq!(bks1.len(), 0);
+        let bks1 = add_book(bks1, bk1);
+        assert_eq!(bks1.len(), 1);
+
+        let fnd_bk = find_book(bks1, "Title1");
+        assert_eq!(
+            fnd_bk,
+            Some(Book::new(
+                "Title1",
+                "Author1",
+                Some(Borrower::new("Borrower1", 1)),
+            ))
+        );
+
+        assert_eq!(bks2.len(), 0);
+        let mut bks2 = add_book(bks2, bk2);
+        assert_eq!(bks2.len(), 1);
+
+        let fnd_bk = find_book(bks2, "Title11");
+        assert_eq!(fnd_bk, None);
+    }
+
     //    #[test]
     //    fn test_num_books_out() {
     //        let br1 = Borrower::new("Borrower1", 1);
