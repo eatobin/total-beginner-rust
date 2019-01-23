@@ -34,16 +34,16 @@ pub fn find_book(bks: Vec<Book>, title: &str) -> Option<Book> {
 //    let mut bks_into_iter = bks.into_iter();
 //    bks_into_iter.find(|bk| Book::get_title(bk) == title)
 //}
-//
-//fn num_books_out<'a>(bks: &'a Vec<&'a mut Book<'a>>, br: &'a Borrower) -> u8 {
-//    let mut count: u8 = 0;
-//    for nxt_bk in bks {
-//        if nxt_bk.get_borrower().as_ref() == Some(&br) {
-//            count += 1;
-//        }
-//    }
-//    count
-//}
+
+fn num_books_out<'a>(bks: &'a Vec<Book>, br: &'a Borrower) -> u8 {
+    let mut count: u8 = 0;
+    for nxt_bk in bks {
+        if nxt_bk.get_borrower().as_ref() == Some(&br) {
+            count += 1;
+        }
+    }
+    count
+}
 //
 //fn not_maxed_out<'a>(bks: &'a Vec<&'a mut Book<'a>>, br: &'a Borrower) -> bool {
 //    let out = num_books_out(&bks, br);
@@ -135,9 +135,7 @@ mod tests {
     fn test_find_borrower_or_book() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower1", 1);
-
         let brs1: Vec<Borrower> = Vec::new();
-
         let brs2: Vec<Borrower> = Vec::new();
 
         assert_eq!(brs1.len(), 0);
