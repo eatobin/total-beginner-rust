@@ -38,8 +38,12 @@ impl Book {
         }
     }
 
-    pub fn get_borrower(self) -> Option<Borrower> {
-        (self.borrower)
+    pub fn get_borrower(&self) -> Option<&Borrower> {
+        self.borrower.as_ref()
+    }
+
+    pub fn get_mut_borrower(&mut self) -> Option<&mut Borrower> {
+        self.borrower.as_mut()
     }
 
     pub fn set_borrower(self, borrower: Option<Borrower>) -> Self {
@@ -83,7 +87,7 @@ mod tests {
             author: "Author1".to_owned(),
             borrower: sbr1,
         };
-        assert_eq!(bk1.get_borrower(), (Some(Borrower::new("Borrower1", 1))));
+        assert_eq!(bk1.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
 
         let bk2 = Book {
             title: "Title1".to_owned(),
