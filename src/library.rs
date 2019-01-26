@@ -35,15 +35,15 @@ pub fn find_book(bks: Vec<Book>, title: &str) -> Option<Book> {
 //    bks_into_iter.find(|bk| Book::get_title(bk) == title)
 //}
 
-fn num_books_out<'a>(bks: &'a Vec<Book>, br: &'a Borrower) -> u8 {
-    let mut count: u8 = 0;
-    for nxt_bk in bks {
-        if nxt_bk.get_borrower().as_ref() == Some(&br) {
-            count += 1;
-        }
-    }
-    count
-}
+//fn num_books_out<'a>(bks: &'a Vec<Book>, br: &'a Borrower) -> u8 {
+//    let mut count: u8 = 0;
+//    for nxt_bk in bks {
+//        if nxt_bk.get_borrower().as_ref() == Some(&br) {
+//            count += 1;
+//        }
+//    }
+//    count
+//}
 //
 //fn not_maxed_out<'a>(bks: &'a Vec<&'a mut Book<'a>>, br: &'a Borrower) -> bool {
 //    let out = num_books_out(&bks, br);
