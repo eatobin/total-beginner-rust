@@ -67,16 +67,15 @@ pub fn check_out(
     let orig_brs = brs.clone();
     let orig_bks = bks.clone();
     let (mbr, brs) = find_borrower(brs, name);
-    let (mut mbk, bks) = find_book(bks, title);
+    let (mbk, bks) = find_book(bks, title);
     if mbr.is_some()
         && mbk.is_some()
         && not_maxed_out(&bks, &mbr.clone().unwrap())
         && book_not_out(&mbk.clone().unwrap())
     {
-        //        let br = mbr.unwrap().clone();
         let bk = mbk.clone().unwrap();
         let new_book = bk.clone().set_borrower(mbr);
-        let mut fewer_bks = remove_book(bks, bk);
+        let fewer_bks = remove_book(bks, bk);
         let new_bks = add_book(fewer_bks, new_book);
         (new_bks, orig_brs)
     } else {
