@@ -15,6 +15,11 @@ pub fn add_book(mut bks: Vec<Book>, bk: Book) -> Vec<Book> {
     bks
 }
 
+pub fn remove_book(mut bks: Vec<Book>, bk: Book) -> Vec<Book> {
+    bks.retain(|this_bk| this_bk != &bk);
+    bks
+}
+
 pub fn find_borrower(brs: Vec<Borrower>, name: &str) -> (Option<Borrower>, Vec<Borrower>) {
     let orig_brs = brs.clone();
     let mut brs_into_iter = brs.into_iter();
@@ -68,27 +73,16 @@ pub fn check_out(
         && not_maxed_out(&bks, &mbr.clone().unwrap())
         && book_not_out(&mbk.clone().unwrap())
     {
-//        let br = mbr.unwrap().clone();
+        //        let br = mbr.unwrap().clone();
         let bk = mbk.clone().unwrap();
-        let new_book = bk.set_borrower(mbr);
-        (orig_bks, orig_brs)
+        let new_book = bk.clone().set_borrower(mbr);
+        let mut fewer_bks = remove_book(bks, bk);
+        let new_bks = add_book(fewer_bks, new_book);
+        (new_bks, orig_brs)
     } else {
         (orig_bks, orig_brs)
     }
-    //    if &mbr.is_some()
-    //        && &mbk.is_some()
-    //        && not_maxed_out(&bks, &mbr.unwrap())
-    //        && book_not_out(&mbk.unwrap())
-    //    {
-    //        (orig_bks, orig_brs)
-    //    }
 }
-//        {
-////          let new_book = &(mbk.unwrap().to_owned().set_borrower(Some(mbr.unwrap())));
-//            let new_book = mbk.unwrap().set_borrower(Some(mbr.unwrap()));
-//            unimplemented!()
-//        }
-//    unimplemented!()
 
 #[cfg(test)]
 mod tests {
@@ -119,28 +113,28 @@ mod tests {
         assert_eq!(bks.len(), 1);
     }
 
-    //    //    #[test]
-    //    //    fn test_remove_book() {
-    //    //        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
-    //    //        let bk2 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
-    //    //        let bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower3", 3)));
-    //    //        let bk4 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
-    //    //        let mut bks: Vec<Book> = Vec::new();
-    //    //
-    //    //        assert_eq!(bks.len(), 0);
-    //    //        let bks = add_item(bks, bk1);
-    //    //        assert_eq!(bks.len(), 1);
-    //    //
-    //    //        let bks = remove_book(bks, bk2);
-    //    //        assert_eq!(bks.len(), 0);
-    //    //
-    //    //        assert_eq!(bks.len(), 0);
-    //    //        let bks = add_item(bks, bk3);
-    //    //        assert_eq!(bks.len(), 1);
-    //    //
-    //    //        let bks = remove_book(bks, bk4);
-    //    //        assert_eq!(bks.len(), 1);
-    //    //    }
+    #[test]
+    fn test_remove_book() {
+        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let bk2 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower3", 3)));
+        let bk4 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        let mut bks: Vec<Book> = Vec::new();
+
+        assert_eq!(bks.len(), 0);
+        let bks = add_book(bks, bk1);
+        assert_eq!(bks.len(), 1);
+
+        let bks = remove_book(bks, bk2);
+        assert_eq!(bks.len(), 0);
+
+        assert_eq!(bks.len(), 0);
+        let bks = add_book(bks, bk3);
+        assert_eq!(bks.len(), 1);
+
+        let bks = remove_book(bks, bk4);
+        assert_eq!(bks.len(), 1);
+    }
 
     #[test]
     fn test_find_borrower_or_book() {
