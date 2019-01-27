@@ -246,7 +246,7 @@ mod tests {
         let bks1 = add_book(bks1, bk2);
 
         let not_maxed_br1 = not_maxed_out(&bks1, &Borrower::new("Borrower1", 1));
-        assert_eq!(false, not_maxed_br1);
+        assert_eq!(not_maxed_br1, false);
 
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
@@ -259,6 +259,23 @@ mod tests {
         let bks1 = add_book(bks1, bk2);
 
         let not_maxed_br2 = not_maxed_out(&bks1, &Borrower::new("Borrower2", 2));
-        assert_eq!(true, not_maxed_br2);
+        assert_eq!(not_maxed_br2, true);
     }
+
+    #[test]
+    fn test_check_out() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(br1);
+        let bk1 = Book::new("Title1", "Author1", sbr1);
+        let bks1: Vec<Book> = Vec::new();
+        let bks1 = add_book(bks1, bk1);
+        let br1 = Borrower::new("Borrower1", 1);
+        let brs1: Vec<Borrower> = Vec::new();
+        let brs1 = add_borrower(brs1, br1);
+
+        // check-out-fail-checked-out-test
+        let (ret_bks, _) = check_out(brs1, bks1.clone(), "Borrower1", "Title1");
+        assert_eq!(ret_bks, bks1);
+    }
+
 }
