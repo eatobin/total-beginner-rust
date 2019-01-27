@@ -42,9 +42,9 @@ impl Book {
         self.borrower.as_ref()
     }
 
-    pub fn get_mut_borrower(&mut self) -> Option<&mut Borrower> {
-        self.borrower.as_mut()
-    }
+    //    pub fn get_mut_borrower(&mut self) -> Option<&mut Borrower> {
+    //        self.borrower.as_mut()
+    //    }
 
     pub fn set_borrower(self, borrower: Option<Borrower>) -> Self {
         Self { borrower, ..self }
