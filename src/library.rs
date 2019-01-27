@@ -45,34 +45,51 @@ fn not_maxed_out(bks: &Vec<Book>, br: &Borrower) -> bool {
     out < max
 }
 
-//fn book_not_out<'a>(bk: &'a Book) -> bool {
-//    bk.get_borrower().is_none()
-//}
-//
-//fn book_out<'a>(bk: &'a Book) -> bool {
-//    bk.get_borrower().is_some()
-//}
-//
-//pub fn check_out<'a>(
-//    brs: &'a Vec<&'a Borrower>,
-//    bks: &'a Vec<&'a mut Book<'a>>,
-//    name: &str,
-//    title: &str,
-//) -> &'a Vec<&'a mut Book<'a>> {
-//        let mbr = find_borrower(&brs, name);
-//        let mut mbk = find_book(&bks, title);
-//        if (&mbr).is_some()
-//            && (&mbk).is_some()
-//            && not_maxed_out(bks, (&mbr).unwrap())
-//            && book_not_out((&mbk).unwrap())
+fn book_not_out(bk: &Book) -> bool {
+    bk.get_borrower().is_none()
+}
+
+fn book_out(bk: &Book) -> bool {
+    bk.get_borrower().is_some()
+}
+
+pub fn check_out(
+    brs: Vec<Borrower>,
+    bks: Vec<Book>,
+    name: &str,
+    title: &str,
+) -> (Vec<Book>, Vec<Borrower>) {
+    let orig_brs = brs.clone();
+    let orig_bks = bks.clone();
+    let (mbr, brs) = find_borrower(brs, name);
+    let (mut mbk, bks) = find_book(bks, title);
+    if mbr.is_some()
+        && mbk.is_some()
+        && not_maxed_out(&bks, &mbr.clone().unwrap())
+        && book_not_out(&mbk.clone().unwrap())
+    {
+//        let br = mbr.unwrap().clone();
+        let bk = mbk.clone().unwrap();
+        let new_book = bk.set_borrower(mbr);
+        (orig_bks, orig_brs)
+    } else {
+        (orig_bks, orig_brs)
+    }
+    //    if &mbr.is_some()
+    //        && &mbk.is_some()
+    //        && not_maxed_out(&bks, &mbr.unwrap())
+    //        && book_not_out(&mbk.unwrap())
+    //    {
+    //        (orig_bks, orig_brs)
+    //    }
+}
 //        {
 ////          let new_book = &(mbk.unwrap().to_owned().set_borrower(Some(mbr.unwrap())));
 //            let new_book = mbk.unwrap().set_borrower(Some(mbr.unwrap()));
 //            unimplemented!()
 //        }
 //    unimplemented!()
-//}
-//
+
 #[cfg(test)]
 mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
