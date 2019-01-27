@@ -73,7 +73,7 @@ pub fn check_out(
         && not_maxed_out(&bks, &mbr.clone().unwrap())
         && book_not_out(&mbk.clone().unwrap())
     {
-        let bk = mbk.clone().unwrap();
+        let bk = mbk.unwrap();
         let new_book = bk.clone().set_borrower(mbr);
         let fewer_bks = remove_book(bks, bk);
         let new_bks = add_book(fewer_bks, new_book);
