@@ -42,41 +42,28 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_new_borrower() {
-        let br = Borrower::new("Borrower1", 1);
-        assert_eq!(Borrower::get_name(&br), "Borrower1");
-        assert_eq!(br.get_max_books(), 1);
-    }
+    fn test_borrower() {
+        let br1 = Borrower::new("Borrower1", 1);
 
-    #[test]
-    fn test_set_values() {
-        let br1 = Borrower {
-            name: "Borrower1".to_owned(),
-            max_books: 1,
-        };
+        // test construct
+        assert_eq!(Borrower::get_name(&br1), "Borrower1");
+        assert_eq!(br1.get_max_books(), 1);
+
+        // test set_name
         let br2 = Borrower {
             name: "Borrower2".to_owned(),
             max_books: 1,
         };
-        assert_eq!(br1.set_name("Borrower2"), br2);
+        assert_eq!(br1.clone().set_name("Borrower2"), br2);
 
-        let br1 = Borrower {
-            name: "Borrower1".to_owned(),
-            max_books: 1,
-        };
+        // test set max_books
         let br2 = Borrower {
             name: "Borrower1".to_owned(),
             max_books: 2,
         };
-        assert_eq!(br1.set_max_books(2), br2);
-    }
+        assert_eq!(br1.clone().set_max_books(2), br2);
 
-    #[test]
-    fn test_borrower_to_string() {
-        let br1 = Borrower {
-            name: "Borrower1".to_owned(),
-            max_books: 1,
-        };
+        // test to_string
         assert_eq!(br1.borrower_to_string(), "Borrower1 (1 books)");
     }
 }
