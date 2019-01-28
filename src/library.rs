@@ -273,6 +273,7 @@ mod tests {
         let bk1 = Book::new("Title1", "Author1", sbr1);
         let bk2 = Book::new("Title2", "Author2", None);
         let bk3 = Book::new("Title2", "Author2", sbr2);
+
         let bks1: Vec<Book> = Vec::new();
         let bks1 = add_book(bks1, bk1.clone());
         let bks1 = add_book(bks1, bk2.clone());
@@ -290,8 +291,8 @@ mod tests {
         assert_eq!(ret_bks, bks2);
 
         // check-out-fail-checked-out-test
-//        let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower1", "Title1");
-//        assert_eq!(ret_bks, bks1);
+        let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower2", "Title1");
+        assert_eq!(ret_bks, bks1);
 
         // check-out-fail-bad-book-test
 //        let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower1", "Title2");
