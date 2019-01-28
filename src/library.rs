@@ -280,11 +280,6 @@ mod tests {
         let bks2: Vec<Book> = Vec::new();
         let bks2 = add_book(bks2, bk1);
         let bks2 = add_book(bks2, bk3);
-        //        let br1 = Borrower::new("Borrower1", 1);
-
-        //        (deftest
-        //            (is (= bks1
-        //                (lib/check-out "Borrower2" "Title1" brs1 bks1))))
 
         // check-out-pass-test
         let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower2", "Title2");
@@ -298,5 +293,4 @@ mod tests {
         let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower2", "NoTitle");
         assert_eq!(ret_bks, bks1);
     }
-
 }
