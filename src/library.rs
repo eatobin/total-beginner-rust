@@ -296,5 +296,9 @@ mod tests {
         // check-out-fail-bad-borrower-test
         let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "NoName", "Title2");
         assert_eq!(ret_bks, bks1);
+
+        // check-out-fail-over-limit-test
+        let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower1", "Title2");
+        assert_eq!(ret_bks, bks1);
     }
 }
