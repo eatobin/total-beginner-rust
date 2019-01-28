@@ -64,7 +64,6 @@ pub fn check_out(
     name: &str,
     title: &str,
 ) -> (Vec<Book>, Vec<Borrower>) {
-    let orig_brs = brs.clone();
     let orig_bks = bks.clone();
     let (mbr, brs) = find_borrower(brs, name);
     let (mbk, bks) = find_book(bks, title);
@@ -77,9 +76,9 @@ pub fn check_out(
         let new_book = bk.clone().set_borrower(mbr);
         let fewer_bks = remove_book(bks, bk);
         let new_bks = add_book(fewer_bks, new_book);
-        (new_bks, orig_brs)
+        (new_bks, brs)
     } else {
-        (orig_bks, orig_brs)
+        (orig_bks, brs)
     }
 }
 
@@ -264,17 +263,39 @@ mod tests {
     #[test]
     fn test_check_out() {
         let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(br1);
-        let bk1 = Book::new("Title1", "Author1", sbr1);
-        let bks1: Vec<Book> = Vec::new();
-        let bks1 = add_book(bks1, bk1);
-        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
         let brs1: Vec<Borrower> = Vec::new();
-        let brs1 = add_borrower(brs1, br1);
+        let brs1 = add_borrower(brs1, br1.clone());
+        let brs1 = add_borrower(brs1, br2.clone());
+
+        let sbr1 = Some(br1);
+        let sbr2 = Some(br2);
+        let bk1 = Book::new("Title1", "Author1", sbr1);
+        let bk2 = Book::new("Title2", "Author2", None);
+        let bk3 = Book::new("Title2", "Author2", sbr2);
+        let bks1: Vec<Book> = Vec::new();
+        let bks1 = add_book(bks1, bk1.clone());
+        let bks1 = add_book(bks1, bk2.clone());
+        let bks2: Vec<Book> = Vec::new();
+        let bks2 = add_book(bks2, bk1);
+        let bks2 = add_book(bks2, bk3);
+        //        let br1 = Borrower::new("Borrower1", 1);
+
+        //        (deftest
+        //            (is (= bks1
+        //                (lib/check-out "Borrower2" "Title1" brs1 bks1))))
+
+        // check-out-pass-test
+        let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower2", "Title2");
+        assert_eq!(ret_bks, bks2);
 
         // check-out-fail-checked-out-test
-        let (ret_bks, _) = check_out(brs1, bks1.clone(), "Borrower1", "Title1");
-        assert_eq!(ret_bks, bks1);
+//        let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower1", "Title1");
+//        assert_eq!(ret_bks, bks1);
+
+        // check-out-fail-bad-book-test
+//        let (ret_bks, brs1) = check_out(brs1, bks1.clone(), "Borrower1", "Title2");
+//        assert_eq!(ret_bks, bks1);
     }
 
 }
