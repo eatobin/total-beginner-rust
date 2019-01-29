@@ -42,10 +42,6 @@ impl Book {
         self.borrower.as_ref()
     }
 
-    //    pub fn get_mut_borrower(&mut self) -> Option<&mut Borrower> {
-    //        self.borrower.as_mut()
-    //    }
-
     pub fn set_borrower(self, borrower: Option<Borrower>) -> Self {
         Self { borrower, ..self }
     }
@@ -75,97 +71,30 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_new_book() {
-        let bk = Book::new("Title1", "Author1", None);
-        assert_eq!(bk.get_title(), "Title1");
-        assert_eq!(bk.get_author(), "Author1");
-
+    fn test_book() {
+        // test construct
+        let bk1 = Book::new("Title1", "Author1", None);
+        assert_eq!(bk1.get_title(), "Title1");
+        assert_eq!(bk1.get_author(), "Author1");
         let br1 = Borrower::new("Borrower1", 1);
         let sbr1 = Some(br1);
-        let bk1 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: sbr1,
-        };
-        assert_eq!(bk1.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
+        let bk2 = Book::new("Title1", "Author1", sbr1);
+        assert_eq!(bk2.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
+        assert_eq!(bk1.get_borrower(), None);
 
-        let bk2 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        assert_eq!(bk2.get_borrower(), None);
-    }
+        // test set values
+        let bk3 = Book::new("Title2", "Author1", None);
+        assert_eq!(bk1.clone().set_title("Title2"), bk3);
+        let bk4 = Book::new("Title1", "Author2", None);
+        assert_eq!(bk1.clone().set_author("Author2"), bk4);
+        assert_eq!(
+            bk1.clone()
+                .set_borrower(Some(Borrower::new("Borrower1", 1))),
+            bk2
+        );
 
-    #[test]
-    fn test_set_values() {
-        let bk1 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        let bk2 = Book {
-            title: "Title2".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        assert_eq!(bk1.set_title("Title2"), bk2);
-
-        let bk1 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        let bk2 = Book {
-            title: "Title1".to_owned(),
-            author: "Author2".to_owned(),
-            borrower: None,
-        };
-        assert_eq!(bk1.set_author("Author2"), bk2);
-
-        let bk1 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(br1);
-        let bk2 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: sbr1,
-        };
-        assert_eq!(bk1.set_borrower(Some(Borrower::new("Borrower1", 1))), bk2);
-
-        let bk1 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        let bk2 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
-        assert_eq!(bk1.set_borrower(None), bk2);
-    }
-
-    #[test]
-    fn test_book_to_string() {
-        let bk1 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: None,
-        };
+        // test to_string
         assert_eq!(bk1.available_string(), "Available");
-
-        let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(br1);
-        let bk2 = Book {
-            title: "Title1".to_owned(),
-            author: "Author1".to_owned(),
-            borrower: sbr1,
-        };
         assert_eq!(bk2.available_string(), "Checked out to Borrower1");
 
         assert_eq!(bk1.book_to_string(), "Title1 by Author1; Available");
