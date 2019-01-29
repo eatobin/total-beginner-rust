@@ -105,33 +105,27 @@ mod tests {
         let bk2 = Book::new("Title1", "Author1", Some(br2));
         let mut bks1: Vec<Book> = Vec::new();
         assert_eq!(bks1.len(), 0);
-        let bks1 = add_book(bks1, bk1);
+        let bks1 = add_book(bks1, bk1.clone());
         assert_eq!(bks1.len(), 1);
-        let bks1 = add_book(bks1, bk2);
+        let bks1 = add_book(bks1, bk2.clone());
         assert_eq!(bks1.len(), 1);
-    }
 
-    #[test]
-    fn test_remove_book() {
-        let bk1 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
-        let bk2 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
+        // remove book
         let bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower3", 3)));
         let bk4 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
-        let mut bks: Vec<Book> = Vec::new();
+        let mut bks1: Vec<Book> = Vec::new();
 
-        assert_eq!(bks.len(), 0);
-        let bks = add_book(bks, bk1);
-        assert_eq!(bks.len(), 1);
+        assert_eq!(bks1.len(), 0);
+        let bks1 = add_book(bks1, bk1.clone());
+        assert_eq!(bks1.len(), 1);
+        let bks1 = remove_book(bks1.clone(), bk2);
+        assert_eq!(bks1.len(), 0);
 
-        let bks = remove_book(bks, bk2);
-        assert_eq!(bks.len(), 0);
+        let bks1 = add_book(bks1, bk3);
+        assert_eq!(bks1.len(), 1);
 
-        assert_eq!(bks.len(), 0);
-        let bks = add_book(bks, bk3);
-        assert_eq!(bks.len(), 1);
-
-        let bks = remove_book(bks, bk4);
-        assert_eq!(bks.len(), 1);
+        let bks1 = remove_book(bks1, bk4);
+        assert_eq!(bks1.len(), 1);
     }
 
     #[test]
