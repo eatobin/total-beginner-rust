@@ -88,27 +88,27 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_add_borrower_or_book() {
+    fn test_library() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower1", 1);
-        let mut brs: Vec<Borrower> = Vec::new();
+        let mut brs1: Vec<Borrower> = Vec::new();
 
-        assert_eq!(brs.len(), 0);
-        let brs = add_borrower(brs, br1);
-        assert_eq!(brs.len(), 1);
-        let brs = add_borrower(brs, br2);
-        assert_eq!(brs.len(), 1);
+        // add borrower
+        assert_eq!(brs1.len(), 0);
+        let brs1 = add_borrower(brs1.clone(), br1.clone());
+        assert_eq!(brs1.len(), 1);
+        let brs1 = add_borrower(brs1, br2.clone());
+        assert_eq!(brs1.len(), 1);
 
-        let br1 = Borrower::new("Borrower1", 1);
-        let br2 = Borrower::new("Borrower1", 1);
-        let mut bk1 = Book::new("Title1", "Author1", Some(br1));
-        let mut bk2 = Book::new("Title1", "Author1", Some(br2));
-        let mut bks: Vec<Book> = Vec::new();
-        assert_eq!(bks.len(), 0);
-        let bks = add_book(bks, bk1);
-        assert_eq!(bks.len(), 1);
-        let bks = add_book(bks, bk2);
-        assert_eq!(bks.len(), 1);
+        // add book
+        let bk1 = Book::new("Title1", "Author1", Some(br1));
+        let bk2 = Book::new("Title1", "Author1", Some(br2));
+        let mut bks1: Vec<Book> = Vec::new();
+        assert_eq!(bks1.len(), 0);
+        let bks1 = add_book(bks1, bk1);
+        assert_eq!(bks1.len(), 1);
+        let bks1 = add_book(bks1, bk2);
+        assert_eq!(bks1.len(), 1);
     }
 
     #[test]
