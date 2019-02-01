@@ -126,48 +126,25 @@ mod tests {
 
         let bks1 = remove_book(bks1, bk4);
         assert_eq!(bks1.len(), 1);
-    }
 
-    #[test]
-    fn test_find_borrower_or_book() {
-        let br1 = Borrower::new("Borrower1", 1);
-        let brs1: Vec<Borrower> = Vec::new();
-
-        assert_eq!(brs1.len(), 0);
-        let brs1 = add_borrower(brs1, br1);
-        assert_eq!(brs1.len(), 1);
-
+        // find borrower
         let (fnd_br, brs1) = find_borrower(brs1, "Borrower1");
         assert_eq!(fnd_br, Some(Borrower::new("Borrower1", 1)));
-        assert_eq!(brs1.len(), 1);
-
         let (fnd_br, brs1) = find_borrower(brs1, "Borrower11");
         assert_eq!(fnd_br, None);
-        assert_eq!(brs1.len(), 1);
 
-        let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(br1);
-        let bk1 = Book::new("Title1", "Author1", sbr1);
-        let bks1: Vec<Book> = Vec::new();
-
-        assert_eq!(bks1.len(), 0);
-        let bks1 = add_book(bks1, bk1);
-        assert_eq!(bks1.len(), 1);
-
-        let (fnd_bk, bks1) = find_book(bks1, "Title1");
+        // find book
+        let (fnd_bk, bks1) = find_book(bks1, "Title3");
         assert_eq!(
             fnd_bk,
             Some(Book::new(
-                "Title1",
-                "Author1",
-                Some(Borrower::new("Borrower1", 1)),
+                "Title3",
+                "Author3",
+                Some(Borrower::new("Borrower3", 3)),
             ))
         );
-        assert_eq!(bks1.len(), 1);
-
         let (fnd_bk, bks1) = find_book(bks1, "Title11");
         assert_eq!(fnd_bk, None);
-        assert_eq!(bks1.len(), 1);
     }
 
     #[test]
