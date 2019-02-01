@@ -34,7 +34,7 @@ pub fn find_book(bks: Vec<Book>, title: &str) -> (Option<Book>, Vec<Book>) {
     (mbk, orig_bks)
 }
 
-fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> u8 {
+fn num_books_out(bks: &[Book], br: &Borrower) -> u8 {
     let mut count: u8 = 0;
     for bk in bks {
         if bk.get_borrower() == Some(br) {
@@ -44,7 +44,7 @@ fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> u8 {
     count
 }
 
-fn not_maxed_out(bks: &Vec<Book>, br: &Borrower) -> bool {
+fn not_maxed_out(bks: &[Book], br: &Borrower) -> bool {
     let out = num_books_out(&bks, br);
     let max = br.get_max_books();
     out < max
@@ -79,6 +79,21 @@ pub fn check_out(
         (new_bks, brs)
     } else {
         (orig_bks, brs)
+    }
+}
+
+pub fn check_in(bks: Vec<Book>, title: &str) -> Vec<Book> {
+    let orig_bks = bks.clone();
+    let (mbk, bks) = find_book(bks, title);
+    if mbk.is_some() && book_out(&mbk.clone().unwrap()) {
+        let bk = mbk.unwrap();
+        let new_book = bk.clone().set_borrower(None);
+        let fewer_bks = remove_book(bks, bk);
+        //        let new_bks = add_book(fewer_bks, new_book);
+        //        new_bks
+        add_book(fewer_bks, new_book)
+    } else {
+        orig_bks
     }
 }
 

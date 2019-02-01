@@ -23,7 +23,7 @@ fn main() {
     let myvec: Vec<String> = vec![String::from("hello"), String::from("world")];
     let mut othervec: Vec<String> = Vec::new();
 
-    othervec.push(myvec.get(1).unwrap().to_string());
+    othervec.push(myvec[1].to_string());
     println!("{:?}", othervec);
 }
 //
