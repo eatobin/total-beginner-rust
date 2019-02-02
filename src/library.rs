@@ -41,20 +41,15 @@ impl Library {
         self.books.retain(|this_bk| this_bk != &bk);
         self
     }
+
+    pub fn find_borrower(self, name: &str) -> (Option<Borrower>, Self) {
+        let orig_lib = self.clone();
+        let mut brs_into_iter = self.borrowers.into_iter();
+        let mbr = brs_into_iter.find(|br| br.get_name() == name);
+        (mbr, orig_lib)
+    }
 }
 
-//pub fn remove_book(mut bks: Vec<Book>, bk: Book) -> Vec<Book> {
-//    bks.retain(|this_bk| this_bk != &bk);
-//    bks
-//}
-//
-//pub fn find_borrower(brs: Vec<Borrower>, name: &str) -> (Option<Borrower>, Vec<Borrower>) {
-//    let orig_brs = brs.clone();
-//    let mut brs_into_iter = brs.into_iter();
-//    let mbr = brs_into_iter.find(|br| br.get_name() == name);
-//    (mbr, orig_brs)
-//}
-//
 //pub fn find_book(bks: Vec<Book>, title: &str) -> (Option<Book>, Vec<Book>) {
 //    let orig_bks = bks.clone();
 //    let mut bks_into_iter = bks.into_iter();
@@ -169,10 +164,10 @@ mod tests {
         assert_eq!(lib.bks_len(), 1);
 
         // find borrower
-        //        let (fnd_br, brs1) = find_borrower(brs1, "Borrower1");
-        //        assert_eq!(fnd_br, Some(Borrower::new("Borrower1", 1)));
-        //        let (fnd_br, brs1) = find_borrower(brs1, "Borrower11");
-        //        assert_eq!(fnd_br, None);
+        let (fnd_br, lib) = lib.find_borrower("Borrower1");
+        assert_eq!(fnd_br, Some(Borrower::new("Borrower1", 1)));
+        let (fnd_br, lib) = lib.find_borrower("Borrower11");
+        assert_eq!(fnd_br, None);
 
         // find book
         //        let (fnd_bk, bks1) = find_book(bks1, "Title3");
