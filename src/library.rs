@@ -48,15 +48,15 @@ impl Library {
         let mbr = brs_into_iter.find(|br| br.get_name() == name);
         (mbr, orig_lib)
     }
+
+    pub fn find_book(self, title: &str) -> (Option<Book>, Self) {
+        let orig_lib = self.clone();
+        let mut bks_into_iter = self.books.into_iter();
+        let mbk = bks_into_iter.find(|bk| bk.get_title() == title);
+        (mbk, orig_lib)
+    }
 }
 
-//pub fn find_book(bks: Vec<Book>, title: &str) -> (Option<Book>, Vec<Book>) {
-//    let orig_bks = bks.clone();
-//    let mut bks_into_iter = bks.into_iter();
-//    let mbk = bks_into_iter.find(|bk| bk.get_title() == title);
-//    (mbk, orig_bks)
-//}
-//
 //fn num_books_out(bks: &[Book], br: &Borrower) -> u8 {
 //    let mut count: u8 = 0;
 //    for bk in bks {
@@ -170,17 +170,17 @@ mod tests {
         assert_eq!(fnd_br, None);
 
         // find book
-        //        let (fnd_bk, bks1) = find_book(bks1, "Title3");
-        //        assert_eq!(
-        //            fnd_bk,
-        //            Some(Book::new(
-        //                "Title3",
-        //                "Author3",
-        //                Some(Borrower::new("Borrower3", 3)),
-        //            ))
-        //        );
-        //        let (fnd_bk, bks1) = find_book(bks1, "Title11");
-        //        assert_eq!(fnd_bk, None);
+        let (fnd_bk, lib) = lib.find_book("Title3");
+        assert_eq!(
+            fnd_bk,
+            Some(Book::new(
+                "Title3",
+                "Author3",
+                Some(Borrower::new("Borrower3", 3)),
+            ))
+        );
+        let (fnd_bk, lib) = lib.find_book("Title11");
+        assert_eq!(fnd_bk, None);
     }
 
     //    #[test]
