@@ -97,20 +97,18 @@ impl Library {
         }
     }
 
-//    pub fn check_in(bks: Vec<Book>, title: &str) -> Vec<Book> {
-//        let orig_bks = bks.clone();
-//        let (mbk, bks) = find_book(bks, title);
-//        if mbk.is_some() && book_out(&mbk.clone().unwrap()) {
-//            let bk = mbk.unwrap();
-//            let new_book = bk.clone().set_borrower(None);
-//            let fewer_bks = remove_book(bks, bk);
-//            //        let new_bks = add_book(fewer_bks, new_book);
-//            //        new_bks
-//            add_book(fewer_bks, new_book)
-//        } else {
-//            orig_bks
-//        }
-//    }
+    pub fn check_in(mut self, title: &str) -> Self {
+        //        let orig_bks = bks.clone();
+        let (mbk, _lib) = self.clone().find_book(title);
+        if mbk.is_some() && Library::book_out(&mbk.clone().unwrap()) {
+            let bk = mbk.unwrap();
+            let new_book = bk.clone().set_borrower(None);
+            self = self.remove_book(bk);
+            self.add_unique_book(new_book)
+        } else {
+            self
+        }
+    }
 }
 
 #[cfg(test)]
