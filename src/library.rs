@@ -98,7 +98,6 @@ impl Library {
     }
 
     pub fn check_in(mut self, title: &str) -> Self {
-        //        let orig_bks = bks.clone();
         let (mbk, _lib) = self.clone().find_book(title);
         if mbk.is_some() && Library::book_out(&mbk.clone().unwrap()) {
             let bk = mbk.unwrap();
