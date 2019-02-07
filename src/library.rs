@@ -245,5 +245,17 @@ mod tests {
         // check-out-fail-over-limit-test
         let ret_lib = lib1.clone().check_out("Borrower1", "Title2");
         assert_eq!(ret_lib, lib1);
+
+        // check-in-pass-test
+        let ret_lib = lib1.clone().check_in("Title2");
+        assert_eq!(ret_lib, lib1);
+
+        // check-in-fail-not-checked-out-test
+        let ret_lib = lib1.clone().check_in("Title2");
+        assert_eq!(ret_lib, lib1);
+
+        // check-in-fail-bad-book-test
+        let ret_lib = lib1.clone().check_in("NoTitle");
+        assert_eq!(ret_lib, lib1);
     }
 }
