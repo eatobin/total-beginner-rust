@@ -38,11 +38,11 @@ pub fn add_borrower(mut brs: Vec<Borrower>, br: Borrower) -> Vec<Borrower> {
 //        }
 //        self
 //    }
-//
-//    fn brs_len(&self) -> usize {
-//        self.borrowers.len()
-//    }
-//
+
+fn brs_len(brs: &Vec<Borrower>) -> usize {
+    brs.len()
+}
+
 //    fn bks_len(&self) -> usize {
 //        self.books.len()
 //    }
