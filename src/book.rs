@@ -46,23 +46,23 @@ impl<'bk> Book<'bk> {
         Self { borrower, ..self }
     }
 
-//    pub fn available_string(&self) -> String {
-//        match &self.borrower {
-//            Some(br) => format!("{} {}", "Checked out to", br.get_name()),
-//            None => "Available".to_owned(),
-//        }
-//    }
-//
-//    pub fn book_to_string(&self) -> String {
-//        format!(
-//            "{} {} {}{} {}",
-//            &(self.title),
-//            "by",
-//            &(self.author),
-//            ";",
-//            &(self.available_string())
-//        )
-//    }
+    pub fn available_string(&self) -> String {
+        match &self.borrower {
+            Some(br) => format!("{} {}", "Checked out to", br.get_name()),
+            None => "Available".to_owned(),
+        }
+    }
+
+    pub fn book_to_string(&self) -> String {
+        format!(
+            "{} {} {}{} {}",
+            &(self.title),
+            "by",
+            &(self.author),
+            ";",
+            &(self.available_string())
+        )
+    }
 }
 
 #[cfg(test)]
@@ -98,15 +98,20 @@ mod tests {
             bk2
         );
     }
-//
-//        // test to_string
-//        assert_eq!(bk1.available_string(), "Available");
-//        assert_eq!(bk2.available_string(), "Checked out to Borrower1");
-//
-//        assert_eq!(bk1.book_to_string(), "Title1 by Author1; Available");
-//        assert_eq!(
-//            bk2.book_to_string(),
-//            "Title1 by Author1; Checked out to Borrower1"
-//        );
-//    }
+
+    #[test]
+    fn test_book_to_string() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(&br1);
+        let bk1 = Book::new("Title1", "Author1", None);
+        let bk2 = Book::new("Title1", "Author1", sbr1);
+        assert_eq!(bk1.available_string(), "Available");
+        assert_eq!(bk2.available_string(), "Checked out to Borrower1");
+
+        assert_eq!(bk1.book_to_string(), "Title1 by Author1; Available");
+        assert_eq!(
+            bk2.book_to_string(),
+            "Title1 by Author1; Checked out to Borrower1"
+        );
+    }
 }
