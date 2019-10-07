@@ -8,7 +8,16 @@ use crate::borrower::Borrower;
 //}
 //
 
-pub fn add_borrower(mut brs: Vec<Borrower>, br: Borrower) -> Vec<Borrower> {
+//pub fn add_borrower(mut brs: Vec<Borrower>, br: Borrower) -> Vec<Borrower> {
+//    if brs.contains(&br) {
+//        brs
+//    } else {
+//        brs.push(br);
+//        brs
+//    }
+//}
+
+pub fn add_borrower<'a>(mut brs: Vec<&'a Borrower>, br: &'a Borrower) -> Vec<&'a Borrower> {
     if brs.contains(&br) {
         brs
     } else {
@@ -51,14 +60,12 @@ fn brs_len(brs: &Vec<Borrower>) -> usize {
 //        self.books.retain(|this_bk| this_bk != &bk);
 //        self
 //    }
-//
-//    pub fn find_borrower(self, name: &str) -> (Option<Borrower>, Self) {
-//        let orig_lib = self.clone();
-//        let mut brs_into_iter = self.borrowers.into_iter();
-//        let mbr = brs_into_iter.find(|br| br.get_name() == name);
-//        (mbr, orig_lib)
-//    }
-//
+
+pub fn find_borrower<'a>(name: &'a str, brs: Vec<&'a Borrower>) -> (Option<&'a Borrower>) {
+    let mut brs_into_iter = brs.into_iter();
+    brs_into_iter.find(|br| br.get_name() == name)
+}
+
 //    pub fn find_book(self, title: &str) -> (Option<Book>, Self) {
 //        let orig_lib = self.clone();
 //        let mut bks_into_iter = self.books.into_iter();
@@ -128,10 +135,10 @@ mod tests {
     #[test]
     fn test_library() {
 //        let mut lib = Library::new();
-        let br1 = Borrower::new("Borrower1", 1);
-        let br2 = Borrower::new("Borrower2", 2);
-        let brs1: Vec<Borrower> = vec![br1.clone()];
-        let brs2: Vec<Borrower> = vec![br1.clone(), br2.clone()];
+        let br1 = &Borrower::new("Borrower1", 1);
+        let br2 = &Borrower::new("Borrower2", 2);
+        let brs1: Vec<&Borrower> = vec![br1];
+        let brs2: Vec<&Borrower> = vec![br1, br2];
 
         // add borrower
         assert_eq!(brs1.len(), 1);
@@ -170,10 +177,10 @@ mod tests {
 //        assert_eq!(lib.bks_len(), 1);
 //
 //        // find borrower
-//        let (fnd_br, lib) = lib.find_borrower("Borrower1");
-//        assert_eq!(fnd_br, Some(Borrower::new("Borrower1", 1)));
-//        let (fnd_br, lib) = lib.find_borrower("Borrower11");
-//        assert_eq!(fnd_br, None);
+        let actual = find_borrower("Borrower1", brs1.clone());
+        assert_eq!(actual, Some(Borrower::new("Borrower1", 1)).as_ref());
+        let actual2 = find_borrower("Borrower11", brs1.clone());
+        assert_eq!(actual2, None);
 //
 //        // find book
 //        let (fnd_bk, lib) = lib.find_book("Title3");
