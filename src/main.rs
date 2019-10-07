@@ -1,8 +1,10 @@
 #![allow(unused)]
+
 //
-mod book;
+//mod book;
 mod borrower;
 mod library;
+
 //
 //use crate::book::Book;
 //use crate::borrower::Borrower;
@@ -20,11 +22,11 @@ fn main() {
     // let oodles: &mut str = &mut noodles[1..];
     // oodles.make_ascii_uppercase();
     // println!("{}", oodles);
-    let myvec: Vec<String> = vec![String::from("hello"), String::from("world")];
-    let mut othervec: Vec<String> = Vec::new();
-
-    othervec.push(myvec[1].to_string());
-    println!("{:?}", othervec);
+    //    let myvec: Vec<String> = vec![String::from("hello"), String::from("world")];
+    //    let mut othervec: Vec<String> = Vec::new();
+    //
+    //    othervec.push(myvec[1].to_string());
+    //    println!("{:?}", othervec);
 }
 //
 //    // let mut char_list = vec!['y', 'm', 'a', 'q'];
