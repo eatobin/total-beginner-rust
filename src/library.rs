@@ -48,7 +48,7 @@ pub fn add_borrower<'a>(mut brs: Vec<&'a Borrower>, br: &'a Borrower) -> Vec<&'a
 //        self
 //    }
 
-fn brs_len(brs: &Vec<Borrower>) -> usize {
+fn brs_len(brs: Vec<&Borrower>) -> usize {
     brs.len()
 }
 
