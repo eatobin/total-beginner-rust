@@ -1,47 +1,47 @@
-//use crate::borrower::Borrower;
-//
-//#[derive(Debug, PartialEq, Clone)]
-//pub struct Book {
-//    title: String,
-//    author: String,
-//    borrower: Option<Borrower>,
-//}
-//
-//impl Book {
-//    pub fn new(title: &str, author: &str, borrower: Option<Borrower>) -> Book {
-//        Book {
-//            title: title.to_owned(),
-//            author: author.to_owned(),
-//            borrower,
-//        }
-//    }
-//
-//    pub fn get_title(&self) -> &str {
-//        &(self.title)
-//    }
-//
+use crate::borrower::Borrower;
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct Book<'a> {
+    title: String,
+    author: String,
+    borrower: Option<&'a Borrower>,
+}
+
+impl Book<'_> {
+    pub fn new<'a>(title: &str, author: &str, borrower: Option<&'a Borrower>) -> Book<'a> {
+        Book {
+            title: title.to_owned(),
+            author: author.to_owned(),
+            borrower,
+        }
+    }
+
+    pub fn get_title(&self) -> &str {
+        &(self.title)
+    }
+
 //    pub fn set_title(self, title: &str) -> Self {
 //        Self {
 //            title: title.to_owned(),
 //            ..self
 //        }
 //    }
-//
-//    pub fn get_author(&self) -> &str {
-//        &(self.author)
-//    }
-//
+
+    pub fn get_author(&self) -> &str {
+        &(self.author)
+    }
+
 //    pub fn set_author(self, author: &str) -> Self {
 //        Self {
 //            author: author.to_owned(),
 //            ..self
 //        }
 //    }
-//
-//    pub fn get_borrower(&self) -> Option<&Borrower> {
-//        self.borrower.as_ref()
-//    }
-//
+
+    pub fn get_borrower(&self) -> Option<&Borrower> {
+        self.borrower
+    }
+
 //    pub fn set_borrower(self, borrower: Option<Borrower>) -> Self {
 //        Self { borrower, ..self }
 //    }
@@ -63,24 +63,25 @@
 //            &(self.available_string())
 //        )
 //    }
-//}
-//
-//#[cfg(test)]
-//mod tests {
-//    // Note this useful idiom: importing names from outer (for mod tests) scope.
-//    use super::*;
-//
-//    #[test]
-//    fn test_book() {
-//        // test construct
-//        let bk1 = Book::new("Title1", "Author1", None);
-//        assert_eq!(bk1.get_title(), "Title1");
-//        assert_eq!(bk1.get_author(), "Author1");
-//        let br1 = Borrower::new("Borrower1", 1);
-//        let sbr1 = Some(br1);
-//        let bk2 = Book::new("Title1", "Author1", sbr1);
-//        assert_eq!(bk2.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
-//        assert_eq!(bk1.get_borrower(), None);
+}
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_book_construct() {
+        let bk1 = Book::new("Title1", "Author1", None);
+        assert_eq!(bk1.get_title(), "Title1");
+        assert_eq!(bk1.get_author(), "Author1");
+        let br1 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(&br1);
+        let bk2 = Book::new("Title1", "Author1", sbr1);
+        assert_eq!(bk2.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
+        assert_eq!(bk1.get_borrower(), None);
+    }
+}
 //
 //        // test set values
 //        let bk3 = Book::new("Title2", "Author1", None);

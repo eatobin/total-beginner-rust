@@ -132,18 +132,18 @@ mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
 
-    #[test]
-    fn test_add_borrower() {
-        let br1 = &Borrower::new("Borrower1", 1);
-        let br2 = &Borrower::new("Borrower2", 2);
-        let brs1: Vec<&Borrower> = vec![br1];
-        let brs2: Vec<&Borrower> = vec![br1, br2];
-
-        // add borrower
-        assert_eq!(brs1.len(), 1);
-        assert_eq!(brs2.len(), 2);
-        assert_eq!(add_borrower(brs1.clone(), br2), brs2);
-        assert_eq!(add_borrower(brs1.clone(), br1), brs1);
+//    #[test]
+//    fn test_add_borrower() {
+//        let br1 = Borrower::new("Borrower1", 1);
+//        let br2 = Borrower::new("Borrower2", 2);
+//        let brs1: Vec<&Borrower> = vec![br1];
+//        let brs2: Vec<&Borrower> = vec![br1, br2];
+//
+//        // add borrower
+//        assert_eq!(brs1.len(), 1);
+//        assert_eq!(brs2.len(), 2);
+//        assert_eq!(add_borrower(brs1.clone(), br2), brs2);
+//        assert_eq!(add_borrower(brs1.clone(), br1), brs1);
     }
 //        lib = lib.add_unique_borrower(br1.clone());
 //        assert_eq!(lib.brs_len(), 1);
@@ -174,18 +174,18 @@ mod tests {
 //
 //        lib = lib.remove_book(bk4);
 //        assert_eq!(lib.bks_len(), 1);
-    #[test]
-    fn test_find_borrower() {
-        let br1 = &Borrower::new("Borrower1", 1);
-        let br2 = &Borrower::new("Borrower2", 2);
-        let brs1: Vec<&Borrower> = vec![br1];
-        let brs2: Vec<&Borrower> = vec![br1, br2];
-
-        let actual = find_borrower("Borrower1", brs1.clone());
-        assert_eq!(actual, Some(Borrower::new("Borrower1", 1)).as_ref());
-        let actual2 = find_borrower("Borrower11", brs1.clone());
-        assert_eq!(actual2, None);
-    }
+//    #[test]
+//    fn test_find_borrower() {
+//        let br1 = Borrower::new("Borrower1", 1);
+//        let br2 = Borrower::new("Borrower2", 2);
+//        let brs1: Vec<&Borrower> = vec![br1];
+//        let brs2: Vec<&Borrower> = vec![br1, br2];
+//
+//        let actual_ptr = find_borrower("Borrower1", brs1.clone());
+//        assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
+//        let actual2 = find_borrower("Borrower11", brs1.clone());
+//        assert_eq!(actual2, None);
+//    }
 //
 //        // find book
 //        let (fnd_bk, lib) = lib.find_book("Title3");
@@ -285,4 +285,4 @@ mod tests {
 //        // check-in-fail-bad-book-test
 //        let ret_lib = lib1.clone().check_in("NoTitle");
 //        assert_eq!(ret_lib, lib1);
-}
+//}

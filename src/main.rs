@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 //
-//mod book;
+mod book;
 mod borrower;
 mod library;
 
