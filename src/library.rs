@@ -136,7 +136,8 @@ mod tests {
         // add borrower
         assert_eq!(brs1.len(), 1);
         assert_eq!(brs2.len(), 2);
-        assert_eq!(add_borrower(brs1.clone(), br2), brs2)
+        assert_eq!(add_borrower(brs1.clone(), br2), brs2);
+        assert_eq!(add_borrower(brs1.clone(), br1), brs1);
 
 //        lib = lib.add_unique_borrower(br1.clone());
 //        assert_eq!(lib.brs_len(), 1);
