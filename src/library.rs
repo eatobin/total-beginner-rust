@@ -26,6 +26,15 @@ pub fn add_borrower<'br>(mut brs: Vec<&'br Borrower>, br: &'br Borrower) -> Vec<
     }
 }
 
+pub fn add_item<'x, T: PartialEq>(mut xs: Vec<&'x T>, x: &'x T) -> Vec<&'x T> {
+    if xs.contains(&x) {
+        xs
+    } else {
+        xs.push(x);
+        xs
+    }
+}
+
 //impl Library {
 //    pub fn new() -> Library {
 //        Library {
@@ -142,6 +151,18 @@ mod tests {
         assert_eq!(brs2.len(), 2);
         assert_eq!(add_borrower(brs1.clone(), br2), brs2);
         assert_eq!(add_borrower(brs1.clone(), br1), brs1);
+    }
+
+    #[test]
+    fn test_add_item() {
+        let br1 = &Borrower::new("Borrower1", 1);
+        let br2 = &Borrower::new("Borrower2", 2);
+        let brs1: Vec<&Borrower> = vec![br1];
+        let brs2: Vec<&Borrower> = vec![br1, br2];
+        assert_eq!(brs1.len(), 1);
+        assert_eq!(brs2.len(), 2);
+        assert_eq!(add_item(brs1.clone(), br2), brs2);
+        assert_eq!(add_item(brs1.clone(), br1), brs1);
     }
     //        lib = lib.add_unique_borrower(br1.clone());
     //        assert_eq!(lib.brs_len(), 1);
