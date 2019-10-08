@@ -19,31 +19,11 @@ pub fn add_item<'x, T: PartialEq>(mut xs: Vec<&'x T>, x: &'x T) -> Vec<&'x T> {
     }
 }
 
-//impl Library {
-//    pub fn new() -> Library {
-//        Library {
-//            borrowers: Vec::new(),
-//            books: Vec::new(),
-//        }
-//    }
-//
-//    pub fn add_unique_borrower(mut self, br: Borrower) -> Self {
-//        if !self.borrowers.contains(&br) {
-//            self.borrowers.push(br);
-//        }
-//        self
-//    }
-//
-//    pub fn add_unique_book(mut self, bk: Book) -> Self {
-//        if !self.books.contains(&bk) {
-//            self.books.push(bk);
-//        }
-//        self
-//    }
-
 fn brs_len(brs: Vec<&Borrower>) -> usize {
     brs.len()
 }
+
+fn xs_len<T>(xs: Vec<&T>) -> usize { xs.len() }
 
 //    fn bks_len(&self) -> usize {
 //        self.books.len()
