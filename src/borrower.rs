@@ -44,7 +44,6 @@ mod tests {
     #[test]
     fn test_borrower_construct() {
         let br1 = Borrower::new("Borrower1", 1);
-
         assert_eq!(Borrower::get_name(&br1), "Borrower1");
         assert_eq!(Borrower::get_max_books(&br1), 1);
     }

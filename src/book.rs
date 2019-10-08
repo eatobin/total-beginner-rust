@@ -107,7 +107,6 @@ mod tests {
         let bk2 = Book::new("Title1", "Author1", sbr1);
         assert_eq!(bk1.available_string(), "Available");
         assert_eq!(bk2.available_string(), "Checked out to Borrower1");
-
         assert_eq!(bk1.book_to_string(), "Title1 by Author1; Available");
         assert_eq!(
             bk2.book_to_string(),
