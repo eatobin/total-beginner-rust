@@ -29,7 +29,7 @@ pub fn find_borrower<'br>(name: &str, brs: Vec<&'br Borrower>) -> Option<&'br Bo
     brs_into_iter.find(|br| br.get_name() == name)
 }
 
-pub fn find_item<'x, T: PartialEq>(target: &str, coll: Vec<&'x T>, f: &dyn Fn(T) -> &str) -> Option<&'x T> {
+pub fn find_item<'x, T: PartialEq>(target: &str, coll: Vec<&'x T>, f: &dyn Fn(&T) -> &'x str) -> Option<&'x T> {
     let mut coll_into_iter = coll.into_iter();
     coll_into_iter.find(|i| f(i) == target)
 }
@@ -145,17 +145,29 @@ mod tests {
 //        assert_eq!(lib.bks_len(), 1);
     }
 
-    #[test]
-    fn test_find_borrower() {
-        let br1 = &Borrower::new("Borrower1", 1);
-        let br2 = &Borrower::new("Borrower2", 2);
-        let brs1: Vec<&Borrower> = vec![br1];
-        let brs2: Vec<&Borrower> = vec![br1, &br2];
-        let actual_ptr = find_borrower("Borrower1", brs1.clone());
-        assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
-        let actual2 = find_borrower("Borrower11", brs1.clone());
-        assert_eq!(actual2, None);
-    }
+//    #[test]
+//    fn test_find_borrower() {
+//        let br1 = &Borrower::new("Borrower1", 1);
+//        let br2 = &Borrower::new("Borrower2", 2);
+//        let brs1: Vec<&Borrower> = vec![br1];
+//        let brs2: Vec<&Borrower> = vec![br1, &br2];
+//        let actual_ptr = find_borrower("Borrower1", brs1.clone());
+//        assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
+//        let actual2 = find_borrower("Borrower11", brs1.clone());
+//        assert_eq!(actual2, None);
+//    }
+
+#[test]
+fn test_find_item() {
+    let br1 = &Borrower::new("Borrower1", 1);
+    let br2 = &Borrower::new("Borrower2", 2);
+    let brs1: Vec<&Borrower> = vec![br1];
+    let brs2: Vec<&Borrower> = vec![br1, &br2];
+    let actual_ptr = find_item("Borrower1", brs1.clone(), Borrower::get_name);
+    assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
+    let actual2 = find_borrower("Borrower11", brs1.clone());
+    assert_eq!(actual2, None);
+}
     //
     //        // find book
     //        let (fnd_bk, lib) = lib.find_book("Title3");
