@@ -24,9 +24,14 @@ pub fn remove_book<'bk3>(mut bks: Vec<&'bk3 Book>, bk: &Book) -> Vec<&'bk3 Book<
     bks
 }
 
-pub fn find_borrower<'br>(name: &str, brs: Vec<&'br Borrower>) -> (Option<&'br Borrower>) {
+pub fn find_borrower<'br>(name: &str, brs: Vec<&'br Borrower>) -> Option<&'br Borrower> {
     let mut brs_into_iter = brs.into_iter();
     brs_into_iter.find(|br| br.get_name() == name)
+}
+
+pub fn find_item<'x, T: PartialEq>(target: &str, coll: Vec<&'x T>, f: &dyn Fn(T) -> &str) -> Option<&'x T> {
+    let mut coll_into_iter = coll.into_iter();
+    coll_into_iter.find(|i| f(i) == target)
 }
 
 //    pub fn find_book(self, title: &str) -> (Option<Book>, Self) {
