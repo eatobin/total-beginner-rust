@@ -1,14 +1,7 @@
 use crate::book::Book;
 use crate::borrower::Borrower;
-//
-//#[derive(Debug, PartialEq, Clone)]
-//pub struct Library {
-//    borrowers: Vec<Borrower>,
-//    books: Vec<Book>,
-//}
-//
 
-//pub fn add_borrower(mut brs: Vec<Borrower>, br: Borrower) -> Vec<Borrower> {
+//pub fn add_borrower<'br>(mut brs: Vec<&'br Borrower>, br: &'br Borrower) -> Vec<&'br Borrower> {
 //    if brs.contains(&br) {
 //        brs
 //    } else {
@@ -16,15 +9,6 @@ use crate::borrower::Borrower;
 //        brs
 //    }
 //}
-
-pub fn add_borrower<'br>(mut brs: Vec<&'br Borrower>, br: &'br Borrower) -> Vec<&'br Borrower> {
-    if brs.contains(&br) {
-        brs
-    } else {
-        brs.push(br);
-        brs
-    }
-}
 
 pub fn add_item<'x, T: PartialEq>(mut xs: Vec<&'x T>, x: &'x T) -> Vec<&'x T> {
     if xs.contains(&x) {
@@ -142,18 +126,6 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_add_borrower() {
-        let br1 = &Borrower::new("Borrower1", 1);
-        let br2 = &Borrower::new("Borrower2", 2);
-        let brs1: Vec<&Borrower> = vec![br1];
-        let brs2: Vec<&Borrower> = vec![br1, br2];
-        assert_eq!(brs1.len(), 1);
-        assert_eq!(brs2.len(), 2);
-        assert_eq!(add_borrower(brs1.clone(), br2), brs2);
-        assert_eq!(add_borrower(brs1.clone(), br1), brs1);
-    }
-
-    #[test]
     fn test_add_item() {
         let br1 = &Borrower::new("Borrower1", 1);
         let br2 = &Borrower::new("Borrower2", 2);
@@ -170,8 +142,10 @@ mod tests {
         let bks2: Vec<&Book> = vec![bk1, bk2];
         assert_eq!(bks1.len(), 1);
         assert_eq!(bks2.len(), 2);
-
+        assert_eq!(add_item(bks1.clone(), bk2), bks2);
+        assert_eq!(add_item(bks1.clone(), bk1), bks1);
     }
+
     //        lib = lib.add_unique_borrower(br1.clone());
     //        assert_eq!(lib.brs_len(), 1);
     //        lib = lib.add_unique_borrower(br2.clone());
