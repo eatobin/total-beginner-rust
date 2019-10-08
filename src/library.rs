@@ -1,4 +1,4 @@
-//use crate::book::Book;
+use crate::book::Book;
 use crate::borrower::Borrower;
 //
 //#[derive(Debug, PartialEq, Clone)]
@@ -163,6 +163,14 @@ mod tests {
         assert_eq!(brs2.len(), 2);
         assert_eq!(add_item(brs1.clone(), br2), brs2);
         assert_eq!(add_item(brs1.clone(), br1), brs1);
+
+        let bk1 = &Book::new("Title1", "Author1", Some(br1));
+        let bk2 = &Book::new("Title1", "Author1", Some(br2));
+        let bks1: Vec<&Book> = vec![bk1];
+        let bks2: Vec<&Book> = vec![bk1, bk2];
+        assert_eq!(bks1.len(), 1);
+        assert_eq!(bks2.len(), 2);
+
     }
     //        lib = lib.add_unique_borrower(br1.clone());
     //        assert_eq!(lib.brs_len(), 1);
@@ -170,8 +178,7 @@ mod tests {
     //        assert_eq!(lib.brs_len(), 1);
 
     //        // add book
-    //        let bk1 = Book::new("Title1", "Author1", Some(br1));
-    //        let bk2 = Book::new("Title1", "Author1", Some(br2));
+
     //
     //        assert_eq!(lib.bks_len(), 0);
     //        lib = lib.add_unique_book(bk1);
