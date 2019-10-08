@@ -19,20 +19,10 @@ pub fn add_item<'x, T: PartialEq>(mut xs: Vec<&'x T>, x: &'x T) -> Vec<&'x T> {
     }
 }
 
-fn brs_len(brs: Vec<&Borrower>) -> usize {
-    brs.len()
+pub fn remove_book<'bk>(mut bks: Vec<&'bk Book>, bk: &Book) -> Vec<&'bk Book<'bk>> {
+    bks.retain(|this_bk| this_bk != &bk);
+    bks
 }
-
-fn xs_len<T>(xs: Vec<&T>) -> usize { xs.len() }
-
-//    fn bks_len(&self) -> usize {
-//        self.books.len()
-//    }
-//
-//    pub fn remove_book(mut self, bk: Book) -> Self {
-//        self.books.retain(|this_bk| this_bk != &bk);
-//        self
-//    }
 
 pub fn find_borrower<'br>(name: &'br str, brs: Vec<&'br Borrower>) -> (Option<&'br Borrower>) {
     let mut brs_into_iter = brs.into_iter();
@@ -126,34 +116,30 @@ mod tests {
         assert_eq!(add_item(bks1.clone(), bk1), bks1);
     }
 
-    //        lib = lib.add_unique_borrower(br1.clone());
-    //        assert_eq!(lib.brs_len(), 1);
-    //        lib = lib.add_unique_borrower(br2.clone());
-    //        assert_eq!(lib.brs_len(), 1);
+    #[test]
+    fn test_remove_book() {
+        let br1 = &Borrower::new("Borrower1", 1);
+        let br2 = &Borrower::new("Borrower2", 2);
+        let bk1 = &Book::new("Title1", "Author1", Some(br1));
+        let bk2 = &Book::new("Title1", "Author1", Some(br2));
+        let bks1: Vec<&Book> = vec![bk1, bk2];
+        let bks2: Vec<&Book> = vec![bk1];
 
-    //        // add book
+        assert_eq!(bks1.len(), 2);
+        assert_eq!(bks2.len(), 1);
+        assert_eq!(remove_book(bks1, bk2), bks2);
+        assert_eq!(remove_book(bks2.clone(), bk2), bks2);
 
-    //
-    //        assert_eq!(lib.bks_len(), 0);
-    //        lib = lib.add_unique_book(bk1);
-    //        assert_eq!(lib.bks_len(), 1);
-    //        lib = lib.add_unique_book(bk2.clone());
-    //        assert_eq!(lib.bks_len(), 1);
-    //
-    //        // remove book
-    //        let bk3 = Book::new("Title3", "Author3", Some(Borrower::new("Borrower3", 3)));
-    //        let bk4 = Book::new("Title1", "Author1", Some(Borrower::new("Borrower1", 1)));
-    //
-    //        assert_eq!(lib.bks_len(), 1);
-    //
-    //        lib = lib.remove_book(bk2);
-    //        assert_eq!(lib.bks_len(), 0);
-    //
-    //        lib = lib.add_unique_book(bk3);
-    //        assert_eq!(lib.bks_len(), 1);
-    //
-    //        lib = lib.remove_book(bk4);
-    //        assert_eq!(lib.bks_len(), 1);
+//        lib = lib.remove_book(bk2);
+//        assert_eq!(lib.bks_len(), 0);
+//
+//        lib = lib.add_unique_book(bk3);
+//        assert_eq!(lib.bks_len(), 1);
+//
+//        lib = lib.remove_book(bk4);
+//        assert_eq!(lib.bks_len(), 1);
+    }
+
     #[test]
     fn test_find_borrower() {
         let br1 = &Borrower::new("Borrower1", 1);
