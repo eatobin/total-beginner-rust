@@ -19,7 +19,7 @@ pub fn add_item<'x, T: PartialEq>(mut xs: Vec<&'x T>, x: &'x T) -> Vec<&'x T> {
     }
 }
 
-pub fn remove_book<'bk>(mut bks: Vec<&'bk Book>, bk: &Book) -> Vec<&'bk Book<'bk>> {
+pub fn remove_book<'bk3>(mut bks: Vec<&'bk3 Book>, bk: &Book) -> Vec<&'bk3 Book<'bk3>> {
     bks.retain(|this_bk| this_bk != &bk);
     bks
 }
