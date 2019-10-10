@@ -55,7 +55,7 @@ mod tests {
             name: "Borrower2".to_owned(),
             max_books: 1,
         };
-        assert_eq!(Borrower::set_name(br1.clone(), "Borrower2"), br2);
+        assert_eq!(Borrower::set_name(br1, "Borrower2"), br2);
     }
 
     #[test]
@@ -65,7 +65,7 @@ mod tests {
             name: "Borrower1".to_owned(),
             max_books: 2,
         };
-        assert_eq!(Borrower::set_max_books(br1.clone(), 2), br2);
+        assert_eq!(Borrower::set_max_books(br1, 2), br2);
     }
 
     #[test]
