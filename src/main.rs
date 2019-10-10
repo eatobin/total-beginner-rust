@@ -4,6 +4,7 @@
 mod book;
 mod borrower;
 mod library;
+mod cat;
 
 //
 //use crate::book::Book;
