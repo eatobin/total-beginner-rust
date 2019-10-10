@@ -1,14 +1,14 @@
 use crate::borrower::Borrower;
 
 #[derive(Debug, PartialEq, Clone)]
-pub struct Book<'bk1> {
+pub struct Book<'a> {
     title: String,
     author: String,
-    borrower: Option<&'bk1 Borrower>,
+    borrower: Option<&'a Borrower>,
 }
 
-impl<'bk2> Book<'bk2> {
-    pub fn new(title: &str, author: &str, borrower: Option<&'bk2 Borrower>) -> Book<'bk2> {
+impl<'a> Book<'a> {
+    pub fn new(title: &str, author: &str, borrower: Option<&'a Borrower>) -> Book<'a> {
         Book {
             title: title.to_owned(),
             author: author.to_owned(),
@@ -42,7 +42,7 @@ impl<'bk2> Book<'bk2> {
         self.borrower
     }
 
-    pub fn set_borrower(self, borrower: Option<&'bk2 Borrower>) -> Self {
+    pub fn set_borrower(self, borrower: Option<&'a Borrower>) -> Self {
         Self { borrower, ..self }
     }
 
