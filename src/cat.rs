@@ -1,13 +1,13 @@
 #[derive(PartialEq, PartialOrd, Debug, Clone)]
-pub struct Cat {
+struct Cat {
     rank: u8,
 }
 
 impl Cat {
-    pub fn get_rank(&self) -> u8 { self.rank }
+    fn get_rank(&self) -> u8 { self.rank }
 }
 
-pub fn find_cat(target: u8, cats: Vec<Cat>) -> Option<Cat> {
+fn find_cat(target: u8, cats: Vec<Cat>) -> Option<Cat> {
     let mut iterator = cats.into_iter();
     let maybe_match = iterator.find(|c| c.get_rank() == target);
     maybe_match
@@ -18,6 +18,8 @@ fn apply_to_3<F>(f: F) -> i32 where
     F: Fn(i32) -> i32 {
     f(3)
 }
+
+
 
 fn triple(x: i32) -> i32 { x * 3 }
 
