@@ -26,6 +26,13 @@ fn find_cat2<F>(target: u8, cats: Vec<Cat>, f: F) -> Option<Cat> where
     maybe_match
 }
 
+fn find_animal<T, F>(target: u8, coll: Vec<T>, f: F) -> Option<T> where
+    F: Fn(&T) -> u8 {
+    let mut iterator = coll.into_iter();
+    let maybe_match = iterator.find(|a| f(a) == target);
+    maybe_match
+}
+
 fn triple(x: i32) -> i32 { x * 3 }
 
 #[cfg(test)]
