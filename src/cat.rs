@@ -93,13 +93,16 @@ mod tests {
     }
 
     #[test]
-    fn test_cat_oldest() {
+    fn test_cat_max_min_val_ref() {
         let cat44 = Cat { rank: 44 };
         let cat4 = Cat { rank: 4 };
         let cat16 = Cat { rank: 16 };
         let cats = vec![cat44, cat4, cat16];
         let mut iterator = cats.iter();
-        let oldest = iterator.max_by_key(|c|c.rank);
-        assert_eq!(oldest, Some(&Cat {rank: 44}))
+        let oldest = iterator.max_by_key(|c| c.rank);
+        assert_eq!(oldest, Some(&Cat { rank: 44 }));
+        let mut iterator2 = cats.into_iter();
+        let youngest = iterator2.min_by_key(|c| c.rank);
+        assert_eq!(youngest, Some(Cat { rank: 4 }))
     }
 }
