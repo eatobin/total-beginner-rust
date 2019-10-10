@@ -1,16 +1,22 @@
-#[derive(PartialEq, PartialOrd, Debug)]
+#[derive(PartialEq, PartialOrd, Debug, Clone)]
 pub struct Cat {
     rank: u8,
 }
 
 impl Cat {
     pub fn get_rank(&self) -> u8 { self.rank }
+}
 
-    pub fn find_cat(target: u8, cats: Vec<Cat>) -> Option<Cat> {
-        let mut iterator = cats.into_iter();
-        let maybe_match = iterator.find(|c| c.get_rank() == target);
-        maybe_match
-    }
+pub fn find_cat(target: u8, cats: Vec<Cat>) -> Option<Cat> {
+    let mut iterator = cats.into_iter();
+    let maybe_match = iterator.find(|c| c.get_rank() == target);
+    maybe_match
+}
+
+// A function which takes a closure and returns an `i32`.
+fn apply_to_3<F>(f: F) -> i32 where
+    F: Fn(i32) -> i32 {
+    f(3)
 }
 
 #[cfg(test)]
@@ -118,6 +124,9 @@ mod tests {
         let cat4 = Cat { rank: 4 };
         let cat16 = Cat { rank: 16 };
         let cats = vec![cat44, cat4, cat16];
-        assert_eq!(Cat::find_cat(44, cats), Some(Cat { rank: 44 }))
+        assert_eq!(find_cat(44, cats.clone()), Some(Cat { rank: 44 }));
+        assert_eq!(find_cat(33, cats), None);
+        let double = |x| 2 * x;
+        assert_eq!(apply_to_3(double), 6)
     }
 }
