@@ -91,4 +91,15 @@ mod tests {
         assert_eq!(iterator.nth(0), None);
         assert_eq!(iterator.len(), 0)
     }
+
+    #[test]
+    fn test_cat_oldest() {
+        let cat44 = Cat { rank: 44 };
+        let cat4 = Cat { rank: 4 };
+        let cat16 = Cat { rank: 16 };
+        let cats = vec![cat44, cat4, cat16];
+        let mut iterator = cats.iter();
+        let oldest = iterator.max_by_key(|c|c.rank);
+        assert_eq!(oldest, Some(&Cat {rank: 44}))
+    }
 }
