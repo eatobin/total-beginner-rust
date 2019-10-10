@@ -1,14 +1,14 @@
 use crate::borrower::Borrower;
 
 #[derive(Debug, PartialEq, Clone)]
-pub struct Book<'a> {
+pub struct Book {
     title: String,
     author: String,
-    borrower: Option<&'a Borrower>,
+    borrower: Option<Borrower>,
 }
 
-impl<'a> Book<'a> {
-    pub fn new(title: &str, author: &str, borrower: Option<&'a Borrower>) -> Book<'a> {
+impl Book {
+    pub fn new(title: &str, author: &str, borrower: Option<Borrower>) -> Book {
         Book {
             title: title.to_owned(),
             author: author.to_owned(),
@@ -39,10 +39,10 @@ impl<'a> Book<'a> {
     }
 
     pub fn get_borrower(&self) -> Option<&Borrower> {
-        self.borrower
+        self.borrower.as_ref()
     }
 
-    pub fn set_borrower(self, borrower: Option<&'a Borrower>) -> Self {
+    pub fn set_borrower(self, borrower: Option<Borrower>) -> Self {
         Self { borrower, ..self }
     }
 
@@ -76,7 +76,7 @@ mod tests {
         assert_eq!(bk1.get_title(), "Title1");
         assert_eq!(bk1.get_author(), "Author1");
         let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(&br1);
+        let sbr1 = Some(br1);
         let bk2 = Book::new("Title1", "Author1", sbr1);
         assert_eq!(bk2.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
         assert_eq!(bk1.get_borrower(), None);
@@ -85,7 +85,7 @@ mod tests {
     #[test]
     fn test_book_set_values() {
         let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(&br1);
+        let sbr1 = Some(br1);
         let bk1 = Book::new("Title1", "Author1", None);
         let bk2 = Book::new("Title1", "Author1", sbr1);
         let bk3 = Book::new("Title2", "Author1", None);
@@ -94,7 +94,7 @@ mod tests {
         assert_eq!(bk1.clone().set_author("Author2"), bk4);
         assert_eq!(
             bk1.clone()
-                .set_borrower(Some(&Borrower::new("Borrower1", 1))),
+                .set_borrower(Some(Borrower::new("Borrower1", 1))),
             bk2
         );
     }
@@ -102,7 +102,7 @@ mod tests {
     #[test]
     fn test_book_to_string() {
         let br1 = Borrower::new("Borrower1", 1);
-        let sbr1 = Some(&br1);
+        let sbr1 = Some(br1);
         let bk1 = Book::new("Title1", "Author1", None);
         let bk2 = Book::new("Title1", "Author1", sbr1);
         assert_eq!(bk1.available_string(), "Available");

@@ -19,20 +19,20 @@ pub fn add_item<'x, T: PartialEq>(mut xs: Vec<&'x T>, x: &'x T) -> Vec<&'x T> {
     }
 }
 
-pub fn remove_book<'bk3>(mut bks: Vec<&'bk3 Book>, bk: &Book) -> Vec<&'bk3 Book<'bk3>> {
-    bks.retain(|this_bk| this_bk != &bk);
-    bks
-}
+//pub fn remove_book<'bk3>(mut bks: Vec<&'bk3 Book>, bk: &Book) -> Vec<&'bk3 Book<'bk3>> {
+//    bks.retain(|this_bk| this_bk != &bk);
+//    bks
+//}
 
 pub fn find_borrower<'br>(name: &str, brs: Vec<&'br Borrower>) -> Option<&'br Borrower> {
     let mut brs_into_iter = brs.into_iter();
     brs_into_iter.find(|br| br.get_name() == name)
 }
 
-pub fn find_mutable_book<'bk4>(title: &str, bks: Vec<&'bk4 Book>) -> Option<&'bk4 Book<'bk4>> {
-    let mut bks_into_iter = bks.into_iter();
-    bks_into_iter.find(|br| br.get_title() == title)
-}
+//pub fn find_mutable_book<'bk4>(title: &str, bks: Vec<&'bk4 Book>) -> Option<&'bk4 Book<'bk4>> {
+//    let mut bks_into_iter = bks.into_iter();
+//    bks_into_iter.find(|br| br.get_title() == title)
+//}
 
 // pub fn find_item<'x, T: PartialEq>(target: &str, coll: Vec<&'x T>, f: &dyn Fn(&T) -> &'x str) -> Option<&'x T> {
 //     let mut coll_into_iter = coll.into_iter();
@@ -105,40 +105,40 @@ mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
 
-    #[test]
-    fn test_add_item() {
-        let br1 = &Borrower::new("Borrower1", 1);
-        let br2 = &Borrower::new("Borrower2", 2);
-        let brs1: Vec<&Borrower> = vec![br1];
-        let brs2: Vec<&Borrower> = vec![br1, br2];
-        assert_eq!(brs1.len(), 1);
-        assert_eq!(brs2.len(), 2);
-        assert_eq!(add_item(brs1.clone(), br2), brs2);
-        assert_eq!(add_item(brs1.clone(), br1), brs1);
+//    #[test]
+//    fn test_add_item() {
+//        let br1 = &Borrower::new("Borrower1", 1);
+//        let br2 = &Borrower::new("Borrower2", 2);
+//        let brs1: Vec<&Borrower> = vec![br1];
+//        let brs2: Vec<&Borrower> = vec![br1, br2];
+//        assert_eq!(brs1.len(), 1);
+//        assert_eq!(brs2.len(), 2);
+//        assert_eq!(add_item(brs1.clone(), br2), brs2);
+//        assert_eq!(add_item(brs1.clone(), br1), brs1);
+//
+//        let bk1 = &Book::new("Title1", "Author1", Some(br1));
+//        let bk2 = &Book::new("Title1", "Author1", Some(br2));
+//        let bks1: Vec<&Book> = vec![bk1];
+//        let bks2: Vec<&Book> = vec![bk1, bk2];
+//        assert_eq!(bks1.len(), 1);
+//        assert_eq!(bks2.len(), 2);
+//        assert_eq!(add_item(bks1.clone(), bk2), bks2);
+//        assert_eq!(add_item(bks1.clone(), bk1), bks1);
+//    }
 
-        let bk1 = &Book::new("Title1", "Author1", Some(br1));
-        let bk2 = &Book::new("Title1", "Author1", Some(br2));
-        let bks1: Vec<&Book> = vec![bk1];
-        let bks2: Vec<&Book> = vec![bk1, bk2];
-        assert_eq!(bks1.len(), 1);
-        assert_eq!(bks2.len(), 2);
-        assert_eq!(add_item(bks1.clone(), bk2), bks2);
-        assert_eq!(add_item(bks1.clone(), bk1), bks1);
-    }
-
-    #[test]
-    fn test_remove_book() {
-        let br1 = &Borrower::new("Borrower1", 1);
-        let br2 = &Borrower::new("Borrower2", 2);
-        let bk1 = &Book::new("Title1", "Author1", Some(br1));
-        let bk2 = &Book::new("Title1", "Author1", Some(br2));
-        let bks1: Vec<&Book> = vec![bk1, bk2];
-        let bks2: Vec<&Book> = vec![bk1];
-
-        assert_eq!(bks1.len(), 2);
-        assert_eq!(bks2.len(), 1);
-        assert_eq!(remove_book(bks1, bk2), bks2);
-        assert_eq!(remove_book(bks2.clone(), bk2), bks2);
+//    #[test]
+//    fn test_remove_book() {
+//        let br1 = &Borrower::new("Borrower1", 1);
+//        let br2 = &Borrower::new("Borrower2", 2);
+//        let bk1 = &Book::new("Title1", "Author1", Some(br1));
+//        let bk2 = &Book::new("Title1", "Author1", Some(br2));
+//        let bks1: Vec<&Book> = vec![bk1, bk2];
+//        let bks2: Vec<&Book> = vec![bk1];
+//
+//        assert_eq!(bks1.len(), 2);
+//        assert_eq!(bks2.len(), 1);
+//        assert_eq!(remove_book(bks1, bk2), bks2);
+//        assert_eq!(remove_book(bks2.clone(), bk2), bks2);
 
         //        lib = lib.remove_book(bk2);
         //        assert_eq!(lib.bks_len(), 0);
@@ -148,7 +148,7 @@ mod tests {
         //
         //        lib = lib.remove_book(bk4);
         //        assert_eq!(lib.bks_len(), 1);
-    }
+//    }
 
     #[test]
     fn test_find_borrower() {
