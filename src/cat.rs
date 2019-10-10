@@ -19,6 +19,8 @@ fn apply_to_3<F>(f: F) -> i32 where
     f(3)
 }
 
+fn triple(x: i32) -> i32 { x * 3 }
+
 #[cfg(test)]
 mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
@@ -126,7 +128,12 @@ mod tests {
         let cats = vec![cat44, cat4, cat16];
         assert_eq!(find_cat(44, cats.clone()), Some(Cat { rank: 44 }));
         assert_eq!(find_cat(33, cats), None);
+    }
+
+    #[test]
+    fn test_double_triple() {
         let double = |x| 2 * x;
-        assert_eq!(apply_to_3(double), 6)
+        assert_eq!(apply_to_3(double), 6);
+        assert_eq!(apply_to_3(triple), 9)
     }
 }
