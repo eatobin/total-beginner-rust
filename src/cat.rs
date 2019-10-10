@@ -141,7 +141,7 @@ mod tests {
         let cat16 = Cat { rank: 16 };
         let cats = vec![cat44, cat4, cat16];
         assert_eq!(find_cat(44, cats.clone()), Some(Cat { rank: 44 }));
-        assert_eq!(find_cat(33, cats), None);
+        assert_eq!(find_cat(33, cats), None)
     }
 
     #[test]
@@ -158,6 +158,16 @@ mod tests {
         let cat16 = Cat { rank: 16 };
         let cats = vec![cat44, cat4, cat16];
         assert_eq!(find_cat2(44, cats.clone(), Cat::get_rank), Some(Cat { rank: 44 }));
-        assert_eq!(find_cat2(33, cats, Cat::get_rank), None);
+        assert_eq!(find_cat2(33, cats, Cat::get_rank), None)
+    }
+
+    #[test]
+    fn test_find_cat_generic() {
+        let cat44 = Cat { rank: 44 };
+        let cat4 = Cat { rank: 4 };
+        let cat16 = Cat { rank: 16 };
+        let cats = vec![cat44, cat4, cat16];
+        assert_eq!(find_animal(44, cats.clone(), Cat::get_rank), Some(Cat { rank: 44 }));
+        assert_eq!(find_animal(33, cats, Cat::get_rank), None)
     }
 }
