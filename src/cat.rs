@@ -35,6 +35,15 @@ fn find_animal<T, F>(target: u8, coll: Vec<T>, f: F) -> Option<T> where
 
 fn triple(x: i32) -> i32 { x * 3 }
 
+#[derive(PartialEq, Debug, Clone)]
+struct Dog {
+    age: u8,
+}
+
+impl Dog {
+    fn get_age(&self) -> u8 { self.age }
+}
+
 #[cfg(test)]
 mod tests {
     // Note this useful idiom: importing names from outer (for mod tests) scope.
@@ -169,5 +178,15 @@ mod tests {
         let cats = vec![cat44, cat4, cat16];
         assert_eq!(find_animal(44, cats.clone(), Cat::get_rank), Some(Cat { rank: 44 }));
         assert_eq!(find_animal(33, cats, Cat::get_rank), None)
+    }
+
+    #[test]
+    fn test_find_dog_generic() {
+        let dog99 = Dog { age: 99 };
+        let dog9 = Dog { age: 9 };
+        let dog16 = Dog { age: 16 };
+        let dogs = vec![dog99, dog9, dog16];
+        assert_eq!(find_animal(99, dogs.clone(), Dog::get_age), Some(Dog { age: 99 }));
+        assert_eq!(find_animal(33, dogs, Dog::get_age), None)
     }
 }
