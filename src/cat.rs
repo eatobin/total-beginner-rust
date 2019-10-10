@@ -19,7 +19,12 @@ fn apply_to_3<F>(f: F) -> i32 where
     f(3)
 }
 
-
+fn find_cat2<F>(target: u8, cats: Vec<Cat>, f: F) -> Option<Cat> where
+    F: Fn(&Cat) -> u8 {
+    let mut iterator = cats.into_iter();
+    let maybe_match = iterator.find(|c| f(c) == target);
+    maybe_match
+}
 
 fn triple(x: i32) -> i32 { x * 3 }
 
@@ -137,5 +142,15 @@ mod tests {
         let double = |x| 2 * x;
         assert_eq!(apply_to_3(double), 6);
         assert_eq!(apply_to_3(triple), 9)
+    }
+
+    #[test]
+    fn test_find_cat_closure() {
+        let cat44 = Cat { rank: 44 };
+        let cat4 = Cat { rank: 4 };
+        let cat16 = Cat { rank: 16 };
+        let cats = vec![cat44, cat4, cat16];
+        assert_eq!(find_cat2(44, cats.clone(), Cat::get_rank), Some(Cat { rank: 44 }));
+        assert_eq!(find_cat2(33, cats, Cat::get_rank), None);
     }
 }
