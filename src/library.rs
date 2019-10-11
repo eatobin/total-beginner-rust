@@ -129,15 +129,6 @@ mod tests {
         assert_eq!(bks2.len(), 1);
         assert_eq!(remove_book(bks1, &bk2), bks2);
         assert_eq!(remove_book(bks2.clone(), &bk2), bks2);
-
-        //        lib = lib.remove_book(bk2);
-        //        assert_eq!(lib.bks_len(), 0);
-        //
-        //        lib = lib.add_unique_book(bk3);
-        //        assert_eq!(lib.bks_len(), 1);
-        //
-        //        lib = lib.remove_book(bk4);
-        //        assert_eq!(lib.bks_len(), 1);
     }
 
     #[test]
