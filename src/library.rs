@@ -107,14 +107,14 @@ mod tests {
         assert_eq!(add_item(brs1.clone(), &br2), brs2);
         assert_eq!(add_item(brs1.clone(), &br1), brs1);
 
-//        let bk1 = Book::new("Title1", "Author1", Some(br1));
-//        let bk2 = Book::new("Title1", "Author1", Some(br2));
-//        let bks1: Vec<Book> = vec![bk1.clone()];
-//        let bks2: Vec<Book> = vec![bk1.clone(), bk2.clone()];
-//        assert_eq!(bks1.len(), 1);
-//        assert_eq!(bks2.len(), 2);
-//        assert_eq!(add_item(bks1.clone(), bk2), bks2);
-//        assert_eq!(add_item(bks1.clone(), bk1), bks1);
+        let bk1 = Book::new("Title1", "Author1", Some(br1));
+        let bk2 = Book::new("Title1", "Author1", Some(br2));
+        let bks1: Vec<&Book> = vec![&bk1];
+        let bks2: Vec<&Book> = vec![&bk1, &bk2];
+        assert_eq!(bks1.len(), 1);
+        assert_eq!(bks2.len(), 2);
+        assert_eq!(add_item(bks1.clone(), &bk2), bks2);
+        assert_eq!(add_item(bks1.clone(), &bk1), bks1);
     }
 
 //    #[test]
