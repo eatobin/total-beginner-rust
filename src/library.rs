@@ -141,23 +141,10 @@ mod tests {
         let bks: Vec<&Book> = vec![&bk1, &bk2];
         let actual_ptr = find_item("Title1", bks.clone(), Book::get_title);
         assert_eq!(actual_ptr, Some(Book::new("Title1", "Author1", Some(br1))).as_ref());
-//        let actual_ptr_2 = find_item("Borrower11", brs, Borrower::get_name);
-//        assert_eq!(actual_ptr_2, None);
+        let actual_ptr_2 = find_item("Title11", bks, Book::get_title);
+        assert_eq!(actual_ptr_2, None);
     }
 
-    //        // find book
-    //        let (fnd_bk, lib) = lib.find_book("Title3");
-    //        assert_eq!(
-    //            fnd_bk,
-    //            Some(Book::new(
-    //                "Title3",
-    //                "Author3",
-    //                Some(Borrower::new("Borrower3", 3)),
-    //            ))
-    //        );
-    //        let (fnd_bk, lib) = lib.find_book("Title11");
-    //        assert_eq!(fnd_bk, None);
-    //
     //        // num books out
     //        let br1 = Borrower::new("Borrower1", 1);
     //        let br2 = Borrower::new("Borrower2", 2);
