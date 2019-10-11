@@ -27,6 +27,12 @@ fn find_item<'a, T, F>(target: &str, coll: Vec<&'a T>, f: F) -> Option<&'a T> wh
     maybe_match
 }
 
+fn num_books_out(bks: Vec<&Book>, br: &Borrower) -> usize {
+    let mut iterator = bks.into_iter();
+    let num_books_out = iterator.filter(|bk| bk.get_borrower() == Some(br)).count();
+    num_books_out
+}
+
 //    fn num_books_out(&self, br: &Borrower) -> u8 {
 //        let mut count: u8 = 0;
 //        for bk in &self.books {
