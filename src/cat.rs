@@ -57,7 +57,7 @@ struct Bird {
 }
 
 impl Bird {
-    fn get_age(&self) -> &str { &self.name }
+    fn get_name(&self) -> &str { &self.name }
 }
 
 #[cfg(test)]
@@ -201,8 +201,20 @@ mod tests {
         let dog99 = Dog { age: 99 };
         let dog9 = Dog { age: 9 };
         let dog16 = Dog { age: 16 };
+        assert_eq!(Dog::get_age(&dog9), 9);
         let dogs = vec![dog99, dog9, dog16];
         assert_eq!(find_animal(99, dogs.clone(), Dog::get_age), Some(Dog { age: 99 }));
         assert_eq!(find_animal(33, dogs, Dog::get_age), None)
+    }
+
+    #[test]
+    fn test_find_bird_generic() {
+        let bird77 = Bird { name: "seventy-seven".to_owned() };
+        let bird7 = Bird { name: "seven".to_owned() };
+        let bird16 = Bird { name: "sixteen".to_owned() };
+        assert_eq!(Bird::get_name(&bird77), "seventy-seven");
+        let birds = vec![bird77, bird7, bird16];
+        assert_eq!(find_talker("sixteen", birds.clone(), Bird::get_name), Some(Bird { name: "sixteen".to_owned() }));
+        assert_eq!(find_talker("twelve", birds.clone(), Bird::get_name), None);
     }
 }
