@@ -33,6 +33,13 @@ fn find_animal<T, F>(target: u8, coll: Vec<T>, f: F) -> Option<T> where
     maybe_match
 }
 
+fn find_talker<T, F>(target: &str, coll: Vec<T>, f: F) -> Option<T> where
+    F: Fn(&T) -> &str {
+    let mut iterator = coll.into_iter();
+    let maybe_match = iterator.find(|a| f(a) == target);
+    maybe_match
+}
+
 fn triple(x: i32) -> i32 { x * 3 }
 
 #[derive(PartialEq, Debug, Clone)]
@@ -42,6 +49,15 @@ struct Dog {
 
 impl Dog {
     fn get_age(&self) -> u8 { self.age }
+}
+
+#[derive(PartialEq, Debug, Clone)]
+struct Bird {
+    name: String,
+}
+
+impl Bird {
+    fn get_age(&self) -> &str { &self.name }
 }
 
 #[cfg(test)]
