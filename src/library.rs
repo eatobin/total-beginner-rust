@@ -10,8 +10,8 @@ pub fn add_item<'a, T: PartialEq>(mut xs: Vec<&'a T>, x: &'a T) -> Vec<&'a T> {
     }
 }
 
-pub fn remove_book(mut bks: Vec<Book>, bk: &Book) -> Vec<Book> {
-    bks.retain(|this_bk| this_bk != bk);
+pub fn remove_book<'a>(mut bks: Vec<&'a Book>, bk: &Book) -> Vec<&'a Book> {
+    bks.retain(|this_bk| this_bk != &bk);
     bks
 }
 
@@ -117,19 +117,18 @@ mod tests {
         assert_eq!(add_item(bks1.clone(), &bk1), bks1);
     }
 
-//    #[test]
-//    fn test_remove_book() {
-//        let br1 = Borrower::new("Borrower1", 1);
-//        let br2 = Borrower::new("Borrower2", 2);
-//        let bk1 = Book::new("Title1", "Author1", Some(br1));
-//        let bk2 = Book::new("Title1", "Author1", Some(br2));
-//        let bks1: Vec<Book> = vec![bk1.clone(), bk2.clone()];
-//        let bks2: Vec<Book> = vec![bk1];
-//
-//        assert_eq!(bks1.len(), 2);
-//        assert_eq!(bks2.len(), 1);
-//        assert_eq!(remove_book(bks1, &bk2), bks2);
-//        assert_eq!(remove_book(bks2.clone(), &bk2), bks2);
+    #[test]
+    fn test_remove_book() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        let bk1 = Book::new("Title1", "Author1", Some(br1));
+        let bk2 = Book::new("Title1", "Author1", Some(br2));
+        let bks1: Vec<&Book> = vec![&bk1, &bk2];
+        let bks2: Vec<&Book> = vec![&bk1];
+        assert_eq!(bks1.len(), 2);
+        assert_eq!(bks2.len(), 1);
+        assert_eq!(remove_book(bks1, &bk2), bks2);
+        assert_eq!(remove_book(bks2.clone(), &bk2), bks2);
 
         //        lib = lib.remove_book(bk2);
         //        assert_eq!(lib.bks_len(), 0);
@@ -139,7 +138,7 @@ mod tests {
         //
         //        lib = lib.remove_book(bk4);
         //        assert_eq!(lib.bks_len(), 1);
-//    }
+    }
 
     #[test]
     fn test_find_borrower() {
