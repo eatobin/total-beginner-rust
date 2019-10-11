@@ -10,14 +10,9 @@ pub fn add_item<'a, T: PartialEq>(mut xs: Vec<&'a T>, x: &'a T) -> Vec<&'a T> {
     }
 }
 
-pub fn remove_book<'a>(mut bks: Vec<&'a Book>, bk: &Book) -> Vec<&'a Book> {
+pub fn remove_book<'a>(mut bks: Vec<&'a Book>, bk: &Book) -> Vec<&'a Book<'a>> {
     bks.retain(|this_bk| this_bk != &bk);
     bks
-}
-
-pub fn find_borrower<'br>(name: &str, brs: Vec<&'br Borrower>) -> Option<&'br Borrower> {
-    let mut brs_into_iter = brs.into_iter();
-    brs_into_iter.find(|br| br.get_name() == name)
 }
 
 fn find_item<'a, T, F>(target: &str, coll: Vec<&'a T>, f: F) -> Option<&'a T> where
@@ -39,17 +34,33 @@ fn not_maxed_out(bks: Vec<&Book>, br: &Borrower) -> bool {
     out < max as usize
 }
 
-//    fn book_not_out(bk: &Book) -> bool {
-//        bk.get_borrower().is_none()
+fn book_not_out(bk: &Book) -> bool {
+    bk.get_borrower().is_none()
+}
+
+fn book_out(bk: &Book) -> bool {
+    bk.get_borrower().is_some()
+}
+
+
+
+
+
+//pub fn check_out<'a>(name: &str, title: &str, brs: Vec<&Borrower>, bks: Vec<&'a Book>) -> Vec<&'a Book> {
+//    let mbr = find_item(name, brs, Borrower::get_name);
+//    let mbk = find_item(title, bks.clone(), Book::get_title);
+//    if mbr.is_some()
+//        && mbk.is_some()
+//        && not_maxed_out(bks.clone(), mbr.unwrap())
+//        && book_not_out(mbk.unwrap()) {
+//        let bk = mbk.unwrap();
+//        let new_book = bk.set_borrower(mbr);
+//        bks.clone();
 //    }
-//
-//    fn book_out(bk: &Book) -> bool {
-//        bk.get_borrower().is_some()
-//    }
-//
-//    pub fn check_out(mut self, name: &str, title: &str) -> Self {
-//        let (mbr, _lib) = self.clone().find_borrower(name);
-//        let (mbk, _lib) = self.clone().find_book(title);
+
+
+
+
 //        if mbr.is_some()
 //            && mbk.is_some()
 //            && self.not_maxed_out(&mbr.clone().unwrap())
@@ -62,7 +73,15 @@ fn not_maxed_out(bks: Vec<&Book>, br: &Borrower) -> bool {
 //        } else {
 //            self
 //        }
-//    }
+//    bks
+//}
+
+
+
+
+
+
+
 //
 //    pub fn check_in(mut self, title: &str) -> Self {
 //        let (mbk, _lib) = self.clone().find_book(title);
@@ -93,8 +112,8 @@ mod tests {
         assert_eq!(add_item(brs1.clone(), &br2), brs2);
         assert_eq!(add_item(brs1.clone(), &br1), brs1);
 
-        let bk1 = Book::new("Title1", "Author1", Some(br1));
-        let bk2 = Book::new("Title1", "Author1", Some(br2));
+        let bk1 = Book::new("Title1", "Author1", Some(&br1));
+        let bk2 = Book::new("Title1", "Author1", Some(&br2));
         let bks1: Vec<&Book> = vec![&bk1];
         let bks2: Vec<&Book> = vec![&bk1, &bk2];
         assert_eq!(bks1.len(), 1);
@@ -107,8 +126,8 @@ mod tests {
     fn test_remove_book() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
-        let bk1 = Book::new("Title1", "Author1", Some(br1));
-        let bk2 = Book::new("Title1", "Author1", Some(br2));
+        let bk1 = Book::new("Title1", "Author1", Some(&br1));
+        let bk2 = Book::new("Title1", "Author1", Some(&br2));
         let bks1: Vec<&Book> = vec![&bk1, &bk2];
         let bks2: Vec<&Book> = vec![&bk1];
         assert_eq!(bks1.len(), 2);
@@ -132,11 +151,11 @@ mod tests {
     fn test_find_book() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
-        let bk1 = Book::new("Title1", "Author1", Some(br1.clone()));
-        let bk2 = Book::new("Title1", "Author1", Some(br2));
+        let bk1 = Book::new("Title1", "Author1", Some(&br1));
+        let bk2 = Book::new("Title1", "Author1", Some(&br2));
         let bks: Vec<&Book> = vec![&bk1, &bk2];
         let actual_ptr = find_item("Title1", bks.clone(), Book::get_title);
-        assert_eq!(actual_ptr, Some(Book::new("Title1", "Author1", Some(br1))).as_ref());
+        assert_eq!(actual_ptr, Some(Book::new("Title1", "Author1", Some(&br1))).as_ref());
         let actual_ptr_2 = find_item("Title11", bks, Book::get_title);
         assert_eq!(actual_ptr_2, None)
     }
@@ -145,10 +164,10 @@ mod tests {
     fn test_num_books_out() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
-        let sbr1 = Some(br1);
-        let sbr2 = Some(br2);
+        let sbr1 = Some(&br1);
+        let sbr2 = Some(&br2);
         let bk1 = Book::new("Title1", "Author1", sbr1);
-        let bk2 = Book::new("Title2", "Author2", sbr2.clone());
+        let bk2 = Book::new("Title2", "Author2", sbr2);
         let bk3 = Book::new("Title3", "Author3", sbr2);
         let bks: Vec<&Book> = vec![&bk1, &bk2, &bk3];
         let books_out_br1 = num_books_out(bks.clone(), &Borrower::new("Borrower1", 1));
@@ -163,8 +182,8 @@ mod tests {
     fn test_not_maxed_out() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
-        let sbr1 = Some(br1);
-        let sbr2 = Some(br2);
+        let sbr1 = Some(&br1);
+        let sbr2 = Some(&br2);
         let bk1 = Book::new("Title1", "Author1", sbr1);
         let bk2 = Book::new("Title2", "Author2", sbr2);
         let bks: Vec<&Book> = vec![&bk1, &bk2];
