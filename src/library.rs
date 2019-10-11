@@ -20,23 +20,13 @@ pub fn find_borrower<'br>(name: &str, brs: Vec<&'br Borrower>) -> Option<&'br Bo
     brs_into_iter.find(|br| br.get_name() == name)
 }
 
-//pub fn find_mutable_book<'bk4>(title: &str, bks: Vec<&'bk4 Book>) -> Option<&'bk4 Book<'bk4>> {
-//    let mut bks_into_iter = bks.into_iter();
-//    bks_into_iter.find(|br| br.get_title() == title)
-//}
+fn find_item<'a, T, F>(target: &str, coll: Vec<&'a T>, f: F) -> Option<&'a T> where
+    F: Fn(&T) -> &str {
+    let mut iterator = coll.into_iter();
+    let maybe_match = iterator.find(|a| f(a) == target);
+    maybe_match
+}
 
-// pub fn find_item<'x, T: PartialEq>(target: &str, coll: Vec<&'x T>, f: &dyn Fn(&T) -> &'x str) -> Option<&'x T> {
-//     let mut coll_into_iter = coll.into_iter();
-//     coll_into_iter.find(|i| f(i) == target)
-// }
-
-//    pub fn find_book(self, title: &str) -> (Option<Book>, Self) {
-//        let orig_lib = self.clone();
-//        let mut bks_into_iter = self.books.into_iter();
-//        let mbk = bks_into_iter.find(|bk| bk.get_title() == title);
-//        (mbk, orig_lib)
-//    }
-//
 //    fn num_books_out(&self, br: &Borrower) -> u8 {
 //        let mut count: u8 = 0;
 //        for bk in &self.books {
