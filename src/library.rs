@@ -10,7 +10,7 @@ use crate::borrower::Borrower;
 //    }
 //}
 
-pub fn add_item<'x, T: PartialEq>(mut xs: Vec<&'x T>, x: &'x T) -> Vec<&'x T> {
+pub fn add_item<T: PartialEq>(mut xs: Vec<T>, x: T) -> Vec<T> {
     if xs.contains(&x) {
         xs
     } else {
