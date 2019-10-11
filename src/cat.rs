@@ -40,6 +40,13 @@ fn find_talker<T, F>(target: &str, coll: Vec<T>, f: F) -> Option<T> where
     maybe_match
 }
 
+fn find_talker_refs<'a, T, F>(target: &str, coll: Vec<&'a T>, f: F) -> Option<&'a T> where
+    F: Fn(&T) -> &str {
+    let mut iterator = coll.into_iter();
+    let maybe_match = iterator.find(|a| f(a) == target);
+    maybe_match
+}
+
 fn triple(x: i32) -> i32 { x * 3 }
 
 #[derive(PartialEq, Debug, Clone)]
@@ -216,5 +223,16 @@ mod tests {
         let birds = vec![bird77, bird7, bird16];
         assert_eq!(find_talker("sixteen", birds.clone(), Bird::get_name), Some(Bird { name: "sixteen".to_owned() }));
         assert_eq!(find_talker("twelve", birds.clone(), Bird::get_name), None);
+    }
+
+    #[test]
+    fn test_find_bird_generic_refs() {
+        let bird77 = Bird { name: "seventy-seven".to_owned() };
+        let bird7 = Bird { name: "seven".to_owned() };
+        let bird16 = Bird { name: "sixteen".to_owned() };
+        assert_eq!(Bird::get_name(&bird77), "seventy-seven");
+        let birds = vec![&bird77, &bird7, &bird16];
+        assert_eq!(find_talker_refs("sixteen", birds.clone(), Bird::get_name), Some(&Bird { name: "sixteen".to_owned() }));
+        assert_eq!(find_talker_refs("twelve", birds.clone(), Bird::get_name), None);
     }
 }
