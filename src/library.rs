@@ -121,30 +121,29 @@ mod tests {
         assert_eq!(remove_book(bks2.clone(), &bk2), bks2);
     }
 
+//    #[test]
+//    fn test_find_borrower() {
+//        let br1 = &Borrower::new("Borrower1", 1);
+//        let br2 = &Borrower::new("Borrower2", 2);
+//        let brs1: Vec<&Borrower> = vec![br1];
+//        let brs2: Vec<&Borrower> = vec![br1, &br2];
+//        let actual_ptr = find_borrower("Borrower1", brs1.clone());
+//        assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
+//        let actual2 = find_borrower("Borrower11", brs1.clone());
+//        assert_eq!(actual2, None);
+//    }
+
     #[test]
-    fn test_find_borrower() {
-        let br1 = &Borrower::new("Borrower1", 1);
-        let br2 = &Borrower::new("Borrower2", 2);
-        let brs1: Vec<&Borrower> = vec![br1];
-        let brs2: Vec<&Borrower> = vec![br1, &br2];
-        let actual_ptr = find_borrower("Borrower1", brs1.clone());
+    fn test_find_item() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        let brs: Vec<&Borrower> = vec![&br1, &br2];
+        let actual_ptr = find_item("Borrower1", brs.clone(), Borrower::get_name);
         assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
-        let actual2 = find_borrower("Borrower11", brs1.clone());
-        assert_eq!(actual2, None);
+        let actual_ptr_2 = find_item("Borrower11", brs, Borrower::get_name);
+        assert_eq!(actual_ptr_2, None);
     }
 
-    // #[test]
-    // fn test_find_item() {
-    //     let br1 = &Borrower::new("Borrower1", 1);
-    //     let br2 = &Borrower::new("Borrower2", 2);
-    //     let brs1: Vec<&Borrower> = vec![br1];
-    //     let brs2: Vec<&Borrower> = vec![br1, &br2];
-    //     let actual_ptr = find_item("Borrower1", brs1.clone(), Borrower::get_name);
-    //     assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
-    //     let actual2 = find_borrower("Borrower11", brs1.clone());
-    //     assert_eq!(actual2, None);
-    // }
-    //
     //        // find book
     //        let (fnd_bk, lib) = lib.find_book("Title3");
     //        assert_eq!(
