@@ -1,7 +1,7 @@
 use crate::book::Book;
 use crate::borrower::Borrower;
 
-pub fn add_item<'a, T: PartialEq>(mut xs: Vec<&'a T>, x: &'a T) -> Vec<&'a T> {
+pub fn add_item<T: PartialEq>(mut xs: Vec<T>, x: T) -> Vec<T> {
     if xs.contains(&x) {
         xs
     } else {
@@ -84,21 +84,21 @@ mod tests {
     fn test_add_item() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
-        let brs1: Vec<&Borrower> = vec![&br1];
-        let brs2: Vec<&Borrower> = vec![&br1, &br2];
+        let brs1: Vec<Borrower> = vec![br1.clone()];
+        let brs2: Vec<Borrower> = vec![br1.clone(), br2.clone()];
         assert_eq!(brs1.len(), 1);
         assert_eq!(brs2.len(), 2);
-        assert_eq!(add_item(brs1.clone(), &br2), brs2);
-        assert_eq!(add_item(brs1.clone(), &br1), brs1);
+        assert_eq!(add_item(brs1.clone(), br2.clone()), brs2);
+        assert_eq!(add_item(brs1.clone(), br1.clone()), brs1);
 
         let bk1 = Book::new("Title1", "Author1", Some(&br1));
         let bk2 = Book::new("Title1", "Author1", Some(&br2));
-        let bks1: Vec<&Book> = vec![&bk1];
-        let bks2: Vec<&Book> = vec![&bk1, &bk2];
+        let bks1: Vec<Book> = vec![bk1.clone()];
+        let bks2: Vec<Book> = vec![bk1.clone(), bk2.clone()];
         assert_eq!(bks1.len(), 1);
         assert_eq!(bks2.len(), 2);
-        assert_eq!(add_item(bks1.clone(), &bk2), bks2);
-        assert_eq!(add_item(bks1.clone(), &bk1), bks1);
+        assert_eq!(add_item(bks1.clone(), bk2), bks2);
+        assert_eq!(add_item(bks1.clone(), bk1), bks1);
     }
 
     #[test]
