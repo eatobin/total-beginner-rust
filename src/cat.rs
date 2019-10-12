@@ -6,9 +6,9 @@ struct Cat {
 impl Cat {
     fn get_rank(&self) -> u8 { self.rank }
 
-    fn set_rank(self, rank: u8) -> Self { Self { rank } }
+//    fn set_rank(self, rank: u8) -> Self { Self { rank } }
 
-//    fn set_rank(&mut self, rank: u8) { self.rank = rank }
+    fn set_rank(&mut self, rank: u8) { self.rank = rank }
 }
 
 fn find_cat(target: u8, cats: Vec<Cat>) -> Option<Cat> {
@@ -242,11 +242,10 @@ mod tests {
 
     #[test]
     fn test_cat_vec_change_refs() {
-        let cat44 = Cat { rank: 44 };
+        let mut cat44 = Cat { rank: 44 };
         let cat4 = Cat { rank: 4 };
         let cat16 = Cat { rank: 16 };
-        let cat99 = Cat::set_rank(cat44.clone(), 99);
-        let cat200 = Cat::set_rank(cat44.clone(), 200);
-        let cats = vec![cat4, cat16, cat44, cat99, cat200];
+        Cat::set_rank(&mut cat44, 99);
+        let cats = vec![cat4, cat16, cat44];
     }
 }
