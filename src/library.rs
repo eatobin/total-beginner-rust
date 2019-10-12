@@ -43,22 +43,22 @@ fn book_out(bk: &Book) -> bool {
 }
 
 
-pub fn check_out<'a>(name: &str, title: &str, brs: Vec<&'a Borrower>, bks: Vec<&'a Book>) -> Vec<&'a Book<'a>> {
-    let mbr = find_item(name, brs, Borrower::get_name);
-    let mbk = find_item(title, bks.clone(), Book::get_title);
-    if mbr.is_some()
-        && mbk.is_some()
-        && not_maxed_out(bks.clone(), mbr.unwrap())
-        && book_not_out(mbk.unwrap()) {
-        let bk = mbk.unwrap();
-        let new_book = bk.clone().set_borrower(mbr);
-        let mut fewer_books = remove_book(bks.clone(), bk);
-        let vv = add_item(fewer_books, &new_book);
-        bks.clone()
-    } else {
-        bks
-    }
-}
+//pub fn check_out<'a>(name: &str, title: &str, brs: Vec<&'a Borrower>, bks: Vec<&'a Book>) -> Vec<&'a Book<'a>> {
+//    let mbr = find_item(name, brs, Borrower::get_name);
+//    let mbk = find_item(title, bks.clone(), Book::get_title);
+//    if mbr.is_some()
+//        && mbk.is_some()
+//        && not_maxed_out(bks.clone(), mbr.unwrap())
+//        && book_not_out(mbk.unwrap()) {
+//        let bk = mbk.unwrap();
+//        let new_book = bk.clone().set_borrower(mbr);
+//        let mut fewer_books = remove_book(bks.clone(), bk);
+//        let vv = add_item(fewer_books, &new_book);
+//        bks.clone()
+//    } else {
+//        bks
+//    }
+//}
 
 
 //
@@ -172,35 +172,27 @@ mod tests {
         assert_eq!(br2_is_not_maxed, true);
     }
 
-    #[test]
-    fn test_check_out() {
-        let br1 = Borrower::new("Borrower1", 1);
-        let br2 = Borrower::new("Borrower2", 2);
-        let brs: Vec<&Borrower> = vec![&br1, &br2];
-        let sbr1 = Some(&br1);
-        let sbr2 = Some(&br2);
-        let bk1 = Book::new("Title1", "Author1", sbr1);
-        let bk2 = Book::new("Title2", "Author2", None);
-        let bk3 = Book::new("Title2", "Author2", sbr2);
-        let bks1: Vec<&Book> = vec![&bk1, &bk2];
-        let bks2: Vec<&Book> = vec![&bk1, &bk3];
-        let pass = check_out("Borrower2", "Title2", brs, bks1);
-        assert_eq!(pass, bks2)
-    }
-    //        // check_out
+//    #[test]
+//    fn test_check_out() {
+//        let br1 = Borrower::new("Borrower1", 1);
+//        let br2 = Borrower::new("Borrower2", 2);
+//        let brs: Vec<&Borrower> = vec![&br1, &br2];
+//        let sbr1 = Some(&br1);
+//        let sbr2 = Some(&br2);
+//        let bk1 = Book::new("Title1", "Author1", sbr1);
+//        let bk2 = Book::new("Title2", "Author2", None);
+//        let bk3 = Book::new("Title2", "Author2", sbr2);
+//        let bks1: Vec<&Book> = vec![&bk1, &bk2];
+//        let bks2: Vec<&Book> = vec![&bk1, &bk3];
+//        let pass = check_out("Borrower2", "Title2", brs, bks1);
+//        assert_eq!(pass, bks2)
+//    }
 
-    //
-    //        let lib1 = Library::new();
-    //        let lib1 = lib1.add_unique_borrower(br1.clone());
-    //        let lib1 = lib1.add_unique_borrower(br2.clone());
-    //        let lib1 = lib1.add_unique_book(bk1.clone());
-    //        let lib1 = lib1.add_unique_book(bk2);
-    //        let lib2 = Library::new();
-    //        let lib2 = lib2.add_unique_borrower(br1);
-    //        let lib2 = lib2.add_unique_borrower(br2);
-    //        let lib2 = lib2.add_unique_book(bk1);
-    //        let lib2 = lib2.add_unique_book(bk3);
-    //
+
+
+
+
+
     //        // check-out-pass-test
     //        let ret_lib = lib1.clone().check_out("Borrower2", "Title2");
     //        assert_eq!(ret_lib, lib2);
