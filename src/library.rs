@@ -22,13 +22,21 @@ fn find_item<'a, T, F>(target: &str, coll: Vec<&'a T>, f: F) -> Option<&'a T> wh
     maybe_match
 }
 
-fn num_books_out(bks: Vec<&Book>, br: &Borrower) -> usize {
+fn find_borrower<'a>(name: &str, brs: Vec<&'a Borrower>) -> Option<&'a Borrower> {
+    let mut iterator = brs.into_iter();
+    let maybe_borrower = iterator.find(|br| br.get_name() == name);
+    maybe_borrower
+}
+
+
+
+fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> usize {
     let mut iterator = bks.into_iter();
     let num_books_out = iterator.filter(|bk| bk.get_borrower() == Some(br)).count();
     num_books_out
 }
 
-fn not_maxed_out(bks: Vec<&Book>, br: &Borrower) -> bool {
+fn not_maxed_out(bks: &Vec<Book>, br: &Borrower) -> bool {
     let out = num_books_out(bks, br);
     let max = br.get_max_books();
     out < max as usize
@@ -43,12 +51,12 @@ fn book_out(bk: &Book) -> bool {
 }
 
 
-//pub fn check_out<'a>(name: &str, title: &str, brs: Vec<&'a Borrower>, bks: Vec<&'a Book>) -> Vec<&'a Book<'a>> {
+//pub fn check_out<'a>(name: &str, title: &str, brs: Vec<&Borrower>, bks: Vec<Book<'a>>) -> Vec<Book<'a>> {
 //    let mbr = find_item(name, brs, Borrower::get_name);
 //    let mbk = find_item(title, bks.clone(), Book::get_title);
 //    if mbr.is_some()
 //        && mbk.is_some()
-//        && not_maxed_out(bks.clone(), mbr.unwrap())
+//        && not_maxed_out(&bks, mbr.unwrap())
 //        && book_not_out(mbk.unwrap()) {
 //        let bk = mbk.unwrap();
 //        let new_book = bk.clone().set_borrower(mbr);
@@ -120,24 +128,24 @@ mod tests {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
         let brs: Vec<&Borrower> = vec![&br1, &br2];
-        let actual_ptr = find_item("Borrower1", brs.clone(), Borrower::get_name);
+        let actual_ptr = find_borrower("Borrower1", brs.clone());
         assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
-        let actual_ptr_2 = find_item("Borrower11", brs, Borrower::get_name);
+        let actual_ptr_2 = find_borrower("Borrower11", brs);
         assert_eq!(actual_ptr_2, None)
     }
 
-    #[test]
-    fn test_find_book() {
-        let br1 = Borrower::new("Borrower1", 1);
-        let br2 = Borrower::new("Borrower2", 2);
-        let bk1 = Book::new("Title1", "Author1", Some(&br1));
-        let bk2 = Book::new("Title1", "Author1", Some(&br2));
-        let bks: Vec<&Book> = vec![&bk1, &bk2];
-        let actual_ptr = find_item("Title1", bks.clone(), Book::get_title);
-        assert_eq!(actual_ptr, Some(Book::new("Title1", "Author1", Some(&br1))).as_ref());
-        let actual_ptr_2 = find_item("Title11", bks, Book::get_title);
-        assert_eq!(actual_ptr_2, None)
-    }
+//    #[test]
+//    fn test_find_book() {
+//        let br1 = Borrower::new("Borrower1", 1);
+//        let br2 = Borrower::new("Borrower2", 2);
+//        let bk1 = Book::new("Title1", "Author1", Some(&br1));
+//        let bk2 = Book::new("Title1", "Author1", Some(&br2));
+//        let bks: Vec<&Book> = vec![&bk1, &bk2];
+//        let actual_ptr = find_item("Title1", bks.clone(), Book::get_title);
+//        assert_eq!(actual_ptr, Some(Book::new("Title1", "Author1", Some(&br1))).as_ref());
+//        let actual_ptr_2 = find_item("Title11", bks, Book::get_title);
+//        assert_eq!(actual_ptr_2, None)
+//    }
 
     #[test]
     fn test_num_books_out() {
@@ -148,12 +156,12 @@ mod tests {
         let bk1 = Book::new("Title1", "Author1", sbr1);
         let bk2 = Book::new("Title2", "Author2", sbr2);
         let bk3 = Book::new("Title3", "Author3", sbr2);
-        let bks: Vec<&Book> = vec![&bk1, &bk2, &bk3];
-        let books_out_br1 = num_books_out(bks.clone(), &Borrower::new("Borrower1", 1));
+        let bks: Vec<Book> = vec![bk1, bk2, bk3];
+        let books_out_br1 = num_books_out(&bks, &Borrower::new("Borrower1", 1));
         assert_eq!(books_out_br1, 1);
-        let books_out_br2 = num_books_out(bks.clone(), &Borrower::new("Borrower2", 2));
+        let books_out_br2 = num_books_out(&bks, &Borrower::new("Borrower2", 2));
         assert_eq!(books_out_br2, 2);
-        let books_out_br0 = num_books_out(bks, &Borrower::new("Borrower0", 0));
+        let books_out_br0 = num_books_out(&bks, &Borrower::new("Borrower0", 0));
         assert_eq!(books_out_br0, 0)
     }
 
@@ -165,10 +173,10 @@ mod tests {
         let sbr2 = Some(&br2);
         let bk1 = Book::new("Title1", "Author1", sbr1);
         let bk2 = Book::new("Title2", "Author2", sbr2);
-        let bks: Vec<&Book> = vec![&bk1, &bk2];
-        let br1_is_not_maxed = not_maxed_out(bks.clone(), &Borrower::new("Borrower1", 1));
+        let bks: Vec<Book> = vec![bk1, bk2];
+        let br1_is_not_maxed = not_maxed_out(&bks, &Borrower::new("Borrower1", 1));
         assert_eq!(br1_is_not_maxed, false);
-        let br2_is_not_maxed = not_maxed_out(bks.clone(), &Borrower::new("Borrower2", 2));
+        let br2_is_not_maxed = not_maxed_out(&bks, &Borrower::new("Borrower2", 2));
         assert_eq!(br2_is_not_maxed, true);
     }
 
