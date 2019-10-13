@@ -46,13 +46,13 @@ impl<'a> Book<'a> {
 //        Self { borrower, ..self }
 //    }
 
-//    pub fn available_string(&self) -> String {
-//        match &self.borrower {
-//            Some(br) => format!("{} {}", "Checked out to", br.get_name()),
-//            None => "Available".to_owned(),
-//        }
-//    }
-//
+    pub fn available_string(&self) -> String {
+        match self.borrower {
+            Some(br) => format!("{} {}", "Checked out to", br.name),
+            None => "Available".to_owned(),
+        }
+    }
+
 //    pub fn book_to_string(&self) -> String {
 //        format!(
 //            "{} {} {}{} {}",

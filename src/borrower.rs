@@ -1,7 +1,7 @@
 #[derive(Debug, PartialEq, Clone)]
 pub struct Borrower {
-    name: String,
-    max_books: u8,
+    pub name: String,
+    pub max_books: u8,
 }
 
 impl Borrower {
