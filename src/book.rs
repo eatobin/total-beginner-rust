@@ -1,21 +1,21 @@
-//use crate::borrower::Borrower;
+use crate::borrower::Borrower;
 
-//#[derive(Debug, PartialEq, Clone)]
-//pub struct Book<'a> {
-//    title: String,
-//    author: String,
-//    borrower: Option<&'a Borrower>,
-//}
-//
-//impl<'a> Book<'a> {
-//    pub fn new(title: &str, author: &str, borrower: Option<&'a Borrower>) -> Book<'a> {
-//        Book {
-//            title: title.to_owned(),
-//            author: author.to_owned(),
-//            borrower,
-//        }
-//    }
-//
+#[derive(Debug, PartialEq, Clone)]
+pub struct Book<'a> {
+    title: String,
+    author: String,
+    borrower: Option<&'a Borrower>,
+}
+
+impl<'a> Book<'a> {
+    pub fn new(title: &str, author: &str, borrower: Option<&'a Borrower>) -> Book<'a> {
+        Book {
+            title: title.to_owned(),
+            author: author.to_owned(),
+            borrower,
+        }
+    }
+
 //    pub fn get_title(&self) -> &str {
 //        &(self.title)
 //    }
@@ -63,7 +63,7 @@
 //            &(self.available_string())
 //        )
 //    }
-//}
+}
 
 //#[cfg(test)]
 //mod tests {
