@@ -61,26 +61,15 @@ mod tests {
         );
     }
 
-//    #[test]
-//    fn test_book_construct() {
-//        let bk1 = Book::new("Title1", "Author1", None);
-//        assert_eq!(bk1.get_title(), "Title1");
-//        assert_eq!(bk1.get_author(), "Author1");
-//        let br1 = Borrower::new("Borrower1", 1);
-//        let sbr1 = Some(&br1);
-//        let bk2 = Book::new("Title1", "Author1", sbr1);
-//        assert_eq!(bk2.get_borrower(), (Some(&Borrower::new("Borrower1", 1))));
-//        assert_eq!(bk1.get_borrower(), None);
-//    }
-//
-//    #[test]
-//    fn test_book_set_values() {
-//        let br1 = Borrower::new("Borrower1", 1);
-//        let sbr1 = Some(&br1);
-//        let bk1 = Book::new("Title1", "Author1", None);
-//        let bk2 = Book::new("Title1", "Author1", sbr1);
-//        let bk3 = Book::new("Title2", "Author1", None);
-//        assert_eq!(bk1.clone().set_title("Title2"), bk3);
+    #[test]
+    fn test_book_set_values() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let sbr1 = Some(&br1);
+        let bk1 = &mut Book::new("Title1", "Author1", None);
+        let bk2 = &mut Book::new("Title1", "Author1", sbr1);
+        let bk3 = &mut Book::new("Title2", "Author1", None);
+        bk1.set_title("Title2");
+        assert_eq!(bk1, bk3);
 //        let bk4 = Book::new("Title1", "Author2", None);
 //        assert_eq!(bk1.clone().set_author("Author2"), bk4);
 //        assert_eq!(
@@ -88,5 +77,5 @@ mod tests {
 //                .set_borrower(Some(&Borrower::new("Borrower1", 1))),
 //            bk2
 //        );
-//    }
+    }
 }
