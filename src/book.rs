@@ -2,9 +2,9 @@ use crate::borrower::Borrower;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Book<'a> {
-    title: String,
-    author: String,
-    borrower: Option<&'a Borrower>,
+    pub title: String,
+    pub author: String,
+    pub borrower: Option<&'a Borrower>,
 }
 
 impl<'a> Book<'a> {
