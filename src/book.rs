@@ -16,35 +16,11 @@ impl<'a> Book<'a> {
         }
     }
 
-//    pub fn get_title(&self) -> &str {
-//        &(self.title)
-//    }
-//
-//    pub fn set_title(self, title: &str) -> Self {
-//        Self {
-//            title: title.to_owned(),
-//            ..self
-//        }
-//    }
-//
-//    pub fn get_author(&self) -> &str {
-//        &(self.author)
-//    }
-//
-//    pub fn set_author(self, author: &str) -> Self {
-//        Self {
-//            author: author.to_owned(),
-//            ..self
-//        }
-//    }
-//
-//    pub fn get_borrower(&self) -> Option<&Borrower> {
-//        self.borrower
-//    }
-//
-//    pub fn set_borrower(self, borrower: Option<&'a Borrower>) -> Self {
-//        Self { borrower, ..self }
-//    }
+    pub fn set_title(&mut self, title: &str) { self.title = title.to_owned() }
+
+    pub fn set_author(&mut self, author: &str) { self.author = author.to_owned() }
+
+    pub fn set_borrower(&mut self, borrower: Option<&'a Borrower>) { self.borrower = borrower }
 
     pub fn available_string(&self) -> String {
         match self.borrower {
@@ -53,16 +29,16 @@ impl<'a> Book<'a> {
         }
     }
 
-//    pub fn book_to_string(&self) -> String {
-//        format!(
-//            "{} {} {}{} {}",
-//            &(self.title),
-//            "by",
-//            &(self.author),
-//            ";",
-//            &(self.available_string())
-//        )
-//    }
+    pub fn book_to_string(&self) -> String {
+        format!(
+            "{} {} {}{} {}",
+            &(self.title),
+            "by",
+            &(self.author),
+            ";",
+            &(self.available_string())
+        )
+    }
 }
 
 //#[cfg(test)]
