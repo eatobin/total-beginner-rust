@@ -1,15 +1,15 @@
-//use crate::book::Book;
-//use crate::borrower::Borrower;
+use crate::book::Book;
+use crate::borrower::Borrower;
 
-//pub fn add_item<T: PartialEq>(mut xs: Vec<T>, x: T) -> Vec<T> {
-//    if xs.contains(&x) {
-//        xs
-//    } else {
-//        xs.push(x);
-//        xs
-//    }
-//}
-//
+pub fn add_item<'a, T: PartialEq>(mut xs: Vec<&'a T>, x: &'a T) -> Vec<&'a T> {
+    if xs.contains(&x) {
+        xs
+    } else {
+        xs.push(x);
+        xs
+    }
+}
+
 //pub fn remove_book<'a>(mut bks: Vec<Book<'a>>, bk: &Book) -> Vec<Book<'a>> {
 //    bks.retain(|this_bk| this_bk != bk);
 //    bks
@@ -83,21 +83,21 @@
 //    }
 //}
 
-//#[cfg(test)]
-//mod tests {
-//    // Note this useful idiom: importing names from outer (for mod tests) scope.
-//    use super::*;
-//
-//    #[test]
-//    fn test_add_item() {
-//        let br1 = Borrower::new("Borrower1", 1);
-//        let br2 = Borrower::new("Borrower2", 2);
-//        let brs1: Vec<Borrower> = vec![br1.clone()];
-//        let brs2: Vec<Borrower> = vec![br1.clone(), br2.clone()];
-//        assert_eq!(brs1.len(), 1);
-//        assert_eq!(brs2.len(), 2);
-//        assert_eq!(add_item(brs1.clone(), br2.clone()), brs2);
-//        assert_eq!(add_item(brs1.clone(), br1.clone()), brs1);
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_add_item() {
+        let br1 = &Borrower::new("Borrower1", 1);
+        let br2 = &Borrower::new("Borrower2", 2);
+        let brs1: Vec<&Borrower> = vec![br1];
+        let brs2: Vec<&Borrower> = vec![br1, br2];
+        assert_eq!(brs1.len(), 1);
+        assert_eq!(brs2.len(), 2);
+        assert_eq!(add_item(brs1.clone(), br2), brs2);
+        assert_eq!(add_item(brs1.clone(), br1), brs1);
 //
 //        let bk1 = Book::new("Title1", "Author1", Some(&br1));
 //        let bk2 = Book::new("Title1", "Author1", Some(&br2));
@@ -107,7 +107,8 @@
 //        assert_eq!(bks2.len(), 2);
 //        assert_eq!(add_item(bks1.clone(), bk2), bks2);
 //        assert_eq!(add_item(bks1.clone(), bk1), bks1);
-//    }
+    }
+}
 //
 //    #[test]
 //    fn test_remove_book() {
@@ -197,35 +198,35 @@
 //    }
 
 
-    //        // check-out-pass-test
-    //        let ret_lib = lib1.clone().check_out("Borrower2", "Title2");
-    //        assert_eq!(ret_lib, lib2);
-    //
-    //        // check-out-fail-checked-out-test
-    //        let ret_lib = lib1.clone().check_out("Borrower2", "Title1");
-    //        assert_eq!(ret_lib, lib1);
-    //
-    //        // check-out-fail-bad-book-test
-    //        let ret_lib = lib1.clone().check_out("Borrower2", "NoTitle");
-    //        assert_eq!(ret_lib, lib1);
-    //
-    //        // check-out-fail-bad-borrower-test
-    //        let ret_lib = lib1.clone().check_out("NoName", "Title2");
-    //        assert_eq!(ret_lib, lib1);
-    //
-    //        // check-out-fail-over-limit-test
-    //        let ret_lib = lib1.clone().check_out("Borrower1", "Title2");
-    //        assert_eq!(ret_lib, lib1);
-    //
-    //        // check-in-pass-test
-    //        let ret_lib = lib1.clone().check_in("Title2");
-    //        assert_eq!(ret_lib, lib1);
-    //
-    //        // check-in-fail-not-checked-out-test
-    //        let ret_lib = lib1.clone().check_in("Title2");
-    //        assert_eq!(ret_lib, lib1);
-    //
-    //        // check-in-fail-bad-book-test
-    //        let ret_lib = lib1.clone().check_in("NoTitle");
-    //        assert_eq!(ret_lib, lib1);
+//        // check-out-pass-test
+//        let ret_lib = lib1.clone().check_out("Borrower2", "Title2");
+//        assert_eq!(ret_lib, lib2);
+//
+//        // check-out-fail-checked-out-test
+//        let ret_lib = lib1.clone().check_out("Borrower2", "Title1");
+//        assert_eq!(ret_lib, lib1);
+//
+//        // check-out-fail-bad-book-test
+//        let ret_lib = lib1.clone().check_out("Borrower2", "NoTitle");
+//        assert_eq!(ret_lib, lib1);
+//
+//        // check-out-fail-bad-borrower-test
+//        let ret_lib = lib1.clone().check_out("NoName", "Title2");
+//        assert_eq!(ret_lib, lib1);
+//
+//        // check-out-fail-over-limit-test
+//        let ret_lib = lib1.clone().check_out("Borrower1", "Title2");
+//        assert_eq!(ret_lib, lib1);
+//
+//        // check-in-pass-test
+//        let ret_lib = lib1.clone().check_in("Title2");
+//        assert_eq!(ret_lib, lib1);
+//
+//        // check-in-fail-not-checked-out-test
+//        let ret_lib = lib1.clone().check_in("Title2");
+//        assert_eq!(ret_lib, lib1);
+//
+//        // check-in-fail-bad-book-test
+//        let ret_lib = lib1.clone().check_in("NoTitle");
+//        assert_eq!(ret_lib, lib1);
 //}
