@@ -58,7 +58,7 @@ mod tests {
         assert_eq!(
             bk2.book_to_string(),
             "Title1 by Author1; Checked out to Borrower1"
-        );
+        )
     }
 
     #[test]
@@ -66,17 +66,16 @@ mod tests {
         let br1 = Borrower::new("Borrower1", 1);
         let sbr1 = Some(&br1);
         let bk1 = &mut Book::new("Title1", "Author1", None);
-        let bk2 = &mut Book::new("Title1", "Author1", sbr1);
+        let bk2 = &mut Book::new("Title2", "Author2", sbr1);
         let bk3 = &mut Book::new("Title2", "Author1", None);
         bk1.set_title("Title2");
         assert_eq!(bk1, bk3);
         let bk4 = &mut Book::new("Title2", "Author2", None);
         bk1.set_author("Author2");
         assert_eq!(bk1, bk4);
-//        assert_eq!(
-//            bk1.clone()
-//                .set_borrower(Some(&Borrower::new("Borrower1", 1))),
-//            bk2
-//        );
+        let br2 = Borrower::new("Borrower1", 1);
+        let sbr2 = Some(&br2);
+        bk1.set_borrower(sbr2);
+        assert_eq!(bk1, bk2)
     }
 }
