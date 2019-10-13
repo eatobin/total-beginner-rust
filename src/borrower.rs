@@ -55,9 +55,9 @@ mod tests {
         assert_eq!(br1, br2);
     }
 
-//    #[test]
-//    fn test_test_to_string() {
-//        let br1 = Borrower::new("Borrower1", 1);
-//        assert_eq!(br1.borrower_to_string(), "Borrower1 (1 books)");
-//    }
+    #[test]
+    fn test_test_to_string() {
+        let br1 = Borrower::new("Borrower1", 1);
+        assert_eq!(br1.borrower_to_string(), "Borrower1 (1 books)");
+    }
 }
