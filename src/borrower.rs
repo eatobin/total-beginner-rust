@@ -44,16 +44,17 @@ mod tests {
         assert_eq!(br1, br2);
     }
 
-//    #[test]
-//    fn test_set_max_books() {
-//        let br1 = Borrower::new("Borrower1", 1);
-//        let br2 = Borrower {
-//            name: "Borrower1".to_owned(),
-//            max_books: 2,
-//        };
-//        assert_eq!(Borrower::set_max_books(br1, 2), br2);
-//    }
-//
+    #[test]
+    fn test_set_max_books() {
+        let br1 = &mut Borrower::new("Borrower1", 1);
+        let br2 = &mut Borrower {
+            name: "Borrower1".to_owned(),
+            max_books: 2,
+        };
+        br1.set_max_books(2);
+        assert_eq!(br1, br2);
+    }
+
 //    #[test]
 //    fn test_test_to_string() {
 //        let br1 = Borrower::new("Borrower1", 1);
