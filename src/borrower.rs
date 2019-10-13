@@ -27,14 +27,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_borrower_construct() {
+    fn test_test_to_string() {
         let br1 = Borrower::new("Borrower1", 1);
-        assert_eq!(br1.name, "Borrower1");
-        assert_eq!(br1.max_books, 1);
+        assert_eq!(br1.borrower_to_string(), "Borrower1 (1 books)");
     }
 
     #[test]
-    fn test_set_name() {
+    fn test_set_values() {
         let br1 = &mut Borrower::new("Borrower1", 1);
         let br2 = &mut Borrower {
             name: "Borrower2".to_owned(),
@@ -42,22 +41,11 @@ mod tests {
         };
         br1.set_name("Borrower2");
         assert_eq!(br1, br2);
-    }
-
-    #[test]
-    fn test_set_max_books() {
-        let br1 = &mut Borrower::new("Borrower1", 1);
-        let br2 = &mut Borrower {
-            name: "Borrower1".to_owned(),
+        let br3 = &mut Borrower {
+            name: "Borrower2".to_owned(),
             max_books: 2,
         };
         br1.set_max_books(2);
-        assert_eq!(br1, br2);
-    }
-
-    #[test]
-    fn test_test_to_string() {
-        let br1 = Borrower::new("Borrower1", 1);
-        assert_eq!(br1.borrower_to_string(), "Borrower1 (1 books)");
+        assert_eq!(br1, br3);
     }
 }
