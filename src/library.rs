@@ -28,7 +28,7 @@ fn find_borrower<'a>(name: &str, brs: &'a Vec<&'a Borrower>) -> Option<&'a &'a B
     maybe_borrower
 }
 
-fn find_book<'a>(title: &str, bks: &'a Vec<&'a Book>) -> Option<&'a &'a Book<'a>> {
+fn find_book<'a>(title: &str, bks: &'a Vec<&'a mut Book<'a>>) -> Option<&'a &'a mut Book<'a>> {
     let mut iterator = bks.into_iter();
     let maybe_mut_book = iterator.find(|bk| bk.title == title.to_owned());
     maybe_mut_book
