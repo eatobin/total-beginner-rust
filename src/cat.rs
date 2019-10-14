@@ -23,7 +23,7 @@ fn apply_to_3<F>(f: F) -> i32 where
     f(3)
 }
 
-fn find_cat2<F>(target: u8, cats: Vec<Cat>, f: F) -> Option<Cat> where
+fn find_cat_2<F>(target: u8, cats: Vec<Cat>, f: F) -> Option<Cat> where
     F: Fn(&Cat) -> u8 {
     let mut iterator = cats.into_iter();
     let maybe_match = iterator.find(|c| f(c) == target);
@@ -193,8 +193,8 @@ mod tests {
         let cat4 = Cat { rank: 4 };
         let cat16 = Cat { rank: 16 };
         let cats = vec![cat44, cat4, cat16];
-        assert_eq!(find_cat2(44, cats.clone(), Cat::get_rank), Some(Cat { rank: 44 }));
-        assert_eq!(find_cat2(33, cats, Cat::get_rank), None)
+        assert_eq!(find_cat_2(44, cats.clone(), Cat::get_rank), Some(Cat { rank: 44 }));
+        assert_eq!(find_cat_2(33, cats, Cat::get_rank), None)
     }
 
     #[test]
