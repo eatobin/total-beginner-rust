@@ -47,6 +47,18 @@ fn find_num(target: i32, nums: &Vec<i32>) -> (usize, i32) {
     result
 }
 
+fn find_name<'a>(target: &str, names: &Vec<&'a str>) -> (usize, &'a str) {
+    let mut result = (0, "none");
+    for (i, item) in names.into_iter().enumerate() {
+        result = if *item == target {
+            (i, *item)
+        } else {
+            result
+        }
+    }
+    result
+}
+
 fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> usize {
     let mut iterator = bks.into_iter();
     let num_books_out = iterator.filter(|bk| bk.borrower == Some(br)).count();
@@ -173,6 +185,17 @@ mod tests {
         assert_eq!(r2, (0, 1));
         let r3 = find_num(11, &foo);
         assert_eq!(r3, (0, 0))
+    }
+
+    #[test]
+    fn test_find_name() {
+        let foo = vec!["one", "two", "three"];
+        let r = find_name("one", &foo);
+        assert_eq!(r, (0, "one"));
+        let r2 = find_name("three", &foo);
+        assert_eq!(r2, (2, "three"));
+        let r3 = find_name("nine", &foo);
+        assert_eq!(r3, (0, "none"))
     }
 
     #[test]
