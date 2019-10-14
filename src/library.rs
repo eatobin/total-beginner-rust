@@ -21,15 +21,19 @@ pub fn remove_book<'a>(mut bks: Vec<&'a Book<'a>>, bk: &Book) -> Vec<&'a Book<'a
 //    let maybe_match = iterator.find(|a| f(a) == target);
 //    maybe_match
 //}
-//
+
 fn find_borrower<'a>(name: &str, brs: &'a Vec<&'a Borrower>) -> Option<&'a &'a Borrower> {
     let mut iterator = brs.into_iter();
     let maybe_borrower = iterator.find(|br| br.name == name.to_owned());
     maybe_borrower
 }
-//
-//
-//
+
+fn find_book<'a>(title: &str, bks: &'a Vec<&'a Book>) -> Option<&'a &'a Book<'a>> {
+    let mut iterator = bks.into_iter();
+    let maybe_mut_book = iterator.find(|bk| bk.title == title.to_owned());
+    maybe_mut_book
+}
+
 //fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> usize {
 //    let mut iterator = bks.into_iter();
 //    let num_books_out = iterator.filter(|bk| bk.get_borrower() == Some(br)).count();
