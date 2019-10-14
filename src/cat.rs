@@ -17,6 +17,12 @@ fn find_cat(target: u8, cats: Vec<Cat>) -> Option<Cat> {
     maybe_match
 }
 
+fn find_cat_9(target: u8, cats: Vec<&Cat>) -> Option<&Cat> {
+    let mut iterator = cats.into_iter();
+    let maybe_match = iterator.find(|c| c.get_rank() == target);
+    maybe_match
+}
+
 // A function which takes a closure and returns an `i32`.
 fn apply_to_3<F>(f: F) -> i32 where
     F: Fn(i32) -> i32 {
@@ -178,6 +184,16 @@ mod tests {
         let cats = vec![cat44, cat4, cat16];
         assert_eq!(find_cat(44, cats.clone()), Some(Cat { rank: 44 }));
         assert_eq!(find_cat(33, cats), None)
+    }
+
+    #[test]
+    fn test_find_cat_val_9() {
+        let cat44 = Cat { rank: 44 };
+        let cat4 = Cat { rank: 4 };
+        let cat16 = Cat { rank: 16 };
+        let cats = vec![&cat44, &cat4, &cat16];
+        assert_eq!(find_cat_9(44, cats.clone()), Some(&Cat { rank: 44 }));
+        assert_eq!(find_cat_9(33, cats), None)
     }
 
     #[test]
