@@ -183,9 +183,9 @@ mod tests {
         let mut bk2 = Book::new("Title2", "Author2", Some(&br2));
         let bks: &Vec<&mut Book> = &vec![&mut bk1, &mut bk2];
         let actual_ptr = find_book("Title1", bks);
-        assert_eq!(actual_ptr, (0,Some(&&mut Book::new("Title1", "Author1", Some(&br1)))));
-//        let actual_ptr_2 = find_book("Title11", bks);
-//        assert_eq!(actual_ptr_2, None)
+        assert_eq!(actual_ptr, (0, Some(&&mut Book::new("Title1", "Author1", Some(&br1)))));
+        let actual_ptr_2 = find_book("Title11", bks);
+        assert_eq!(actual_ptr_2, (0, None))
     }
 
     #[test]
