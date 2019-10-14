@@ -137,20 +137,19 @@ mod tests {
         let actual_ptr_2 = find_borrower("Borrower11", brs);
         assert_eq!(actual_ptr_2, None)
     }
-}
 
-#[test]
-fn test_find_book() {
-    let br1 = Borrower::new("Borrower1", 1);
-    let br2 = Borrower::new("Borrower2", 2);
-    let bk1 = Book::new("Title1", "Author1", Some(&br1));
-    let bk2 = Book::new("Title1", "Author1", Some(&br2));
-    let bks: &Vec<&Book> = &vec![&bk1, &bk2];
-//    let actual_ptr = find_item("Title1", bks.clone(), Book::get_title);
-//    assert_eq!(actual_ptr, Some(Book::new("Title1", "Author1", Some(&br1))).as_ref());
-//    let actual_ptr_2 = find_item("Title11", bks, Book::get_title);
-//    assert_eq!(actual_ptr_2, None)
-}
+    #[test]
+    fn test_find_book() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        let mut bk1 = Book::new("Title1", "Author1", Some(&br1));
+        let mut bk2 = Book::new("Title1", "Author1", Some(&br2));
+        let bks: &Vec<&mut Book> = &vec![&mut bk1, &mut bk2];
+        let actual_ptr = find_book("Title1", bks);
+        assert_eq!(actual_ptr, Some(&&mut Book::new("Title1", "Author1", Some(&br1))));
+        let actual_ptr_2 = find_book("Title11", bks);
+        assert_eq!(actual_ptr_2, None)
+    }
 
 //    #[test]
 //    fn test_num_books_out() {
@@ -233,4 +232,4 @@ fn test_find_book() {
 //        // check-in-fail-bad-book-test
 //        let ret_lib = lib1.clone().check_in("NoTitle");
 //        assert_eq!(ret_lib, lib1);
-//}
+}
