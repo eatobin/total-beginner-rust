@@ -35,6 +35,18 @@ fn find_borrower<'a>(name: &str, brs: &'a Vec<&'a Borrower>) -> Option<&'a &'a B
 //    maybe_mut_book
 //}
 
+fn find_book<'a>(title: &str, bks: &'a Vec<&'a mut Book<'a>>) -> (usize, Option<&'a &'a mut Book<'a>>) {
+    let mut result: (usize, Option<&'a &'a mut Book<'a>>) = (0, None);
+    for (i, bk) in bks.into_iter().enumerate() {
+        result = if bk.title == title.to_owned() {
+            (i, Some(bk))
+        } else {
+            result
+        }
+    }
+    result
+}
+
 fn find_num(target: i32, nums: &Vec<i32>) -> (usize, i32) {
     let mut result = (0, 0);
     for (i, item) in nums.into_iter().enumerate() {
