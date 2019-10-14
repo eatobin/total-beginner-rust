@@ -1,5 +1,6 @@
 use crate::book::Book;
 use crate::borrower::Borrower;
+use std::ops::Deref;
 
 pub fn add_item<'a, T: PartialEq>(mut xs: Vec<&'a T>, x: &'a T) -> Vec<&'a T> {
     if xs.contains(&x) {
@@ -28,10 +29,22 @@ fn find_borrower<'a>(name: &str, brs: &'a Vec<&'a Borrower>) -> Option<&'a &'a B
     maybe_borrower
 }
 
-fn find_book<'a>(title: &str, bks: &'a Vec<&'a mut Book<'a>>) -> Option<&'a &'a mut Book<'a>> {
-    let mut iterator = bks.into_iter();
-    let maybe_mut_book = iterator.find(|bk| bk.title == title.to_owned());
-    maybe_mut_book
+//fn find_book<'a>(title: &str, bks: &'a Vec<&'a mut Book<'a>>) -> Option<&'a &'a mut Book<'a>> {
+//    let mut iterator = bks.into_iter();
+//    let maybe_mut_book = iterator.find(|bk| bk.title == title.to_owned());
+//    maybe_mut_book
+//}
+
+fn find_num(target: i32, nums: &Vec<i32>) -> (usize, i32) {
+    let mut result = (0, 0);
+    for (i, item) in nums.into_iter().enumerate() {
+        result = if *item == target {
+            (i, *item)
+        } else {
+            result
+        }
+    }
+    result
 }
 
 fn num_books_out(bks: &Vec<Book>, br: &Borrower) -> usize {
@@ -138,17 +151,28 @@ mod tests {
         assert_eq!(actual_ptr_2, None)
     }
 
+//    #[test]
+//    fn test_find_book() {
+//        let br1 = Borrower::new("Borrower1", 1);
+//        let br2 = Borrower::new("Borrower2", 2);
+//        let mut bk1 = Book::new("Title1", "Author1", Some(&br1));
+//        let mut bk2 = Book::new("Title1", "Author1", Some(&br2));
+//        let bks: &Vec<&mut Book> = &vec![&mut bk1, &mut bk2];
+//        let actual_ptr = find_book("Title1", bks);
+//        assert_eq!(actual_ptr, Some(&&mut Book::new("Title1", "Author1", Some(&br1))));
+//        let actual_ptr_2 = find_book("Title11", bks);
+//        assert_eq!(actual_ptr_2, None)
+//    }
+
     #[test]
-    fn test_find_book() {
-        let br1 = Borrower::new("Borrower1", 1);
-        let br2 = Borrower::new("Borrower2", 2);
-        let mut bk1 = Book::new("Title1", "Author1", Some(&br1));
-        let mut bk2 = Book::new("Title1", "Author1", Some(&br2));
-        let bks: &Vec<&mut Book> = &vec![&mut bk1, &mut bk2];
-        let actual_ptr = find_book("Title1", bks);
-        assert_eq!(actual_ptr, Some(&&mut Book::new("Title1", "Author1", Some(&br1))));
-        let actual_ptr_2 = find_book("Title11", bks);
-        assert_eq!(actual_ptr_2, None)
+    fn test_find_num() {
+        let foo = vec![1, 35, 64, 36, 26];
+        let r = find_num(26, &foo);
+        assert_eq!(r, (4, 26));
+        let r2 = find_num(1, &foo);
+        assert_eq!(r2, (0, 1));
+        let r3 = find_num(11, &foo);
+        assert_eq!(r3, (0, 0))
     }
 
     #[test]
