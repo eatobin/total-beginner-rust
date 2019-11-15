@@ -43,22 +43,22 @@ fn book_out(bk: &Book) -> bool {
 }
 
 
-//pub fn check_out<'a>(name: &str, title: &str, brs: Vec<&'a Borrower>, bks: Vec<&'a Book>) -> Vec<&'a Book<'a>> {
-//    let mbr = find_item(name, brs, Borrower::get_name);
-//    let mbk = find_item(title, bks.clone(), Book::get_title);
-//    if mbr.is_some()
-//        && mbk.is_some()
-//        && not_maxed_out(bks.clone(), mbr.unwrap())
-//        && book_not_out(mbk.unwrap()) {
-//        let bk = mbk.unwrap();
-//        let new_book = bk.clone().set_borrower(mbr);
-//        let mut fewer_books = remove_book(bks.clone(), bk);
-//        let vv = add_item(fewer_books, &new_book);
-//        bks.clone()
-//    } else {
-//        bks
-//    }
-//}
+pub fn check_out<'a>(name: &str, title: &str, brs: Vec<&'a Borrower>, bks: Vec<&'a Book>) -> Vec<&'a Book<'a>> {
+    let mbr = find_item(name, brs, Borrower::get_name);
+    let mbk = find_item(title, bks.clone(), Book::get_title);
+    if mbr.is_some()
+        && mbk.is_some()
+        && not_maxed_out(bks.clone(), mbr.unwrap())
+        && book_not_out(mbk.unwrap()) {
+        let bk = mbk.unwrap();
+        let new_book = bk.clone().set_borrower(mbr);
+        let mut fewer_books = remove_book(bks.clone(), bk);
+        let vv = add_item(fewer_books, &new_book);
+        bks.clone()
+    } else {
+        bks
+    }
+}
 
 
 //
