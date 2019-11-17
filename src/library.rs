@@ -31,7 +31,7 @@ fn find_borrower<'a>(n: &str, brs: &'a Vec<&'a Borrower>) -> Option<&'a &'a Borr
     maybe_match
 }
 
-fn find_book<'a>(t: &str, bks: Vec<Book<'a>>) -> Option<(usize, Book<'a>)> {
+fn find_book<'a>(t: &str, bks: &'a Vec<Book<'a>>) -> Option<(usize, &'a Book<'a>)> {
     let mut iterator = bks.into_iter().enumerate();
     let maybe_match = iterator.find(|(i, bk)| bk.title == t.to_string());
     maybe_match
@@ -166,7 +166,7 @@ fn test_find_borrower() {
 //        let actual_ptr_2 = find_item("Title11", bks, Book::get_title);
 //        assert_eq!(actual_ptr_2, None)
 //    }
-//
+
 //    #[test]
 //    fn test_num_books_out() {
 //        let br1 = Borrower::new("Borrower1", 1);
