@@ -33,6 +33,12 @@ fn find_borrower<'a>(n: &str, brs: Vec<&'a Borrower>) -> Option<(usize, &'a Borr
     maybe_match
 }
 
+fn find_book<'a>(t: &str, bks: Vec<Book<'a>>) -> Option<Book<'a>> {
+    let mut iterator = bks.into_iter();
+    let maybe_match = iterator.find(|bk| bk.title == t.to_string());
+    maybe_match
+}
+
 //fn find_item<'a, T, F>(target: &str, coll: Vec<&'a T>, f: F) -> Option<&'a T> where
 //    F: Fn(&T) -> &str {
 //    let mut iterator = coll.into_iter();
