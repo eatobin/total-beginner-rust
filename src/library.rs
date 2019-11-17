@@ -25,7 +25,7 @@ pub fn add_book<'a>(mut bks: Vec<Book<'a>>, bk: Book<'a>) -> Vec<Book<'a>> {
 //    bks
 //}
 
-fn find_borrower<'a>(n: &str, brs: Vec<&'a Borrower>) -> Option<&'a Borrower> {
+fn find_borrower<'a>(n: &str, brs: &'a Vec<&'a Borrower>) -> Option<&'a &'a Borrower> {
     let mut iterator = brs.into_iter();
     let maybe_match = iterator.find(|br| br.name == n.to_string());
     maybe_match
@@ -143,16 +143,16 @@ mod tests {
 //        assert_eq!(remove_book(bks2.clone(), bk2), bks2)
 //    }
 
-    #[test]
-    fn test_find_borrower() {
-        let br1 = Borrower::new("Borrower1", 1);
-        let br2 = Borrower::new("Borrower2", 2);
-        let brs: Vec<&Borrower> = vec![&br1, &br2];
-//        let actual_ptr = find_borrower("Borrower1", brs.clone(), Borrower::get_name);
-//        assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref());
-//        let actual_ptr_2 = find_item("Borrower11", brs, Borrower::get_name);
-//        assert_eq!(actual_ptr_2, None)
-    }
+#[test]
+fn test_find_borrower() {
+    let br1 = Borrower::new("Borrower1", 1);
+    let br2 = Borrower::new("Borrower2", 2);
+    let brs: Vec<&Borrower> = vec![&br1, &br2];
+    let actual_ptr = find_borrower("Borrower1", &brs);
+    assert_eq!(actual_ptr, Some(Borrower::new("Borrower1", 1)).as_ref().as_ref());
+    let actual_ptr_2 = find_borrower("Borrower11", &brs);
+    assert_eq!(actual_ptr_2, None)
+}
 
 //    #[test]
 //    fn test_find_book() {
