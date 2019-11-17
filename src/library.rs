@@ -25,17 +25,15 @@ pub fn add_book<'a>(mut bks: Vec<Book<'a>>, bk: Book<'a>) -> Vec<Book<'a>> {
 //    bks
 //}
 
-// TODO
-// S/B Books
-fn find_borrower<'a>(n: &str, brs: Vec<&'a Borrower>) -> Option<(usize, &'a Borrower)> {
-    let mut iterator = brs.into_iter().enumerate();
-    let maybe_match = iterator.find(|(i, br)| br.name == n.to_string());
+fn find_borrower<'a>(n: &str, brs: Vec<&'a Borrower>) -> Option<&'a Borrower> {
+    let mut iterator = brs.into_iter();
+    let maybe_match = iterator.find(|br| br.name == n.to_string());
     maybe_match
 }
 
-fn find_book<'a>(t: &str, bks: Vec<Book<'a>>) -> Option<Book<'a>> {
-    let mut iterator = bks.into_iter();
-    let maybe_match = iterator.find(|bk| bk.title == t.to_string());
+fn find_book<'a>(t: &str, bks: Vec<Book<'a>>) -> Option<(usize, Book<'a>)> {
+    let mut iterator = bks.into_iter().enumerate();
+    let maybe_match = iterator.find(|(i, bk)| bk.title == t.to_string());
     maybe_match
 }
 
