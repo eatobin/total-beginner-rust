@@ -10,6 +10,15 @@ pub fn add_borrower<'a>(mut brs: Vec<&'a Borrower>, br: &'a Borrower) -> Vec<&'a
     }
 }
 
+pub fn add_book<'a>(mut bks: Vec<Book<'a>>, bk: Book<'a>) -> Vec<Book<'a>> {
+    if bks.contains(&bk) {
+        bks
+    } else {
+        bks.push(bk);
+        bks
+    }
+}
+
 //pub fn add_item<T: PartialEq>(mut xs: Vec<T>, x: T) -> Vec<T> {
 //    if xs.contains(&x) {
 //        xs
@@ -100,19 +109,22 @@ mod tests {
         assert_eq!(add_borrower(brs1.clone(), &br2), brs2);
         assert_eq!(add_borrower(brs1.clone(), &br1), brs1);
     }
+
+    #[test]
+    fn test_add_book() {
+        let br1 = Borrower::new("Borrower1", 1);
+        let br2 = Borrower::new("Borrower2", 2);
+        let bk1 = Book::new("Title1", "Author1", Some(&br1));
+        let bk2 = Book::new("Title1", "Author1", Some(&br2));
+        let bks1: Vec<Book> = vec![bk1.clone()];
+        let bks2: Vec<Book> = vec![bk1.clone(), bk2.clone()];
+        assert_eq!(bks1.len(), 1);
+        assert_eq!(bks2.len(), 2);
+        assert_eq!(add_book(bks1.clone(), bk2), bks2);
+        assert_eq!(add_book(bks1.clone(), bk1), bks1);
+    }
 }
 
-
-//        let bk1 = Book::new("Title1", "Author1", Some(&br1));
-//        let bk2 = Book::new("Title1", "Author1", Some(&br2));
-//        let bks1: Vec<Book> = vec![bk1.clone()];
-//        let bks2: Vec<Book> = vec![bk1.clone(), bk2.clone()];
-//        assert_eq!(bks1.len(), 1);
-//        assert_eq!(bks2.len(), 2);
-//        assert_eq!(add_item(bks1.clone(), bk2), bks2);
-//        assert_eq!(add_item(bks1.clone(), bk1), bks1);
-//    }
-//
 //    #[test]
 //    fn test_remove_book() {
 //        let br1 = Borrower::new("Borrower1", 1);
