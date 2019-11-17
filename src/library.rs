@@ -1,5 +1,6 @@
 use crate::book::Book;
 use crate::borrower::Borrower;
+use std::fs::read;
 
 pub fn add_borrower<'a>(mut brs: Vec<&'a Borrower>, br: &'a Borrower) -> Vec<&'a Borrower> {
     if brs.contains(&br) {
@@ -19,20 +20,17 @@ pub fn add_book<'a>(mut bks: Vec<Book<'a>>, bk: Book<'a>) -> Vec<Book<'a>> {
     }
 }
 
-//pub fn add_item<T: PartialEq>(mut xs: Vec<T>, x: T) -> Vec<T> {
-//    if xs.contains(&x) {
-//        xs
-//    } else {
-//        xs.push(x);
-//        xs
-//    }
-//}
-//
 //pub fn remove_book<'a>(mut bks: Vec<Book<'a>>, bk: Book) -> Vec<Book<'a>> {
 //    bks.retain(|this_bk| this_bk != &bk);
 //    bks
 //}
-//
+
+fn find_borrower<'a>(n: &str, brs: Vec<&'a Borrower>) -> Option<(usize, &'a Borrower)> {
+    let mut iterator = brs.into_iter().enumerate();
+    let maybe_match = iterator.find(|(i, br)| br.name == n.to_string());
+    maybe_match
+}
+
 //fn find_item<'a, T, F>(target: &str, coll: Vec<&'a T>, f: F) -> Option<&'a T> where
 //    F: Fn(&T) -> &str {
 //    let mut iterator = coll.into_iter();
