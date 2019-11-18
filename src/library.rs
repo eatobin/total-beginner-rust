@@ -2,7 +2,7 @@ use crate::book::Book;
 use crate::borrower::Borrower;
 use std::fs::read;
 
-pub fn add_borrower<'a>(mut brs: Vec<&'a Borrower>, br: &'a Borrower) -> Vec<&'a Borrower> {
+pub fn add_borrower<'a>(mut brs: Vec<Borrower>, br: Borrower) -> Vec<Borrower> {
     if brs.contains(&br) {
         brs
     } else {
@@ -106,12 +106,12 @@ mod tests {
     fn test_add_borrower() {
         let br1 = Borrower::new("Borrower1", 1);
         let br2 = Borrower::new("Borrower2", 2);
-        let mut brs1: Vec<&Borrower> = vec![&br1];
-        let mut brs2: Vec<&Borrower> = vec![&br1, &br2];
+        let mut brs1: Vec<Borrower> = vec![br1.clone()];
+        let mut brs2: Vec<Borrower> = vec![br1.clone(), br2.clone()];
         assert_eq!(brs1.len(), 1);
         assert_eq!(brs2.len(), 2);
-        assert_eq!(add_borrower(brs1.clone(), &br2), brs2);
-        assert_eq!(add_borrower(brs1.clone(), &br1), brs1);
+        assert_eq!(add_borrower(brs1.clone(), br2), brs2);
+        assert_eq!(add_borrower(brs1.clone(), br1), brs1);
     }
 
     #[test]
